@@ -2,40 +2,31 @@ package possebom.com.teamswidgets;
 
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import com.squareup.picasso.Picasso;
 
 
 public class MainActivity extends BaseActivity {
 
     private DrawerLayout drawer;
+    private RecyclerView mRecyclerView;
+    private CountryAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setActionBarIcon(R.drawable.abc_ab_share_pack_holo_dark);
 
-        GridView gridView = (GridView) findViewById(R.id.gridView);
-        gridView.setAdapter(new GridViewAdapter());
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String url = (String) view.getTag();
-                // DetailActivity.launch(HomeActivity.this, view.findViewById(R.id.image), url);
-            }
-        });
+        mRecyclerView = (RecyclerView) findViewById(R.id.list);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        mAdapter = new CountryAdapter(CountryManager.getInstance().getCountries(), R.layout.card, this);
+        mRecyclerView.setAdapter(mAdapter);
 
         drawer = (DrawerLayout) findViewById(R.id.drawer);
         drawer.setDrawerShadow(R.drawable.drawer_shadow, Gravity.START);
@@ -63,43 +54,4 @@ public class MainActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private static class GridViewAdapter extends BaseAdapter {
-
-        @Override
-        public int getCount() {
-            return 10;
-        }
-
-        @Override
-        public Object getItem(int i) {
-            return "Item " + String.valueOf(i + 1);
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return i;
-        }
-
-        @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
-
-            if (view == null) {
-                view = LayoutInflater.from(viewGroup.getContext())
-                        .inflate(R.layout.grid_item, viewGroup, false);
-            }
-
-            String imageUrl = "http://lorempixel.com/800/600/sports/" + String.valueOf(i + 1)+ "/";
-            view.setTag(imageUrl);
-
-            ImageView image = (ImageView) view.findViewById(R.id.image);
-            Picasso.with(view.getContext())
-                    .load(imageUrl).placeholder(R.drawable.ic_launcher)
-                    .into(image);
-
-            TextView text = (TextView) view.findViewById(R.id.text);
-            text.setText(getItem(i).toString());
-
-            return view;
-        }
-    }
 }
