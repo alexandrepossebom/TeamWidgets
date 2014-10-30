@@ -39,6 +39,8 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.ViewHold
         Country country = countries.get(i);
         viewHolder.countryName.setText(country.name);
         String imageUrl = "http://lorempixel.com/800/600/city/" + String.valueOf(i);
+
+
         Picasso.with(mContext).load(imageUrl).into(viewHolder.countryImage);
     }
 
