@@ -7,30 +7,34 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import possebom.com.teamswidgets.MainActivity;
 import possebom.com.teamswidgets.R;
+import possebom.com.teamswidgets.model.Team;
+import possebom.com.teamswidgets.util.Log;
 
 /**
  * Created by alexandre on 01/11/14.
  */
 public class TeamsAdapter extends RecyclerView.Adapter<TeamsAdapter.ViewHolder> {
 
-    private List<String> applications;
+    private List<Team> teamList;
     private int rowLayout;
     private MainActivity mAct;
 
     public TeamsAdapter(int rowLayout, MainActivity act) {
-        applications = new ArrayList<String>();
+        teamList = new ArrayList<Team>();
         this.rowLayout = rowLayout;
         this.mAct = act;
     }
 
-    public void setApplications(List<String> applications) {
-        this.applications = applications;
-        this.notifyItemRangeInserted(0, applications.size() - 1);
+    public void setTeamList(List<Team> applications) {
+        this.teamList = applications;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -41,21 +45,29 @@ public class TeamsAdapter extends RecyclerView.Adapter<TeamsAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(final ViewHolder viewHolder, int i) {
-        final String teamName = applications.get(i);
-        viewHolder.name.setText(teamName);
-//        viewHolder.image.setImageDrawable(appInfo.getIcon());
+        final Team team = teamList.get(i);
 
+        viewHolder.name.setText(team.getName());
+
+//        Picasso.with(mAct).setIndicatorsEnabled(true);
+        Picasso.with(mAct)
+                .load(team.getImgUrl())
+                .placeholder(R.drawable.ic_launcher)
+                .error(R.drawable.drawer_shadow)
+                .into(viewHolder.image);
+
+        Log.d(team.getImgUrl());
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                mAct.animateActivity(appInfo, viewHolder.image);
+                mAct.animateActivity(team, viewHolder.image);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return applications == null ? 0 : applications.size();
+        return teamList == null ? 0 : teamList.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
