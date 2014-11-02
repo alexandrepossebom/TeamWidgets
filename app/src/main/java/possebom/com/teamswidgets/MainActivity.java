@@ -36,7 +36,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mRecyclerView = (RecyclerView) findViewById(R.id.list);
+        mRecyclerView = (RecyclerView) findViewById(R.id.listTeams);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mAdapter = new TeamsAdapter(R.layout.card_teams, MainActivity.this);
@@ -44,6 +44,7 @@ public class MainActivity extends BaseActivity {
         fabButton.setOnClickListener(fabClickListener);
 
         TWController.INSTANCE.getBus().register(this);
+        TWController.INSTANCE.getDao().update(this);
     }
 
     @Override

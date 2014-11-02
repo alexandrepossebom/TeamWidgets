@@ -21,21 +21,25 @@ import com.joanzapata.android.iconify.Iconify;
 import com.tundem.aboutlibraries.Libs;
 import com.tundem.aboutlibraries.ui.LibsActivity;
 
+import possebom.com.teamswidgets.controller.TWController;
+import possebom.com.teamswidgets.dao.DAO;
+
 /**
  * Created by alexandre on 30/10/14.
  */
 public abstract class BaseActivity extends ActionBarActivity {
-    private Toolbar toolbar;
+    protected Toolbar toolbar;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private LinearLayout mDrawerList;
     protected View fabButton;
-
+    protected DAO dao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResource());
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
         fabButton = findViewById(R.id.fab_button);
@@ -52,7 +56,7 @@ public abstract class BaseActivity extends ActionBarActivity {
         if (fabButton != null) {
             setupFabButton();
         }
-
+        dao = TWController.INSTANCE.getDao();
     }
 
     protected ImageView getFabImageView() {
@@ -64,8 +68,6 @@ public abstract class BaseActivity extends ActionBarActivity {
     }
 
     private void setupFabButton() {
-//        getFabImageView().setImageDrawable(new IconDrawable(this, Iconify.IconValue.fa_location_arrow));
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             fabButton.setOutlineProvider(new ViewOutlineProvider() {
                 @TargetApi(Build.VERSION_CODES.LOLLIPOP)

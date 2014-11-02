@@ -4,18 +4,18 @@ package possebom.com.teamswidgets.model;
  * Created by alexandre on 01/11/14.
  */
 public class Match {
-    private Integer timestamp;
+    private long timestamp;
     private Boolean home;
     private String transmission;
     private String opponent;
     private String league;
     private String place;
 
-    public Integer getTimestamp() {
+    public long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(final Integer timestamp) {
+    public void setTimestamp(final long timestamp) {
         this.timestamp = timestamp;
     }
 

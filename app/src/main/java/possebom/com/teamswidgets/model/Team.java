@@ -10,14 +10,14 @@ public class Team {
 
     private String name;
     private String imgUrl;
-    private List<Match> matchList = new ArrayList<Match>();
+    private List<Match> matches = new ArrayList<Match>();
 
-    public List<Match> getMatchList() {
-        return matchList;
+    public List<Match> getMatches() {
+        return matches;
     }
 
-    public void setMatchList(final List<Match> matchList) {
-        this.matchList = matchList;
+    public void setMatches(final List<Match> matches) {
+        this.matches = matches;
     }
 
     public String getImgUrl() {
