@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    card_view:cardCornerRadius="10dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
     android:clickable="true"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    card_view:cardCornerRadius="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,32 +23,31 @@
 
             <ImageView
                 android:id="@+id/imageView01"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/detail_team_image_size"
+                android:layout_height="@dimen/detail_team_image_size"
                 android:elevation="8dp"
                 android:padding="1dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_launcher" />
+                android:src="@drawable/generic_team"/>
 
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="X"
                 android:paddingEnd="30dp"
                 android:paddingStart="30dp"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:text="X"
+                android:textAppearance="?android:attr/textAppearanceLarge"/>
 
             <ImageView
                 android:id="@+id/imageView02"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/detail_team_image_size"
+                android:layout_height="@dimen/detail_team_image_size"
                 android:elevation="8dp"
                 android:padding="1dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_launcher" />
+                android:src="@drawable/generic_team"/>
         </LinearLayout>
-
 
 
         <LinearLayout
@@ -57,60 +57,40 @@
             android:paddingEnd="30dp"
             android:paddingStart="30dp">
 
-            <IconTextView
+            <TextView
                 android:id="@+id/textViewDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:shadowColor="#22000000"
-                android:shadowDx="3"
-                android:shadowDy="3"
-                android:shadowRadius="1"
-                android:text="{fa-android}" />
+                android:drawablePadding="5dp"
+                android:padding="5dp"/>
 
-            <IconTextView
+            <TextView
                 android:id="@+id/textViewTimeRemain"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:shadowColor="#22000000"
-                android:shadowDx="3"
-                android:shadowDy="3"
-                android:shadowRadius="1"
-                android:text="{fa-android}" />
+                android:drawablePadding="5dp"
+                android:padding="5dp"/>
 
-            <IconTextView
+            <TextView
                 android:id="@+id/textViewLeague"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:shadowColor="#22000000"
-                android:shadowDx="3"
-                android:shadowDy="3"
-                android:shadowRadius="1"
-                android:text="Medium Text" />
+                android:drawablePadding="5dp"
+                android:padding="5dp"/>
 
-            <IconTextView
+            <TextView
                 android:id="@+id/textViewTransmission"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:shadowColor="#22000000"
-                android:shadowDx="3"
-                android:shadowDy="3"
-                android:shadowRadius="1"
-                android:text="Medium Text" />
+                android:drawablePadding="5dp"
+                android:padding="5dp"/>
 
-            <IconTextView
+            <TextView
                 android:id="@+id/textViewPlace"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:shadowColor="#22000000"
-                android:shadowDx="3"
-                android:shadowDy="3"
-                android:shadowRadius="1"
-                android:text="Medium Text" />
+                android:drawablePadding="5dp"
+                android:padding="5dp"/>
         </LinearLayout>
     </LinearLayout>
 

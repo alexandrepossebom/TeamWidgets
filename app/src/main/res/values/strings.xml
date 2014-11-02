@@ -19,5 +19,23 @@
     <string name="dialog_processinganduploading">Processing and uploading your applications. Please be patient!</string>
     <string name="title_activity_detail">DetailActivity</string>
     <string name="hello_world">Hello world!</string>
+    <string name="twitter">Twitter</string>
+    <string name="google_plus">Google Plus</string>
+    <string name="played">Played</string>
+
+    <plurals name="days">
+        <item quantity="one">%d day</item>
+        <item quantity="other">%d days</item>
+    </plurals>
+    <plurals name="hours">
+        <item quantity="one">%d hour</item>
+        <item quantity="other">%d hours</item>
+    </plurals>
+    <plurals name="minutes">
+        <item quantity="one">%d minute</item>
+        <item quantity="other">%d minutes</item>
+    </plurals>
+
+    <string name="and">" and "</string>
 
 </resources>

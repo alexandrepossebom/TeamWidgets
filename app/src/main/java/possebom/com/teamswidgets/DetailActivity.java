@@ -9,6 +9,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 
+import com.squareup.picasso.Picasso;
+
 import possebom.com.teamswidgets.adapters.MatchesAdapter;
 import possebom.com.teamswidgets.controller.TWController;
 import possebom.com.teamswidgets.model.Team;
@@ -54,6 +56,12 @@ public class DetailActivity extends BaseActivity {
         }
 
         team = dao.getTeamByName(teamName);
+        Picasso.with(this)
+                .load(team.getImgUrl())
+                .placeholder(R.drawable.generic_team)
+                .into(getFabImageView());
+
+
     }
 
     @Override
@@ -68,6 +76,8 @@ public class DetailActivity extends BaseActivity {
             mRecyclerView.startLayoutAnimation();
         }
     }
+
+
 
     @Override
     protected int getLayoutResource() {

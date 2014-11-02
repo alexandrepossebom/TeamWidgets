@@ -20,4 +20,6 @@
     <dimen name="drawer_secondary_text">16sp</dimen>
     <dimen name="drawer_secondary_icon">16dp</dimen>
     <dimen name="drawer_width">240dp</dimen>
+
+    <dimen name="detail_team_image_size">50dp</dimen>
 </resources>

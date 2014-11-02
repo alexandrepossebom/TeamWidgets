@@ -12,7 +12,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewOutlineProvider;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -29,11 +28,11 @@ import possebom.com.teamswidgets.dao.DAO;
  */
 public abstract class BaseActivity extends ActionBarActivity {
     protected Toolbar toolbar;
+    protected View fabButton;
+    protected DAO dao;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private LinearLayout mDrawerList;
-    protected View fabButton;
-    protected DAO dao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,8 +115,14 @@ public abstract class BaseActivity extends ActionBarActivity {
             }
         });
 
-        final ImageView imageView = (ImageView) mDrawerList.findViewById(R.id.drawer_opensource_icon);
-        final Drawable drawable = new IconDrawable(this, Iconify.IconValue.fa_github).colorRes(R.color.secondary).actionBarSize();
+        setIconDrawer(R.id.drawer_opensource_icon, Iconify.IconValue.fa_github);
+        setIconDrawer(R.id.drawer_twitter_icon, Iconify.IconValue.fa_twitter);
+        setIconDrawer(R.id.drawer_plus_icon, Iconify.IconValue.fa_google_plus_square);
+    }
+
+    private void setIconDrawer(int resId, Iconify.IconValue iconId) {
+        final ImageView imageView = (ImageView) mDrawerList.findViewById(resId);
+        final Drawable drawable = new IconDrawable(this, iconId).colorRes(R.color.secondary).actionBarSize();
         imageView.setImageDrawable(drawable);
     }
 
