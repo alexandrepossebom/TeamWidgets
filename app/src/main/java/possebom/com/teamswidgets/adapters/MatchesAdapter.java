@@ -13,16 +13,11 @@ import com.joanzapata.android.iconify.IconDrawable;
 import com.joanzapata.android.iconify.Iconify;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import possebom.com.teamswidgets.DetailActivity;
-import possebom.com.teamswidgets.MainActivity;
 import possebom.com.teamswidgets.R;
 import possebom.com.teamswidgets.controller.TWController;
 import possebom.com.teamswidgets.model.Match;
 import possebom.com.teamswidgets.model.Team;
-import possebom.com.teamswidgets.util.Log;
 
 /**
  * Created by alexandre on 01/11/14.
@@ -31,11 +26,9 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
 
     private Team team;
     private int rowLayout;
-    private DetailActivity mAct;
 
-    public MatchesAdapter(int rowLayout, DetailActivity act) {
-        this.rowLayout = rowLayout;
-        this.mAct = act;
+    public MatchesAdapter() {
+        rowLayout = R.layout.card_matches;
     }
 
     @Override
@@ -56,9 +49,9 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
 
         viewHolder.textViewLeague.setText(match.getLeague());
         setIcon(viewHolder.textViewLeague, Iconify.IconValue.fa_trophy);
-        if(match.getTransmission().isEmpty()){
+        if (match.getTransmission().isEmpty()) {
             viewHolder.textViewTransmission.setVisibility(View.GONE);
-        }else {
+        } else {
             viewHolder.textViewTransmission.setText(match.getTransmission());
             setIcon(viewHolder.textViewTransmission, Iconify.IconValue.fa_eye);
         }

@@ -14,8 +14,9 @@ import java.util.List;
 
 import possebom.com.teamswidgets.MainActivity;
 import possebom.com.teamswidgets.R;
+import possebom.com.teamswidgets.controller.TWController;
+import possebom.com.teamswidgets.event.SelectTeamEvent;
 import possebom.com.teamswidgets.model.Team;
-import possebom.com.teamswidgets.util.Log;
 
 /**
  * Created by alexandre on 01/11/14.
@@ -24,12 +25,10 @@ public class TeamsAdapter extends RecyclerView.Adapter<TeamsAdapter.ViewHolder> 
 
     private List<Team> teamList;
     private int rowLayout;
-    private MainActivity mAct;
 
-    public TeamsAdapter(int rowLayout, MainActivity act) {
+    public TeamsAdapter() {
         teamList = new ArrayList<Team>();
-        this.rowLayout = rowLayout;
-        this.mAct = act;
+        this.rowLayout = R.layout.card_teams;
     }
 
     public void setTeamList(List<Team> applications) {
@@ -49,18 +48,16 @@ public class TeamsAdapter extends RecyclerView.Adapter<TeamsAdapter.ViewHolder> 
 
         viewHolder.name.setText(team.getName());
 
-//        Picasso.with(mAct).setIndicatorsEnabled(true);
-        Picasso.with(mAct)
+        Picasso.with(viewHolder.image.getContext())
                 .load(team.getImgUrl())
                 .placeholder(R.drawable.ic_launcher)
                 .error(R.drawable.drawer_shadow)
                 .into(viewHolder.image);
 
-        Log.d(team.getImgUrl());
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mAct.animateActivity(team, viewHolder.image);
+                TWController.INSTANCE.getBus().post(new SelectTeamEvent(team.getName()));
             }
         });
     }

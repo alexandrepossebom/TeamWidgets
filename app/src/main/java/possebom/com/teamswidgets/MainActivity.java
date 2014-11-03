@@ -17,8 +17,10 @@ import com.squareup.picasso.Picasso;
 
 import possebom.com.teamswidgets.adapters.TeamsAdapter;
 import possebom.com.teamswidgets.controller.TWController;
+import possebom.com.teamswidgets.event.SelectTeamEvent;
 import possebom.com.teamswidgets.event.UpdateEvent;
 import possebom.com.teamswidgets.model.Team;
+import timber.log.Timber;
 
 
 public class MainActivity extends BaseActivity {
@@ -39,7 +41,7 @@ public class MainActivity extends BaseActivity {
         mRecyclerView = (RecyclerView) findViewById(R.id.listTeams);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mAdapter = new TeamsAdapter(R.layout.card_teams, MainActivity.this);
+        mAdapter = new TeamsAdapter();
         mRecyclerView.setAdapter(mAdapter);
         fabButton.setOnClickListener(fabClickListener);
 
@@ -70,11 +72,14 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    public void animateActivity(Team team, View appIcon) {
-        Intent i = new Intent(this, DetailActivity.class);
-        i.putExtra("teamName", team.getName());
-
-        ActivityOptionsCompat transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(this, Pair.create(fabButton, "fab"), Pair.create(appIcon, "appIcon"));
-        startActivity(i, transitionActivityOptions.toBundle());
+    @Subscribe
+    public void onTeamSelected(SelectTeamEvent event) {
+        if (event.getName() != null) {
+            Timber.d("aqui " + event.getName());
+            Intent i = new Intent(this, DetailActivity.class);
+            i.putExtra("teamName", event.getName());
+            ActivityOptionsCompat transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(this, fabButton, "fab");
+            startActivity(i, transitionActivityOptions.toBundle());
+        }
     }
 }

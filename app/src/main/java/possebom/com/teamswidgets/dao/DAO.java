@@ -16,7 +16,7 @@ import java.util.List;
 import possebom.com.teamswidgets.controller.TWController;
 import possebom.com.teamswidgets.event.UpdateEvent;
 import possebom.com.teamswidgets.model.Team;
-import possebom.com.teamswidgets.util.Log;
+import timber.log.Timber;
 
 /**
  * Created by alexandre on 01/11/14.
@@ -25,11 +25,11 @@ public class DAO {
 
     private List<Team> teamList = new ArrayList<Team>();
 
-    public Team getTeamByName(final String name){
+    public Team getTeamByName(final String name) {
         Team teamResult = null;
 
-        for (Team team: teamList){
-            if(team.getName().equals(name)){
+        for (Team team : teamList) {
+            if (team.getName().equals(name)) {
                 teamResult = team;
                 break;
             }
@@ -47,15 +47,13 @@ public class DAO {
                     public void onCompleted(Exception e, JsonObject result) {
                         String message = null;
                         if (e != null) {
-                            Log.d(e.getMessage());
+                            Timber.e(e.getMessage());
                             return;
                         } else {
-                            final Gson gson = new Gson();
                             final Type collectionType = new TypeToken<Collection<Team>>() {
                             }.getType();
-                            teamList = gson.fromJson(result.getAsJsonArray("Teams").toString(), collectionType);
-                            Log.i(result.toString());
-                            Log.i("Team list size: " + teamList.size());
+                            teamList = new Gson().fromJson(result.getAsJsonArray("Teams").toString(), collectionType);
+                            Timber.i("Team list size: " + teamList.size());
                         }
                         TWController.INSTANCE.getBus().post(new UpdateEvent(message));
                     }

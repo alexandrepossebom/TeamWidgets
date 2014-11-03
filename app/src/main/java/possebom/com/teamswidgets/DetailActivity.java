@@ -12,9 +12,7 @@ import android.view.animation.LayoutAnimationController;
 import com.squareup.picasso.Picasso;
 
 import possebom.com.teamswidgets.adapters.MatchesAdapter;
-import possebom.com.teamswidgets.controller.TWController;
 import possebom.com.teamswidgets.model.Team;
-import possebom.com.teamswidgets.util.Log;
 
 public class DetailActivity extends BaseActivity {
 
@@ -44,7 +42,7 @@ public class DetailActivity extends BaseActivity {
         mRecyclerView = (RecyclerView) findViewById(R.id.listMatches);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mAdapter = new MatchesAdapter(R.layout.card_matches, this);
+        mAdapter = new MatchesAdapter();
         mRecyclerView.setAdapter(mAdapter);
         fabButton.setOnClickListener(fabClickListener);
 
@@ -56,18 +54,16 @@ public class DetailActivity extends BaseActivity {
         }
 
         team = dao.getTeamByName(teamName);
-        Picasso.with(this)
-                .load(team.getImgUrl())
-                .placeholder(R.drawable.generic_team)
-                .into(getFabImageView());
-
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         if (team != null) {
+            Picasso.with(this)
+                    .load(team.getImgUrl())
+                    .placeholder(R.drawable.generic_team)
+                    .into(getFabImageView());
             mAdapter.setTeam(team);
             Animation fadeIn = AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left);
             fadeIn.setDuration(250);
@@ -76,7 +72,6 @@ public class DetailActivity extends BaseActivity {
             mRecyclerView.startLayoutAnimation();
         }
     }
-
 
 
     @Override

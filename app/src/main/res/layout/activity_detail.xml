@@ -1,8 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MyActivity">
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".MyActivity">
 
 
     <android.support.v7.widget.Toolbar
@@ -11,18 +11,18 @@
         android:layout_height="?android:attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
-        android:transitionName="actionBar" />
+        android:transitionName="actionBar"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/listMatches"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipToPadding="false"
         android:layout_below="@id/toolbar"
+        android:clipToPadding="false"
         android:paddingBottom="@dimen/activity_vertical_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_horizontal_margin" />
+        android:paddingTop="@dimen/activity_horizontal_margin"/>
 
 
     <ImageButton
@@ -40,5 +40,5 @@
         android:scaleType="fitCenter"
         android:src="@drawable/ic_launcher"
         android:stateListAnimator="@anim/fab_anim"
-        android:transitionName="fab" />
+        android:transitionName="fab"/>
 </RelativeLayout>

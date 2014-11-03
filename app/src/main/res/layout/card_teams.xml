@@ -6,7 +6,6 @@
     android:clickable="true"
     android:orientation="horizontal">
 
-
     <TextView
         android:id="@+id/teamName"
         android:layout_width="match_parent"
@@ -26,6 +25,7 @@
         android:clickable="false"
         android:padding="4dp"
         android:scaleType="centerCrop"
+        android:src="@drawable/generic_team"
         android:transitionName="appIcon" />
 
 </android.support.v7.widget.CardView>
