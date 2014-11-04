@@ -1,6 +1,7 @@
 package possebom.com.teamswidgets.dao;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -23,7 +24,14 @@ import timber.log.Timber;
  */
 public class DAO {
 
+    private static final String PREFS_NAME = "TeamPref";
+    private static final String PREFS_KEY_JSON = "json";
+    private static final String PREFS_KEY_LASTUPDATE = "lastUpdate";
+
+
     private List<Team> teamList = new ArrayList<Team>();
+
+
 
     public Team getTeamByName(final String name) {
         Team teamResult = null;
@@ -38,7 +46,23 @@ public class DAO {
         return teamResult;
     }
 
-    public void update(Context context) {
+    public void update(final Context context) {
+        final SharedPreferences sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        long lastUpdate = sharedPreferences.getLong(PREFS_KEY_LASTUPDATE,0);
+        long now = System.currentTimeMillis();
+        long diff = now - lastUpdate;
+
+        final Type collectionType = new TypeToken<Collection<Team>>() { }.getType();
+
+        if(diff < 60 * 1000 ){
+            Timber.d("Dont need update diff is : "+ diff/1000);
+            final String json = sharedPreferences.getString(PREFS_KEY_JSON,"");
+            teamList = new Gson().fromJson(json, collectionType);
+            Timber.i("Team list size: " + teamList.size());
+            TWController.INSTANCE.getBus().post(new UpdateEvent(null));
+            return;
+        }
+
         Ion.with(context)
                 .load("http://possebom.com/widgets/teams.json")
                 .asJsonObject()
@@ -48,12 +72,16 @@ public class DAO {
                         String message = null;
                         if (e != null) {
                             Timber.e(e.getMessage());
-                            return;
+                            message = e.getMessage();
                         } else {
-                            final Type collectionType = new TypeToken<Collection<Team>>() {
-                            }.getType();
-                            teamList = new Gson().fromJson(result.getAsJsonArray("Teams").toString(), collectionType);
+                            final String json = result.getAsJsonArray("Teams").toString();
+                            teamList = new Gson().fromJson(json, collectionType);
                             Timber.i("Team list size: " + teamList.size());
+
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString(PREFS_KEY_JSON, json);
+                            editor.putLong(PREFS_KEY_LASTUPDATE, System.currentTimeMillis());
+                            editor.commit();
                         }
                         TWController.INSTANCE.getBus().post(new UpdateEvent(message));
                     }

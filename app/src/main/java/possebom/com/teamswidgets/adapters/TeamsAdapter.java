@@ -14,8 +14,6 @@ import java.util.List;
 
 import possebom.com.teamswidgets.MainActivity;
 import possebom.com.teamswidgets.R;
-import possebom.com.teamswidgets.controller.TWController;
-import possebom.com.teamswidgets.event.SelectTeamEvent;
 import possebom.com.teamswidgets.model.Team;
 
 /**
@@ -25,10 +23,12 @@ public class TeamsAdapter extends RecyclerView.Adapter<TeamsAdapter.ViewHolder> 
 
     private List<Team> teamList;
     private int rowLayout;
+    private MainActivity mainActivity;
 
-    public TeamsAdapter() {
+    public TeamsAdapter(MainActivity mainActivity) {
         teamList = new ArrayList<Team>();
         this.rowLayout = R.layout.card_teams;
+        this.mainActivity = mainActivity;
     }
 
     public void setTeamList(List<Team> applications) {
@@ -57,7 +57,7 @@ public class TeamsAdapter extends RecyclerView.Adapter<TeamsAdapter.ViewHolder> 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TWController.INSTANCE.getBus().post(new SelectTeamEvent(team.getName()));
+                mainActivity.selectTeam(team.getName());
             }
         });
     }
