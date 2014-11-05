@@ -38,6 +38,16 @@ public class TeamsFragment extends BaseFragment {
 
         mAdapter = new TeamsAdapter((MainActivity) getActivity());
 
+        mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(final RecyclerView recyclerView, final int dx, final int dy) {
+                Timber.d("scroll : %d %d",dx,dy);
+                super.onScrolled(recyclerView, dx, dy);
+            }
+        });
+
+        setTopPadding(mRecyclerView);
+
         mRecyclerView.setAdapter(mAdapter);
         return view;
     }

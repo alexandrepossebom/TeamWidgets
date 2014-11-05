@@ -1,20 +1,11 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:elevation="4dp"
-        android:transitionName="actionBar"/>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
 
     <android.support.v4.widget.DrawerLayout
         android:id="@+id/drawer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/toolbar">
+        android:layout_height="match_parent">
 
         <FrameLayout
             android:id="@+id/fragment_container"
@@ -26,21 +17,11 @@
 
     </android.support.v4.widget.DrawerLayout>
 
-    <ImageButton
-        android:id="@+id/fab_button"
-        android:layout_width="@dimen/fab_size"
-        android:layout_height="@dimen/fab_size"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/toolbar"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="-28dp"
-        android:background="@drawable/button_round"
-        android:elevation="8dp"
-        android:padding="1dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/ic_launcher"
-        android:stateListAnimator="@anim/fab_anim"
-        android:transitionName="fab"/>
-</RelativeLayout>
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:transitionName="actionBar"/>
+</FrameLayout>

@@ -1,4 +1,4 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MyActivity"
     android:layout_width="match_parent"
@@ -164,4 +164,4 @@
         android:padding="1dp"
         android:scaleType="fitCenter"
         android:src="@drawable/ic_launcher"/>
-</RelativeLayout>
+</FrameLayout>

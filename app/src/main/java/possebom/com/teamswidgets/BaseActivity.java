@@ -36,6 +36,8 @@ public abstract class BaseActivity extends ActionBarActivity {
 
     private LinearLayout mDrawerList;
     protected FragmentManager fragmentManager;
+    protected int toolbarTop;
+    protected int toolbarBottom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,9 @@ public abstract class BaseActivity extends ActionBarActivity {
         fabButton = findViewById(R.id.fab_button);
 
         if (toolbar != null) {
+
+            toolbarTop = toolbar.getTop();
+            toolbarBottom = toolbar.getBottom();
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
@@ -60,9 +65,7 @@ public abstract class BaseActivity extends ActionBarActivity {
             setupDrawerActions();
         }
 
-        if (fabButton != null) {
-            setupFabButton();
-        }
+
         dao = TWController.INSTANCE.getDao();
     }
 
@@ -72,21 +75,6 @@ public abstract class BaseActivity extends ActionBarActivity {
             imageView = (ImageView) fabButton;
         }
         return imageView;
-    }
-
-    private void setupFabButton() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            fabButton.setOutlineProvider(new ViewOutlineProvider() {
-                @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-                @Override
-                public void getOutline(View view, Outline outline) {
-                    int fabSize = view.getContext().getResources().getDimensionPixelSize(R.dimen.fab_size);
-                    outline.setOval(0, 0, fabSize, fabSize);
-                }
-            });
-        } else {
-            getFabImageView().setScaleType(ImageView.ScaleType.FIT_CENTER);
-        }
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -135,6 +123,5 @@ public abstract class BaseActivity extends ActionBarActivity {
     }
 
     protected abstract int getLayoutResource();
-
 
 }
