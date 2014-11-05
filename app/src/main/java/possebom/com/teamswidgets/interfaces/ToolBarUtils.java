@@ -8,4 +8,5 @@ import possebom.com.teamswidgets.model.Team;
 public interface ToolBarUtils {
     public void hideToolBar();
     public void showToolBar();
+    public void setTitle(final String title);
 }

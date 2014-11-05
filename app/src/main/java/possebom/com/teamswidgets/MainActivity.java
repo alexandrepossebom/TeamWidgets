@@ -1,10 +1,8 @@
 package possebom.com.teamswidgets;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.View;
+import android.support.v4.app.FragmentTransaction;
 
 import possebom.com.teamswidgets.adapters.TeamsAdapter;
 import possebom.com.teamswidgets.controller.TWController;
@@ -15,24 +13,17 @@ import possebom.com.teamswidgets.model.Team;
 import timber.log.Timber;
 
 
-public class MainActivity extends BaseActivity implements TeamsAdapter.OnTeamSelectedListener, ToolBarUtils{
-
-    private final View.OnClickListener fabClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            TWController.INSTANCE.getDao().update(view.getContext());
-            toolbar.setSubtitle("teste");
-            toolbar.setVisibility(View.GONE);
-        }
-    };
+public class MainActivity extends BaseActivity implements TeamsAdapter.OnTeamSelectedListener, ToolBarUtils {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Timber.d("onCreate");
         super.onCreate(savedInstanceState);
         TWController.INSTANCE.getBus().register(this);
-        if (fragmentManager.getFragments() == null) {
+        if (fragmentManager.getFragments() == null && dao.getDefaultTeamName() == null) {
             fragmentManager.beginTransaction().add(R.id.fragment_container, new TeamsFragment()).commit();
+        }else if(fragmentManager.getFragments() == null){
+            onTeamSelected(dao.getDefaultTeamName(),false);
         }
     }
 
@@ -42,27 +33,42 @@ public class MainActivity extends BaseActivity implements TeamsAdapter.OnTeamSel
     }
 
     @Override
-    public void onTeamSelected(final Team team) {
-        Timber.d("num frags : %s", getSupportFragmentManager().getFragments().size());
-        Timber.d("selectTeam : %s", team.getName());
+    public void onTeamSelected(final String teamName) {
+        onTeamSelected(teamName,true);
+    }
+
+    public void onTeamSelected(final String teamName, boolean addToBackStack) {
+        if(getSupportFragmentManager().getFragments() != null) {
+            Timber.d("num frags : %d", getSupportFragmentManager().getFragments().size());
+        }
+        Timber.d("selectTeam : %s", teamName);
         Fragment fragment = new MatchsFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("teamName", team.getName());
+        bundle.putString("teamName", teamName);
         fragment.setArguments(bundle);
-        fragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).addToBackStack(null).commit();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction().replace(R.id.fragment_container, fragment);
+        if(addToBackStack){
+            fragmentTransaction.addToBackStack(null);
+        }
+        fragmentTransaction.commit();
     }
 
     @Override
     public void hideToolBar() {
         Timber.d("hideToolBar");
         toolbar.animate().translationY(toolbar.getHeight() * -1);
-        findViewById(R.id.drawerList).setPadding(0,0,0,0);
+        findViewById(R.id.drawerList).setPadding(0, 0, 0, 0);
     }
 
     @Override
     public void showToolBar() {
         Timber.d("showToolBar");
         toolbar.animate().translationY(0f);
-        findViewById(R.id.drawerList).setPadding(0,toolbar.getHeight(),0,0);
+        findViewById(R.id.drawerList).setPadding(0, toolbar.getHeight(), 0, 0);
+    }
+
+    @Override
+    public void setTitle(final String title) {
+        toolbar.setTitle(title);
     }
 }

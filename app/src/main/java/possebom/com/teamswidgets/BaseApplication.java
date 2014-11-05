@@ -1,6 +1,7 @@
 package possebom.com.teamswidgets;
 
 import android.app.Application;
+import android.content.Context;
 
 import timber.log.Timber;
 
@@ -9,12 +10,17 @@ import timber.log.Timber;
  */
 public class BaseApplication extends Application {
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
+    private static Context context;
 
+    public void onCreate(){
+        super.onCreate();
         if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
         }
+        context = getApplicationContext();
+    }
+
+    public static Context getContext() {
+        return context;
     }
 }

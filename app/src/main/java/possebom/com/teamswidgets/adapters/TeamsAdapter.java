@@ -55,7 +55,7 @@ public class TeamsAdapter extends RecyclerView.Adapter<TeamsAdapter.ViewHolder> 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCallback.onTeamSelected(team);
+                mCallback.onTeamSelected(team.getName());
             }
         });
     }
@@ -66,7 +66,7 @@ public class TeamsAdapter extends RecyclerView.Adapter<TeamsAdapter.ViewHolder> 
     }
 
     public interface OnTeamSelectedListener {
-        public void onTeamSelected(final Team team);
+        public void onTeamSelected(final String teamName);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

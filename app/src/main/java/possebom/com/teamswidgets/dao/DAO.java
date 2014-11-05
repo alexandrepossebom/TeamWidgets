@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import possebom.com.teamswidgets.BaseApplication;
 import possebom.com.teamswidgets.controller.TWController;
 import possebom.com.teamswidgets.event.UpdateEvent;
 import possebom.com.teamswidgets.model.Team;
@@ -30,6 +31,24 @@ public class DAO {
     private static final String PREFS_KEY_LASTUPDATE = "lastUpdate";
 
     private List<Team> teamList = new ArrayList<Team>();
+    private Team team = null;
+    private SharedPreferences sharedPreferences;
+
+    private SharedPreferences getSharedPreferences(){
+        if(sharedPreferences == null) {
+            final Context context = BaseApplication.getContext();
+            sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        }
+        return sharedPreferences;
+    }
+
+    public String getDefaultTeamName(){
+        return getSharedPreferences().getString("defaultTeamName", null);
+    }
+
+    public void setDefaultTeamName(final String teamName){
+        getSharedPreferences().edit().putString("defaultTeamName",teamName).apply();
+    }
 
     public Team getTeamByName(final String name) {
         Team teamResult = null;
@@ -45,8 +64,7 @@ public class DAO {
     }
 
     public void update(final Context context) {
-        final SharedPreferences sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        long lastUpdate = sharedPreferences.getLong(PREFS_KEY_LASTUPDATE, 0);
+        long lastUpdate = getSharedPreferences().getLong(PREFS_KEY_LASTUPDATE, 0);
         long now = System.currentTimeMillis();
         long diff = now - lastUpdate;
 
@@ -72,7 +90,7 @@ public class DAO {
                             TWController.INSTANCE.getBus().post(new UpdateEvent("error"));
                         } else {
                             final String json = result.getAsJsonArray("Teams").toString();
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            SharedPreferences.Editor editor = getSharedPreferences().edit();
                             editor.putString(PREFS_KEY_JSON, json);
                             editor.putLong(PREFS_KEY_LASTUPDATE, System.currentTimeMillis());
                             editor.apply();

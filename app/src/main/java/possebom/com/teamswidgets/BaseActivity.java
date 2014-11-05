@@ -23,6 +23,7 @@ import com.tundem.aboutlibraries.ui.LibsActivity;
 
 import possebom.com.teamswidgets.controller.TWController;
 import possebom.com.teamswidgets.dao.DAO;
+import possebom.com.teamswidgets.fragments.TeamsFragment;
 import timber.log.Timber;
 
 /**
@@ -108,6 +109,14 @@ public abstract class BaseActivity extends ActionBarActivity {
 
                 //start the activity
                 startActivity(i);
+            }
+        });
+
+        mDrawerList.findViewById(R.id.drawer_teams).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fragmentManager.beginTransaction().replace(R.id.fragment_container, new TeamsFragment()).commit();
+                mDrawerLayout.closeDrawers();
             }
         });
 
