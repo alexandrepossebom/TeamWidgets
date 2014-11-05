@@ -23,6 +23,7 @@ import com.tundem.aboutlibraries.ui.LibsActivity;
 
 import possebom.com.teamswidgets.controller.TWController;
 import possebom.com.teamswidgets.dao.DAO;
+import possebom.com.teamswidgets.fragments.AboutFragment;
 import possebom.com.teamswidgets.fragments.TeamsFragment;
 import timber.log.Timber;
 
@@ -91,23 +92,14 @@ public abstract class BaseActivity extends ActionBarActivity {
         mDrawerList.findViewById(R.id.drawer_opensource).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Create an intent with context and the Activity class
                 Intent i = new Intent(getApplicationContext(), LibsActivity.class);
-                //Pass the fields of your application to the lib so it can find all external lib information
+
                 i.putExtra(Libs.BUNDLE_FIELDS, Libs.toStringArray(R.string.class.getFields()));
-
-                //Display the library version (OPTIONAL)
                 i.putExtra(Libs.BUNDLE_VERSION, false);
-                //Display the library license (OPTIONAL
                 i.putExtra(Libs.BUNDLE_LICENSE, true);
-
-                //Set a title (OPTIONAL)
                 i.putExtra(Libs.BUNDLE_TITLE, getString(R.string.drawer_opensource));
-
-                //Pass your theme (OPTIONAL)
                 i.putExtra(Libs.BUNDLE_THEME, R.style.AboutTheme);
 
-                //start the activity
                 startActivity(i);
             }
         });
@@ -120,9 +112,18 @@ public abstract class BaseActivity extends ActionBarActivity {
             }
         });
 
+        mDrawerList.findViewById(R.id.drawer_about).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fragmentManager.beginTransaction().replace(R.id.fragment_container, new AboutFragment()).addToBackStack(null).commit();
+                mDrawerLayout.closeDrawers();
+            }
+        });
+
         setIconDrawer(R.id.drawer_opensource_icon, Iconify.IconValue.fa_github);
         setIconDrawer(R.id.drawer_twitter_icon, Iconify.IconValue.fa_twitter);
         setIconDrawer(R.id.drawer_plus_icon, Iconify.IconValue.fa_google_plus_square);
+        setIconDrawer(R.id.drawer_about_icon, Iconify.IconValue.fa_info_circle);
     }
 
     private void setIconDrawer(int resId, Iconify.IconValue iconId) {

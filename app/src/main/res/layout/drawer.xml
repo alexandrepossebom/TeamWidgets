@@ -43,6 +43,38 @@
         android:layout_height="1px"
         android:background="@color/dividers"/>
 
+    <LinearLayout
+        android:id="@+id/drawer_about"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/drawer_secondary"
+        android:background="@drawable/button_rect_list_normal"
+        android:clickable="true">
+
+        <ImageView
+            android:id="@+id/drawer_about_icon"
+            android:layout_width="@dimen/drawer_secondary_icon"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"/>
+
+        <TextView
+            android:id="@+id/drawer_about_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:text="@string/about"
+            android:textColor="@color/secondary"
+            android:textSize="@dimen/drawer_secondary_text"
+            android:textStyle="normal"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/dividers"/>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
