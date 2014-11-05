@@ -68,8 +68,8 @@ public class DAO {
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
                         if (e != null) {
-                            Timber.e(e.getMessage());
-                            TWController.INSTANCE.getBus().post(new UpdateEvent(e.getMessage()));
+                            Timber.e("Error :" + e.getMessage());
+                            TWController.INSTANCE.getBus().post(new UpdateEvent("error"));
                         } else {
                             final String json = result.getAsJsonArray("Teams").toString();
                             SharedPreferences.Editor editor = sharedPreferences.edit();

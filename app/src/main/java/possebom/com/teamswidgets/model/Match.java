@@ -18,7 +18,7 @@ public class Match {
     private String opponent;
     private String league;
     private String place;
-    private Calendar date = Calendar.getInstance();
+    private final Calendar date = Calendar.getInstance();
 
     public long getTimestamp() {
         return timestamp;

@@ -2,21 +2,19 @@ package possebom.com.teamswidgets;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.view.View;
 
-import com.squareup.otto.Subscribe;
-
+import possebom.com.teamswidgets.adapters.TeamsAdapter;
 import possebom.com.teamswidgets.controller.TWController;
-import possebom.com.teamswidgets.event.SelectTeamEvent;
 import possebom.com.teamswidgets.fragments.MatchsFragment;
 import possebom.com.teamswidgets.fragments.TeamsFragment;
+import possebom.com.teamswidgets.model.Team;
 import timber.log.Timber;
 
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements TeamsAdapter.OnTeamSelectedListener{
 
-    View.OnClickListener fabClickListener = new View.OnClickListener() {
+    private final View.OnClickListener fabClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             TWController.INSTANCE.getDao().update(view.getContext());
@@ -29,8 +27,8 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         fabButton.setOnClickListener(fabClickListener);
         TWController.INSTANCE.getBus().register(this);
-        if (getSupportFragmentManager().getFragments() == null) {
-            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new TeamsFragment()).commit();
+        if (fragmentManager.getFragments() == null) {
+            fragmentManager.beginTransaction().add(R.id.fragment_container, new TeamsFragment()).commit();
         }
     }
 
@@ -39,15 +37,14 @@ public class MainActivity extends BaseActivity {
         return R.layout.activity_main;
     }
 
-    public void selectTeam(String name) {
+    @Override
+    public void onTeamSelected(final Team team) {
         Timber.d("num frags : %s", getSupportFragmentManager().getFragments().size());
-        Timber.d("selectTeam : %s", name);
-        final FragmentManager fragmentManager = getSupportFragmentManager();
+        Timber.d("selectTeam : %s", team.getName());
         Fragment fragment = new MatchsFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("teamName", name);
+        bundle.putString("teamName", team.getName());
         fragment.setArguments(bundle);
         fragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).addToBackStack(null).commit();
     }
-
 }

@@ -16,7 +16,7 @@ import possebom.com.teamswidgets.model.Team;
 
 public class DetailActivity extends BaseActivity {
 
-    View.OnClickListener fabClickListener = new View.OnClickListener() {
+    private final View.OnClickListener fabClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
 //            UploadHelper.getInstance(DetailActivity.this, null).upload(appInfo);

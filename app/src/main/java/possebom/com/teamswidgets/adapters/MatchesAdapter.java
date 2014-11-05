@@ -13,7 +13,6 @@ import com.joanzapata.android.iconify.IconDrawable;
 import com.joanzapata.android.iconify.Iconify;
 import com.squareup.picasso.Picasso;
 
-import possebom.com.teamswidgets.DetailActivity;
 import possebom.com.teamswidgets.R;
 import possebom.com.teamswidgets.controller.TWController;
 import possebom.com.teamswidgets.model.Match;
@@ -25,7 +24,7 @@ import possebom.com.teamswidgets.model.Team;
 public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHolder> {
 
     private Team team;
-    private int rowLayout;
+    private final int rowLayout;
 
     public MatchesAdapter() {
         rowLayout = R.layout.card_matches;
@@ -104,13 +103,13 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView textViewDate;
-        public TextView textViewTimeRemain;
-        public TextView textViewLeague;
-        public TextView textViewTransmission;
-        public TextView textViewPlace;
-        public ImageView imageView01;
-        public ImageView imageView02;
+        public final TextView textViewDate;
+        public final TextView textViewTimeRemain;
+        public final TextView textViewLeague;
+        public final TextView textViewTransmission;
+        public final TextView textViewPlace;
+        public final ImageView imageView01;
+        public final ImageView imageView02;
 
         public ViewHolder(View itemView) {
             super(itemView);

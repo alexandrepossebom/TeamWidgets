@@ -5,7 +5,7 @@ package possebom.com.teamswidgets.event;
  */
 public class SelectTeamEvent {
 
-    private String name;
+    private final String name;
 
     public SelectTeamEvent(final String name) {
         this.name = name;

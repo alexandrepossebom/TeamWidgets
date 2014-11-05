@@ -8,15 +8,14 @@ import com.squareup.otto.Bus;
 
 import possebom.com.teamswidgets.controller.TWController;
 import possebom.com.teamswidgets.dao.DAO;
-import timber.log.Timber;
 
 /**
  * Created by alexandre on 03/11/14.
  */
 public abstract class BaseFragment extends Fragment {
 
-    protected DAO dao = TWController.INSTANCE.getDao();
-    protected Bus bus = TWController.INSTANCE.getBus();
+    protected final DAO dao = TWController.INSTANCE.getDao();
+    protected final Bus bus = TWController.INSTANCE.getBus();
     protected Context context;
 
     @Override

@@ -12,7 +12,6 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-import possebom.com.teamswidgets.MainActivity;
 import possebom.com.teamswidgets.R;
 import possebom.com.teamswidgets.model.Team;
 
@@ -20,15 +19,14 @@ import possebom.com.teamswidgets.model.Team;
  * Created by alexandre on 01/11/14.
  */
 public class TeamsAdapter extends RecyclerView.Adapter<TeamsAdapter.ViewHolder> {
-
     private List<Team> teamList;
-    private int rowLayout;
-    private MainActivity mainActivity;
+    private final int rowLayout;
+    private final OnTeamSelectedListener mCallback;
 
-    public TeamsAdapter(MainActivity mainActivity) {
+    public TeamsAdapter(OnTeamSelectedListener mCallback) {
         teamList = new ArrayList<Team>();
         this.rowLayout = R.layout.card_teams;
-        this.mainActivity = mainActivity;
+        this.mCallback = mCallback;
     }
 
     public void setTeamList(List<Team> applications) {
@@ -57,7 +55,7 @@ public class TeamsAdapter extends RecyclerView.Adapter<TeamsAdapter.ViewHolder> 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mainActivity.selectTeam(team.getName());
+                mCallback.onTeamSelected(team);
             }
         });
     }
@@ -67,9 +65,13 @@ public class TeamsAdapter extends RecyclerView.Adapter<TeamsAdapter.ViewHolder> 
         return teamList == null ? 0 : teamList.size();
     }
 
+    public interface OnTeamSelectedListener {
+        public void onTeamSelected(final Team team);
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView name;
-        public ImageView image;
+        public final TextView name;
+        public final ImageView image;
 
         public ViewHolder(View itemView) {
             super(itemView);

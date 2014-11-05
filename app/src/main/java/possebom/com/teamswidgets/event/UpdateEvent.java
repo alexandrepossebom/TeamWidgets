@@ -4,7 +4,7 @@ package possebom.com.teamswidgets.event;
  * Created by alexandre on 01/11/14.
  */
 public class UpdateEvent {
-    private String message;
+    private final String message;
 
     public UpdateEvent(final String message) {
         this.message = message;

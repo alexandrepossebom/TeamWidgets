@@ -37,5 +37,6 @@
     </plurals>
 
     <string name="and">" and "</string>
+    <string name="teams">Teams</string>
 
 </resources>

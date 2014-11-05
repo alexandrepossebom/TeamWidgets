@@ -1,7 +1,6 @@
 package possebom.com.teamswidgets.fragments;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -63,7 +62,6 @@ public class TeamsFragment extends BaseFragment {
     public void onUpdate(UpdateEvent event) {
         Timber.d("onUpdate");
         if (event.getMessage() != null) {
-            Timber.d("onUpdate error : " + event.getMessage());
             return;
         }
 

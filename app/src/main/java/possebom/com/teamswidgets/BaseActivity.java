@@ -2,29 +2,22 @@ package possebom.com.teamswidgets;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Outline;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.text.style.BackgroundColorSpan;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.RelativeSizeSpan;
 import android.view.View;
 import android.view.ViewOutlineProvider;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.joanzapata.android.iconify.IconDrawable;
 import com.joanzapata.android.iconify.Iconify;
-import com.mikpenz.iconics.Iconics;
-import com.mikpenz.iconics.IconicsDrawable;
-import com.mikpenz.iconics.typeface.FontAwesome;
 import com.tundem.aboutlibraries.Libs;
 import com.tundem.aboutlibraries.ui.LibsActivity;
 
@@ -40,13 +33,16 @@ public abstract class BaseActivity extends ActionBarActivity {
     protected View fabButton;
     protected DAO dao;
     private DrawerLayout mDrawerLayout;
-    private ActionBarDrawerToggle actionBarDrawerToggle;
+
     private LinearLayout mDrawerList;
+    protected FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResource());
+
+        fragmentManager = getSupportFragmentManager();
 
         Timber.tag("LifeCycles");
         Timber.d("Activity Created");
@@ -95,8 +91,7 @@ public abstract class BaseActivity extends ActionBarActivity {
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void setupDrawerActions() {
-        // Handle ActionBarDrawerToggle
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
         actionBarDrawerToggle.syncState();
 
         // Handle different Drawer States :D
@@ -131,9 +126,6 @@ public abstract class BaseActivity extends ActionBarActivity {
         setIconDrawer(R.id.drawer_opensource_icon, Iconify.IconValue.fa_github);
         setIconDrawer(R.id.drawer_twitter_icon, Iconify.IconValue.fa_twitter);
         setIconDrawer(R.id.drawer_plus_icon, Iconify.IconValue.fa_google_plus_square);
-
-        TextView tv = (TextView) mDrawerList.findViewById(R.id.tv);
-//        new Iconics.IconicsBuilder().ctx(this).on(tv).build();
     }
 
     private void setIconDrawer(int resId, Iconify.IconValue iconId) {
