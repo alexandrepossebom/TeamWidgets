@@ -37,9 +37,9 @@ public abstract class BaseFragment extends Fragment {
 
         final int paddingVertical = context.getResources().getDimensionPixelSize(R.dimen.activity_vertical_margin);
         final int paddingTop = actionBarHeight + paddingVertical;
-        final int padingLeftRight = context.getResources().getDimensionPixelSize(R.dimen.activity_horizontal_margin);
+        final int paddingLeftRight = context.getResources().getDimensionPixelSize(R.dimen.activity_horizontal_margin);
 
-        view.setPadding(padingLeftRight, paddingTop, padingLeftRight, paddingVertical);
+        view.setPadding(paddingLeftRight, paddingTop, paddingLeftRight, paddingVertical);
     }
 
 

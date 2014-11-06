@@ -15,4 +15,5 @@
 
     <dimen name="detail_team_image_size">50dp</dimen>
     <dimen name="drawer_icon_padding">12dp</dimen>
+    <dimen name="team_icon_elevation">4dp</dimen>
 </resources>

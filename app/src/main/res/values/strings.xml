@@ -26,5 +26,8 @@
     <string name="teams">Teams</string>
     <string name="about">About</string>
     <string name="about_text">This application is a small tribute to José Altair Possebom.\n\nDeveloped by Alexandre Possebom</string>
+    <string name="icon">Icon</string>
+    <string name="team_image_desc">Team Icon</string>
+    <string name="versus">X</string>
 
 </resources>

@@ -2,6 +2,7 @@
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
@@ -26,10 +27,12 @@
                 android:id="@+id/imageView01"
                 android:layout_width="@dimen/detail_team_image_size"
                 android:layout_height="@dimen/detail_team_image_size"
-                android:elevation="8dp"
+                android:contentDescription="@string/team_image_desc"
+                android:elevation="@dimen/team_icon_elevation"
                 android:padding="1dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/generic_team"/>
+                android:src="@drawable/generic_team"
+                tools:ignore="UnusedAttribute"/>
 
             <TextView
                 android:id="@+id/textView"
@@ -37,19 +40,20 @@
                 android:layout_height="wrap_content"
                 android:paddingEnd="30dp"
                 android:paddingStart="30dp"
-                android:text="X"
+                android:text="@string/versus"
                 android:textAppearance="?android:attr/textAppearanceLarge"/>
 
             <ImageView
                 android:id="@+id/imageView02"
                 android:layout_width="@dimen/detail_team_image_size"
                 android:layout_height="@dimen/detail_team_image_size"
-                android:elevation="8dp"
+                android:contentDescription="@string/team_image_desc"
+                android:elevation="@dimen/team_icon_elevation"
                 android:padding="1dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/generic_team"/>
+                android:src="@drawable/generic_team"
+                tools:ignore="UnusedAttribute"/>
         </LinearLayout>
-
 
         <LinearLayout
             android:layout_width="match_parent"

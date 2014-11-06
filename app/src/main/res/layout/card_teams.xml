@@ -26,6 +26,6 @@
         android:padding="4dp"
         android:scaleType="centerCrop"
         android:src="@drawable/generic_team"
-        android:transitionName="appIcon" />
+        android:contentDescription="@string/team_image_desc"/>
 
 </android.support.v7.widget.CardView>

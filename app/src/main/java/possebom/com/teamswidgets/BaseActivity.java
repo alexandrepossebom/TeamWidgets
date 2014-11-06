@@ -1,10 +1,7 @@
 package possebom.com.teamswidgets;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.graphics.Outline;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
@@ -12,7 +9,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.ViewOutlineProvider;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -33,12 +29,9 @@ import timber.log.Timber;
 public abstract class BaseActivity extends ActionBarActivity {
     protected Toolbar toolbar;
     protected DAO dao;
-    private DrawerLayout mDrawerLayout;
-
-    private LinearLayout mDrawerList;
     protected FragmentManager fragmentManager;
-    protected int toolbarTop;
-    protected int toolbarBottom;
+    private DrawerLayout mDrawerLayout;
+    private LinearLayout mDrawerList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +47,6 @@ public abstract class BaseActivity extends ActionBarActivity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
 
         if (toolbar != null) {
-
-            toolbarTop = toolbar.getTop();
-            toolbarBottom = toolbar.getBottom();
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }

@@ -3,7 +3,6 @@ package possebom.com.teamswidgets.controller;
 import com.squareup.otto.Bus;
 
 import possebom.com.teamswidgets.dao.DAO;
-import possebom.com.teamswidgets.model.Team;
 
 /**
  * Created by alexandre on 01/11/14.
@@ -12,7 +11,7 @@ public enum TWController {
     INSTANCE;
     private final Bus bus = new Bus();
     private final DAO dao = new DAO();
-    private Team defaultTeam;
+    private String defaultTeamName;
 
     private TWController() {
 
@@ -27,11 +26,17 @@ public enum TWController {
     }
 
 
-    public Team getDefaultTeam() {
-        return defaultTeam;
+    public String getDefaultTeamName() {
+        if (defaultTeamName == null) {
+            defaultTeamName = dao.getDefaultTeamName();
+        }
+        return defaultTeamName;
     }
 
-    public void setDefaultTeam(final Team defaultTeam) {
-        this.defaultTeam = defaultTeam;
+    public void setDefaultTeam(final String defaultTeamName) {
+        if (this.defaultTeamName == null || (defaultTeamName != null && !defaultTeamName.equals(this.defaultTeamName))) {
+            dao.setDefaultTeamName(defaultTeamName);
+            this.defaultTeamName = defaultTeamName;
+        }
     }
 }

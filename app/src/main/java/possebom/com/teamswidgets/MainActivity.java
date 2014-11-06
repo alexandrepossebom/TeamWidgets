@@ -6,10 +6,9 @@ import android.support.v4.app.FragmentTransaction;
 
 import possebom.com.teamswidgets.adapters.TeamsAdapter;
 import possebom.com.teamswidgets.controller.TWController;
-import possebom.com.teamswidgets.fragments.MatchsFragment;
+import possebom.com.teamswidgets.fragments.MatchesFragment;
 import possebom.com.teamswidgets.fragments.TeamsFragment;
 import possebom.com.teamswidgets.interfaces.ToolBarUtils;
-import possebom.com.teamswidgets.model.Team;
 import timber.log.Timber;
 
 
@@ -20,10 +19,10 @@ public class MainActivity extends BaseActivity implements TeamsAdapter.OnTeamSel
         Timber.d("onCreate");
         super.onCreate(savedInstanceState);
         TWController.INSTANCE.getBus().register(this);
-        if (fragmentManager.getFragments() == null && dao.getDefaultTeamName() == null) {
+        if (fragmentManager.getFragments() == null && TWController.INSTANCE.getDefaultTeamName() == null) {
             fragmentManager.beginTransaction().add(R.id.fragment_container, new TeamsFragment()).commit();
-        }else if(fragmentManager.getFragments() == null){
-            onTeamSelected(dao.getDefaultTeamName(),false);
+        } else if (fragmentManager.getFragments() == null) {
+            onTeamSelected(TWController.INSTANCE.getDefaultTeamName(), false);
         }
     }
 
@@ -34,20 +33,21 @@ public class MainActivity extends BaseActivity implements TeamsAdapter.OnTeamSel
 
     @Override
     public void onTeamSelected(final String teamName) {
-        onTeamSelected(teamName,true);
+        onTeamSelected(teamName, true);
     }
 
     public void onTeamSelected(final String teamName, boolean addToBackStack) {
-        if(getSupportFragmentManager().getFragments() != null) {
+        TWController.INSTANCE.setDefaultTeam(teamName);
+        if (getSupportFragmentManager().getFragments() != null) {
             Timber.d("num frags : %d", getSupportFragmentManager().getFragments().size());
         }
         Timber.d("selectTeam : %s", teamName);
-        Fragment fragment = new MatchsFragment();
+        Fragment fragment = new MatchesFragment();
         Bundle bundle = new Bundle();
         bundle.putString("teamName", teamName);
         fragment.setArguments(bundle);
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction().replace(R.id.fragment_container, fragment);
-        if(addToBackStack){
+        if (addToBackStack) {
             fragmentTransaction.addToBackStack(null);
         }
         fragmentTransaction.commit();

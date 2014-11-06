@@ -23,14 +23,13 @@ import timber.log.Timber;
 /**
  * Created by alexandre on 03/11/14.
  */
-public class MatchsFragment extends BaseFragment {
+public class MatchesFragment extends BaseFragment {
 
     private RecyclerView mRecyclerView;
     private MatchesAdapter mAdapter;
-    private Team team;
     private String teamName;
     private ToolBarUtils toolBarUtils;
-    private boolean toobarIsHidden = false;
+    private boolean toolbarIsHidden = false;
 
 
     @Override
@@ -76,7 +75,7 @@ public class MatchsFragment extends BaseFragment {
             return;
         }
 
-        team = dao.getTeamByName(teamName);
+        final Team team = dao.getTeamByName(teamName);
 
         if (team != null) {
             mAdapter.setTeam(team);
@@ -94,11 +93,11 @@ public class MatchsFragment extends BaseFragment {
             mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
                 @Override
                 public void onScrolled(final RecyclerView recyclerView, final int dx, final int dy) {
-                    if (dy > 0 && !toobarIsHidden) {
-                        toobarIsHidden = true;
+                    if (dy > 0 && !toolbarIsHidden) {
+                        toolbarIsHidden = true;
                         toolBarUtils.hideToolBar();
-                    } else if (dy < 0 && toobarIsHidden) {
-                        toobarIsHidden = false;
+                    } else if (dy < 0 && toolbarIsHidden) {
+                        toolbarIsHidden = false;
                         toolBarUtils.showToolBar();
                     }
                     super.onScrolled(recyclerView, dx, dy);

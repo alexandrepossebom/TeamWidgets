@@ -31,7 +31,6 @@ public class DAO {
     private static final String PREFS_KEY_LASTUPDATE = "lastUpdate";
 
     private List<Team> teamList = new ArrayList<Team>();
-    private Team team = null;
     private SharedPreferences sharedPreferences;
 
     private SharedPreferences getSharedPreferences(){
@@ -71,7 +70,7 @@ public class DAO {
         final CharSequence strDiff = DateUtils.getRelativeTimeSpanString(lastUpdate);
 
         if (diff < INTERVAL) {
-            Timber.d("Dont need update diff is : " + strDiff);
+            Timber.d("Don't need update diff is : " + strDiff);
             final String json = sharedPreferences.getString(PREFS_KEY_JSON, "");
             updateResults(json);
             return;
