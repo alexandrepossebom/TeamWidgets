@@ -32,7 +32,6 @@ import timber.log.Timber;
  */
 public abstract class BaseActivity extends ActionBarActivity {
     protected Toolbar toolbar;
-    protected View fabButton;
     protected DAO dao;
     private DrawerLayout mDrawerLayout;
 
@@ -53,7 +52,6 @@ public abstract class BaseActivity extends ActionBarActivity {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
-        fabButton = findViewById(R.id.fab_button);
 
         if (toolbar != null) {
 
@@ -71,15 +69,6 @@ public abstract class BaseActivity extends ActionBarActivity {
         dao = TWController.INSTANCE.getDao();
     }
 
-    protected ImageView getFabImageView() {
-        ImageView imageView = null;
-        if (fabButton instanceof ImageView) {
-            imageView = (ImageView) fabButton;
-        }
-        return imageView;
-    }
-
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void setupDrawerActions() {
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
         actionBarDrawerToggle.syncState();

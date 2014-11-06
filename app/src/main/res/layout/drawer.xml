@@ -6,9 +6,9 @@
     android:layout_height="match_parent"
     android:layout_gravity="start"
     android:background="@color/list_background"
-    android:paddingTop="?android:attr/actionBarSize"
     android:clickable="true"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingTop="?android:attr/actionBarSize">
 
     <LinearLayout
         android:id="@+id/drawer_teams"
@@ -22,8 +22,8 @@
             android:layout_width="@dimen/drawer_secondary_icon"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
+            android:layout_marginLeft="@dimen/drawer_icon_padding"
+            android:layout_marginRight="@dimen/drawer_icon_padding"
             android:src="@drawable/generic_team"/>
 
         <TextView
@@ -55,8 +55,8 @@
             android:layout_width="@dimen/drawer_secondary_icon"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"/>
+            android:layout_marginLeft="@dimen/drawer_icon_padding"
+            android:layout_marginRight="@dimen/drawer_icon_padding"/>
 
         <TextView
             android:id="@+id/drawer_about_title"
@@ -85,7 +85,7 @@
         android:layout_height="1px"
         android:background="@color/dividers"/>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/drawer_secondary"
         android:background="@drawable/button_rect_list_secondary"
@@ -95,32 +95,28 @@
             android:id="@+id/drawer_plus_icon"
             android:layout_width="@dimen/drawer_secondary_icon"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"/>
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/drawer_icon_padding"
+            android:layout_marginRight="@dimen/drawer_icon_padding"/>
 
         <TextView
             android:id="@+id/drawer_plus_title"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_toEndOf="@id/drawer_plus_icon"
-            android:layout_toRightOf="@id/drawer_plus_icon"
             android:gravity="center_vertical"
             android:minHeight="44dp"
             android:text="@string/google_plus"
             android:textColor="@color/secondary"
             android:textSize="@dimen/drawer_secondary_text"
             android:textStyle="normal"/>
-    </RelativeLayout>
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@color/dividers"/>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/drawer_twitter"
         android:layout_width="match_parent"
         android:layout_height="@dimen/drawer_secondary"
@@ -131,32 +127,28 @@
             android:id="@+id/drawer_twitter_icon"
             android:layout_width="@dimen/drawer_secondary_icon"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"/>
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/drawer_icon_padding"
+            android:layout_marginRight="@dimen/drawer_icon_padding"/>
 
         <TextView
             android:id="@+id/drawer_twitter_title"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_toEndOf="@id/drawer_twitter_icon"
-            android:layout_toRightOf="@id/drawer_twitter_icon"
             android:gravity="center_vertical"
             android:minHeight="44dp"
             android:text="@string/twitter"
             android:textColor="@color/secondary"
             android:textSize="@dimen/drawer_secondary_text"
             android:textStyle="normal"/>
-    </RelativeLayout>
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@color/dividers"/>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/drawer_opensource"
         android:layout_width="match_parent"
         android:layout_height="@dimen/drawer_secondary"
@@ -167,23 +159,19 @@
             android:id="@+id/drawer_opensource_icon"
             android:layout_width="@dimen/drawer_secondary_icon"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"/>
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/drawer_icon_padding"
+            android:layout_marginRight="@dimen/drawer_icon_padding"/>
 
         <TextView
             android:id="@+id/drawer_opensource_title"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_toEndOf="@id/drawer_opensource_icon"
-            android:layout_toRightOf="@id/drawer_opensource_icon"
             android:gravity="center_vertical"
             android:minHeight="44dp"
             android:text="@string/drawer_opensource"
             android:textColor="@color/secondary"
             android:textSize="@dimen/drawer_secondary_text"
             android:textStyle="normal"/>
-    </RelativeLayout>
+    </LinearLayout>
 </LinearLayout>
