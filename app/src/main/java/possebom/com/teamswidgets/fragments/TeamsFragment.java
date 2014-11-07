@@ -30,26 +30,20 @@ public class TeamsFragment extends BaseFragment {
 
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_teams, container, false);
+        mContentView = inflater.inflate(R.layout.fragment_teams, container, false);
 
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.listTeams);
+        mRecyclerView = (RecyclerView) mContentView.findViewById(R.id.listTeams);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         mAdapter = new TeamsAdapter((MainActivity) getActivity());
 
-        mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(final RecyclerView recyclerView, final int dx, final int dy) {
-                Timber.d("scroll : %d %d",dx,dy);
-                super.onScrolled(recyclerView, dx, dy);
-            }
-        });
+        mRecyclerView.setOnScrollListener(mScrollListener);
 
         setTopPadding(mRecyclerView);
 
         mRecyclerView.setAdapter(mAdapter);
-        return view;
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
@@ -67,13 +61,15 @@ public class TeamsFragment extends BaseFragment {
         Timber.d("onPause");
     }
 
-
     @Subscribe
     public void onUpdate(UpdateEvent event) {
         Timber.d("onUpdate");
         if (event.getMessage() != null) {
+            setContentEmpty(true);
             return;
         }
+
+        setContentShown(true);
 
         mAdapter.setTeamList(TWController.INSTANCE.getDao().getTeamList());
         Animation fadeIn = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);

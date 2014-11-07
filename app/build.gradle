@@ -31,4 +31,5 @@ dependencies {
     compile 'com.koushikdutta.ion:ion:1.3.8'
     compile 'com.squareup:otto:1.3.5'
     compile 'com.jakewharton.timber:timber:2.4.1'
+    compile 'com.github.johnkil.android-progressfragment:progressfragment:1.4.0'
 }

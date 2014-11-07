@@ -1,11 +1,13 @@
 package possebom.com.teamswidgets;
 
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 
 import possebom.com.teamswidgets.adapters.TeamsAdapter;
 import possebom.com.teamswidgets.controller.TWController;
+import possebom.com.teamswidgets.fragments.AboutFragment;
 import possebom.com.teamswidgets.fragments.MatchesFragment;
 import possebom.com.teamswidgets.fragments.TeamsFragment;
 import possebom.com.teamswidgets.interfaces.ToolBarUtils;
@@ -19,11 +21,48 @@ public class MainActivity extends BaseActivity implements TeamsAdapter.OnTeamSel
         Timber.d("onCreate");
         super.onCreate(savedInstanceState);
         TWController.INSTANCE.getBus().register(this);
-        if (fragmentManager.getFragments() == null && TWController.INSTANCE.getDefaultTeamName() == null) {
-            fragmentManager.beginTransaction().add(R.id.fragment_container, new TeamsFragment()).commit();
-        } else if (fragmentManager.getFragments() == null) {
-            onTeamSelected(TWController.INSTANCE.getDefaultTeamName(), false);
+
+        if (savedInstanceState != null) {
+            return;
         }
+
+        if (TWController.INSTANCE.getDefaultTeamName() == null) {
+            showFragment(Frag.TEAMS, null);
+        } else {
+            onTeamSelected(TWController.INSTANCE.getDefaultTeamName());
+        }
+
+    }
+
+    @Override
+    protected void showFragment(final Frag frag, final Bundle bundle) {
+        Fragment fragment;
+        switch (frag) {
+            case ABOUT:
+                fragment = new AboutFragment();
+                break;
+            case TEAMS:
+                fragment = new TeamsFragment();
+                break;
+            case MATCHES:
+                fragment = new MatchesFragment();
+                break;
+            default:
+                Timber.d("Fragment not exists");
+                return;
+        }
+        fragment.setArguments(bundle);
+        Timber.d("num back stack : %d", fragmentManager.getBackStackEntryCount());
+        if (fragmentManager.getFragments() != null) {
+            Timber.d("num frags : %d", fragmentManager.getFragments().size());
+        }
+
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, fragment);
+        if (fragmentManager.getFragments() != null) {
+            fragmentTransaction.addToBackStack(null);
+        }
+        fragmentTransaction.commit();
     }
 
     @Override
@@ -33,24 +72,11 @@ public class MainActivity extends BaseActivity implements TeamsAdapter.OnTeamSel
 
     @Override
     public void onTeamSelected(final String teamName) {
-        onTeamSelected(teamName, true);
-    }
-
-    public void onTeamSelected(final String teamName, boolean addToBackStack) {
         TWController.INSTANCE.setDefaultTeam(teamName);
-        if (getSupportFragmentManager().getFragments() != null) {
-            Timber.d("num frags : %d", getSupportFragmentManager().getFragments().size());
-        }
         Timber.d("selectTeam : %s", teamName);
-        Fragment fragment = new MatchesFragment();
         Bundle bundle = new Bundle();
         bundle.putString("teamName", teamName);
-        fragment.setArguments(bundle);
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction().replace(R.id.fragment_container, fragment);
-        if (addToBackStack) {
-            fragmentTransaction.addToBackStack(null);
-        }
-        fragmentTransaction.commit();
+        showFragment(Frag.MATCHES, bundle);
     }
 
     @Override

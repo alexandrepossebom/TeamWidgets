@@ -16,7 +16,6 @@ import com.squareup.otto.Subscribe;
 import possebom.com.teamswidgets.R;
 import possebom.com.teamswidgets.adapters.MatchesAdapter;
 import possebom.com.teamswidgets.event.UpdateEvent;
-import possebom.com.teamswidgets.interfaces.ToolBarUtils;
 import possebom.com.teamswidgets.model.Team;
 import timber.log.Timber;
 
@@ -28,15 +27,13 @@ public class MatchesFragment extends BaseFragment {
     private RecyclerView mRecyclerView;
     private MatchesAdapter mAdapter;
     private String teamName;
-    private ToolBarUtils toolBarUtils;
-    private boolean toolbarIsHidden = false;
 
 
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_matches, container, false);
+        mContentView = inflater.inflate(R.layout.fragment_matches, container, false);
 
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.listMatches);
+        mRecyclerView = (RecyclerView) mContentView.findViewById(R.id.listMatches);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -49,8 +46,7 @@ public class MatchesFragment extends BaseFragment {
             teamName = getArguments().getString("teamName", "");
         }
 
-//        showList();
-        return view;
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
@@ -72,8 +68,11 @@ public class MatchesFragment extends BaseFragment {
     public void onUpdate(UpdateEvent event) {
         Timber.d("onUpdate");
         if (event.getMessage() != null) {
+            setContentEmpty(true);
             return;
         }
+
+        setContentShown(true);
 
         final Team team = dao.getTeamByName(teamName);
 
@@ -83,29 +82,13 @@ public class MatchesFragment extends BaseFragment {
             fadeIn.setDuration(250);
             LayoutAnimationController layoutAnimationController = new LayoutAnimationController(fadeIn);
             mRecyclerView.setLayoutAnimation(layoutAnimationController);
-
             setTopPadding(mRecyclerView);
-
-            toolBarUtils = (ToolBarUtils) getActivity();
+            mRecyclerView.setOnScrollListener(mScrollListener);
             toolBarUtils.setTitle(team.getName());
             dao.setDefaultTeamName(team.getName());
-
-            mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
-                @Override
-                public void onScrolled(final RecyclerView recyclerView, final int dx, final int dy) {
-                    if (dy > 0 && !toolbarIsHidden) {
-                        toolbarIsHidden = true;
-                        toolBarUtils.hideToolBar();
-                    } else if (dy < 0 && toolbarIsHidden) {
-                        toolbarIsHidden = false;
-                        toolBarUtils.showToolBar();
-                    }
-                    super.onScrolled(recyclerView, dx, dy);
-                }
-            });
-
             mRecyclerView.startLayoutAnimation();
         }
     }
+
 
 }

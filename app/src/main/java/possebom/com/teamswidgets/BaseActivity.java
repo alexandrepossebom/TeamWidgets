@@ -33,6 +33,12 @@ public abstract class BaseActivity extends ActionBarActivity {
     private DrawerLayout mDrawerLayout;
     private LinearLayout mDrawerList;
 
+
+    protected enum Frag
+    {
+        ABOUT, TEAMS, MATCHES
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,7 +92,7 @@ public abstract class BaseActivity extends ActionBarActivity {
         mDrawerList.findViewById(R.id.drawer_teams).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragmentManager.beginTransaction().replace(R.id.fragment_container, new TeamsFragment()).commit();
+                showFragment(Frag.TEAMS,null);
                 mDrawerLayout.closeDrawers();
             }
         });
@@ -94,7 +100,7 @@ public abstract class BaseActivity extends ActionBarActivity {
         mDrawerList.findViewById(R.id.drawer_about).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragmentManager.beginTransaction().replace(R.id.fragment_container, new AboutFragment()).addToBackStack(null).commit();
+                showFragment(Frag.ABOUT,null);
                 mDrawerLayout.closeDrawers();
             }
         });
@@ -110,6 +116,8 @@ public abstract class BaseActivity extends ActionBarActivity {
         final Drawable drawable = new IconDrawable(this, iconId).colorRes(R.color.secondary).actionBarSize();
         imageView.setImageDrawable(drawable);
     }
+
+    protected abstract void showFragment(Frag frag, Bundle bundle);
 
     protected abstract int getLayoutResource();
 
