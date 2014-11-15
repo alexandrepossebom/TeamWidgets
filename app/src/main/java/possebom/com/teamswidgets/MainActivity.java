@@ -98,14 +98,12 @@ public class MainActivity extends BaseActivity implements TeamsAdapter.OnTeamSel
     public void hideToolBar() {
         Timber.d("hideToolBar");
         toolbar.animate().translationY(toolbar.getHeight() * -1);
-        findViewById(R.id.drawerList).setPadding(0, 0, 0, 0);
     }
 
     @Override
     public void showToolBar() {
         Timber.d("showToolBar");
         toolbar.animate().translationY(0f);
-        findViewById(R.id.drawerList).setPadding(0, toolbar.getHeight(), 0, 0);
     }
 
     @Override
