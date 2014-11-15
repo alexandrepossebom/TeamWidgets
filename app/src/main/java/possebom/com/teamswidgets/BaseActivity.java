@@ -11,9 +11,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.joanzapata.android.iconify.IconDrawable;
 import com.joanzapata.android.iconify.Iconify;
+import com.squareup.picasso.Picasso;
 import com.tundem.aboutlibraries.Libs;
 import com.tundem.aboutlibraries.ui.LibsActivity;
 
@@ -21,6 +23,7 @@ import possebom.com.teamswidgets.controller.TWController;
 import possebom.com.teamswidgets.dao.DAO;
 import possebom.com.teamswidgets.fragments.AboutFragment;
 import possebom.com.teamswidgets.fragments.TeamsFragment;
+import possebom.com.teamswidgets.model.Team;
 import timber.log.Timber;
 
 /**
@@ -109,6 +112,25 @@ public abstract class BaseActivity extends ActionBarActivity {
         setIconDrawer(R.id.drawer_twitter_icon, Iconify.IconValue.fa_twitter);
         setIconDrawer(R.id.drawer_plus_icon, Iconify.IconValue.fa_google_plus_square);
         setIconDrawer(R.id.drawer_about_icon, Iconify.IconValue.fa_info_circle);
+    }
+
+    protected void setupDrawerCover(final Team team){
+        final ImageView teamDrawer = (ImageView) findViewById(R.id.imageview_team_drawer);
+        final ImageView drawerCover = (ImageView) findViewById(R.id.imageview_drawer_cover);
+        final TextView textViewCoverTeamName = (TextView) findViewById(R.id.textview_cover_team_name);
+        final TextView textViewCoverTeamDescription = (TextView) findViewById(R.id.textview_cover_team_description);
+
+        Picasso.with(this)
+                .load(team.getImgUrl())
+                .placeholder(R.drawable.generic_team)
+                .into(teamDrawer);
+
+        Picasso.with(this)
+                .load("http://possebom.com/widgets/soccer.jpg")
+                .into(drawerCover);
+        
+        textViewCoverTeamName.setText(team.getName());
+        textViewCoverTeamDescription.setText(team.getName());
     }
 
     private void setIconDrawer(int resId, Iconify.IconValue iconId) {

@@ -4,9 +4,6 @@ package possebom.com.teamswidgets;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.widget.ImageView;
-
-import com.squareup.picasso.Picasso;
 
 import possebom.com.teamswidgets.adapters.TeamsAdapter;
 import possebom.com.teamswidgets.controller.TWController;
@@ -14,6 +11,7 @@ import possebom.com.teamswidgets.fragments.AboutFragment;
 import possebom.com.teamswidgets.fragments.MatchesFragment;
 import possebom.com.teamswidgets.fragments.TeamsFragment;
 import possebom.com.teamswidgets.interfaces.ToolBarUtils;
+import possebom.com.teamswidgets.model.Team;
 import timber.log.Timber;
 
 
@@ -75,18 +73,8 @@ public class MainActivity extends BaseActivity implements TeamsAdapter.OnTeamSel
 
     @Override
     public void onTeamSelected(final String teamName) {
-        final ImageView teamDrawer = (ImageView) findViewById(R.id.imageview_team_drawer);
-        final ImageView drawerCover = (ImageView) findViewById(R.id.imageview_drawer_cover);
-
-        Picasso.with(this)
-                .load(dao.getTeamByName(teamName).getImgUrl())
-                .placeholder(R.drawable.generic_team)
-                .into(teamDrawer);
-
-        Picasso.with(this)
-                .load("http://possebom.com/widgets/soccer.jpg")
-                .into(drawerCover);
-
+        final Team team = dao.getTeamByName(teamName);
+        setupDrawerCover(team);
         TWController.INSTANCE.setDefaultTeam(teamName);
         Timber.d("selectTeam : %s", teamName);
         Bundle bundle = new Bundle();
