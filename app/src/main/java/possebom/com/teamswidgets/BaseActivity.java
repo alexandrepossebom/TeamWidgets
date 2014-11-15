@@ -115,6 +115,9 @@ public abstract class BaseActivity extends ActionBarActivity {
     }
 
     protected void setupDrawerCover(final Team team){
+        if(team == null){
+            return;
+        }
         final ImageView teamDrawer = (ImageView) findViewById(R.id.imageview_team_drawer);
         final ImageView drawerCover = (ImageView) findViewById(R.id.imageview_drawer_cover);
         final TextView textViewCoverTeamName = (TextView) findViewById(R.id.textview_cover_team_name);
@@ -127,8 +130,9 @@ public abstract class BaseActivity extends ActionBarActivity {
 
         Picasso.with(this)
                 .load("http://possebom.com/widgets/soccer.jpg")
+                .placeholder(android.R.color.holo_green_light)
                 .into(drawerCover);
-        
+
         textViewCoverTeamName.setText(team.getName());
         textViewCoverTeamDescription.setText(team.getName());
     }

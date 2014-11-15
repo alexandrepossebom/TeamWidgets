@@ -50,11 +50,7 @@ public class TeamsFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         bus.register(this);
-        if(dao.isNeedUpdate()) {
-            dao.update(getActivity());
-        }else{
-            onUpdate(null);
-        }
+        dao.update();
         Timber.d("onResume");
     }
 

@@ -54,11 +54,7 @@ public class MatchesFragment extends BaseFragment {
         super.onResume();
         Timber.d("onResume");
         bus.register(this);
-        if(dao.isNeedUpdate()) {
-            dao.update(getActivity());
-        }else{
-            onUpdate(null);
-        }
+        dao.update();
     }
 
     @Override
@@ -71,27 +67,24 @@ public class MatchesFragment extends BaseFragment {
     @Subscribe
     public void onUpdate(UpdateEvent event) {
         Timber.d("onUpdate");
-        if (event != null && event.getMessage() != null) {
+        final Team team = dao.getTeamByName(teamName);
+        if ((event != null && event.getMessage() != null) || team == null) {
             setContentEmpty(true);
             return;
         }
 
         setContentShown(true);
 
-        final Team team = dao.getTeamByName(teamName);
-
-        if (team != null) {
-            mAdapter.setTeam(team);
-            Animation fadeIn = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
-            fadeIn.setDuration(250);
-            LayoutAnimationController layoutAnimationController = new LayoutAnimationController(fadeIn);
-            mRecyclerView.setLayoutAnimation(layoutAnimationController);
-            setTopPadding(mRecyclerView);
-            mRecyclerView.setOnScrollListener(mScrollListener);
-            toolBarUtils.setTitle(team.getName());
-            dao.setDefaultTeamName(team.getName());
-            mRecyclerView.startLayoutAnimation();
-        }
+        mAdapter.setTeam(team);
+        Animation fadeIn = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
+        fadeIn.setDuration(250);
+        LayoutAnimationController layoutAnimationController = new LayoutAnimationController(fadeIn);
+        mRecyclerView.setLayoutAnimation(layoutAnimationController);
+        setTopPadding(mRecyclerView);
+        mRecyclerView.setOnScrollListener(mScrollListener);
+        toolBarUtils.setTitle(team.getName());
+        dao.setDefaultTeamName(team.getName());
+        mRecyclerView.startLayoutAnimation();
     }
 
 

@@ -88,11 +88,12 @@ public enum DAO {
         return true;
     }
 
-    public void update(final Context context) {
-
+    public void update() {
         if (!isNeedUpdate()) {
             return;
         }
+        
+        final Context context = BaseApplication.getContext();
 
         Ion.with(context)
                 .load("http://possebom.com/widgets/teams.json")

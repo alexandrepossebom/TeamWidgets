@@ -3,8 +3,6 @@ package possebom.com.teamswidgets.fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.OnScrollListener;
 import android.util.TypedValue;
@@ -17,7 +15,6 @@ import possebom.com.teamswidgets.R;
 import possebom.com.teamswidgets.controller.TWController;
 import possebom.com.teamswidgets.dao.DAO;
 import possebom.com.teamswidgets.interfaces.ToolBarUtils;
-import timber.log.Timber;
 
 /**
  * Created by alexandre on 03/11/14.
@@ -73,11 +70,10 @@ public abstract class BaseFragment extends ProgressFragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable final Bundle savedInstanceState) {
+    public void onActivityCreated(final Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setContentView(mContentView);
         setEmptyText("lala");
-        setContentShown(true);
     }
 
 }
