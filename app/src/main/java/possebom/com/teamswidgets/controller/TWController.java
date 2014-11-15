@@ -10,7 +10,7 @@ import possebom.com.teamswidgets.dao.DAO;
 public enum TWController {
     INSTANCE;
     private final Bus bus = new Bus();
-    private final DAO dao = new DAO();
+    private final DAO dao = DAO.INSTANCE;
     private String defaultTeamName;
 
     private TWController() {

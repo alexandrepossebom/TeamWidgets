@@ -24,7 +24,8 @@ import timber.log.Timber;
 /**
  * Created by alexandre on 01/11/14.
  */
-public class DAO {
+public enum DAO {
+    INSTANCE;
     private static final long INTERVAL = 24 * 60 * 60 * 1000;
     private static final String PREFS_NAME = "TeamPref";
     private static final String PREFS_KEY_JSON = "json";
@@ -32,6 +33,13 @@ public class DAO {
 
     private List<Team> teamList = new ArrayList<Team>();
     private SharedPreferences sharedPreferences;
+
+    private DAO(){
+        String json = getSharedPreferences().getString(PREFS_KEY_JSON, null);
+        if(json != null){
+            updateResults(json,false);
+        }
+    }
 
     private SharedPreferences getSharedPreferences(){
         if(sharedPreferences == null) {
@@ -72,7 +80,7 @@ public class DAO {
         if (diff < INTERVAL) {
             Timber.d("Don't need update diff is : " + strDiff);
             final String json = sharedPreferences.getString(PREFS_KEY_JSON, "");
-            updateResults(json);
+            updateResults(json,true);
             return;
         }
 
@@ -93,18 +101,20 @@ public class DAO {
                             editor.putString(PREFS_KEY_JSON, json);
                             editor.putLong(PREFS_KEY_LASTUPDATE, System.currentTimeMillis());
                             editor.apply();
-                            updateResults(json);
+                            updateResults(json,true);
                         }
                     }
                 });
     }
 
-    private void updateResults(final String json) {
+    private void updateResults(final String json, boolean sendBus) {
         final Type collectionType = new TypeToken<Collection<Team>>() {
         }.getType();
         teamList = new Gson().fromJson(json, collectionType);
         Timber.i("Team list size: " + teamList.size());
-        TWController.INSTANCE.getBus().post(new UpdateEvent(null));
+        if(sendBus) {
+            TWController.INSTANCE.getBus().post(new UpdateEvent(null));
+        }
     }
 
     public List<Team> getTeamList() {
