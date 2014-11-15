@@ -75,8 +75,9 @@ public class MainActivity extends BaseActivity implements TeamsAdapter.OnTeamSel
 
     @Override
     public void onTeamSelected(final String teamName) {
-        ImageView teamDrawer = (ImageView) findViewById(R.id.imageview_team_drawer);
-        ImageView drawerCover = (ImageView) findViewById(R.id.imageview_drawer_cover);
+        final ImageView teamDrawer = (ImageView) findViewById(R.id.imageview_team_drawer);
+        final ImageView drawerCover = (ImageView) findViewById(R.id.imageview_drawer_cover);
+
         Picasso.with(this)
                 .load(dao.getTeamByName(teamName).getImgUrl())
                 .placeholder(R.drawable.generic_team)

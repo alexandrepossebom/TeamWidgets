@@ -34,27 +34,27 @@ public enum DAO {
     private List<Team> teamList = new ArrayList<Team>();
     private SharedPreferences sharedPreferences;
 
-    private DAO(){
+    private DAO() {
         String json = getSharedPreferences().getString(PREFS_KEY_JSON, null);
-        if(json != null){
-            updateResults(json,false);
+        if (json != null) {
+            updateResults(json, false);
         }
     }
 
-    private SharedPreferences getSharedPreferences(){
-        if(sharedPreferences == null) {
+    private SharedPreferences getSharedPreferences() {
+        if (sharedPreferences == null) {
             final Context context = BaseApplication.getContext();
             sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         }
         return sharedPreferences;
     }
 
-    public String getDefaultTeamName(){
+    public String getDefaultTeamName() {
         return getSharedPreferences().getString("defaultTeamName", null);
     }
 
-    public void setDefaultTeamName(final String teamName){
-        getSharedPreferences().edit().putString("defaultTeamName",teamName).apply();
+    public void setDefaultTeamName(final String teamName) {
+        getSharedPreferences().edit().putString("defaultTeamName", teamName).apply();
     }
 
     public Team getTeamByName(final String name) {
@@ -70,7 +70,7 @@ public enum DAO {
         return teamResult;
     }
 
-    public void update(final Context context) {
+    public boolean isNeedUpdate() {
         long lastUpdate = getSharedPreferences().getLong(PREFS_KEY_LASTUPDATE, 0);
         long now = System.currentTimeMillis();
         long diff = now - lastUpdate;
@@ -80,11 +80,19 @@ public enum DAO {
         if (diff < INTERVAL) {
             Timber.d("Don't need update diff is : " + strDiff);
             final String json = sharedPreferences.getString(PREFS_KEY_JSON, "");
-            updateResults(json,true);
-            return;
+            updateResults(json, true);
+            return false;
         }
 
         Timber.d("Updating diff is : " + strDiff);
+        return true;
+    }
+
+    public void update(final Context context) {
+
+        if (!isNeedUpdate()) {
+            return;
+        }
 
         Ion.with(context)
                 .load("http://possebom.com/widgets/teams.json")
@@ -101,7 +109,7 @@ public enum DAO {
                             editor.putString(PREFS_KEY_JSON, json);
                             editor.putLong(PREFS_KEY_LASTUPDATE, System.currentTimeMillis());
                             editor.apply();
-                            updateResults(json,true);
+                            updateResults(json, true);
                         }
                     }
                 });
@@ -112,7 +120,7 @@ public enum DAO {
         }.getType();
         teamList = new Gson().fromJson(json, collectionType);
         Timber.i("Team list size: " + teamList.size());
-        if(sendBus) {
+        if (sendBus) {
             TWController.INSTANCE.getBus().post(new UpdateEvent(null));
         }
     }

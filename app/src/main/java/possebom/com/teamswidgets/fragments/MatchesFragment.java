@@ -52,9 +52,13 @@ public class MatchesFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        bus.register(this);
-        dao.update(getActivity());
         Timber.d("onResume");
+        bus.register(this);
+        if(dao.isNeedUpdate()) {
+            dao.update(getActivity());
+        }else{
+            onUpdate(null);
+        }
     }
 
     @Override
@@ -67,7 +71,7 @@ public class MatchesFragment extends BaseFragment {
     @Subscribe
     public void onUpdate(UpdateEvent event) {
         Timber.d("onUpdate");
-        if (event.getMessage() != null) {
+        if (event != null && event.getMessage() != null) {
             setContentEmpty(true);
             return;
         }
