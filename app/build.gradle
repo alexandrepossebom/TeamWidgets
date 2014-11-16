@@ -33,4 +33,5 @@ dependencies {
     compile 'com.squareup:otto:1.3.5'
     compile 'com.jakewharton.timber:timber:2.5.0'
     compile 'com.github.johnkil.android-progressfragment:progressfragment:1.4.0'
+    compile 'me.tatarka.support:jobscheduler:0.1.1'
 }

@@ -1,8 +1,12 @@
 package possebom.com.teamswidgets;
 
 import android.app.Application;
+import android.content.ComponentName;
 import android.content.Context;
 
+import me.tatarka.support.job.JobInfo;
+import me.tatarka.support.job.JobScheduler;
+import possebom.com.teamswidgets.service.UpdateJobService;
 import timber.log.Timber;
 
 /**
@@ -12,15 +16,23 @@ public class BaseApplication extends Application {
 
     private static Context context;
 
-    public void onCreate(){
+    public static Context getContext() {
+        return context;
+    }
+
+    public void onCreate() {
         super.onCreate();
         if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
         }
         context = getApplicationContext();
-    }
 
-    public static Context getContext() {
-        return context;
+        final JobInfo job = new JobInfo.Builder(0, new ComponentName(context, UpdateJobService.class))
+                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
+                .setPeriodic(60 * 60 * 1000)
+                .setPersisted(true)
+                .build();
+
+        JobScheduler.getInstance(context).schedule(job);
     }
 }
