@@ -34,11 +34,14 @@ public class TeamsFragment extends BaseFragment {
 
         mRecyclerView = (RecyclerView) mContentView.findViewById(R.id.listTeams);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+
+
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         mAdapter = new TeamsAdapter((MainActivity) getActivity());
 
         mRecyclerView.setOnScrollListener(mScrollListener);
+        mRecyclerView.setHasFixedSize(true);
 
         setTopPadding(mRecyclerView);
 

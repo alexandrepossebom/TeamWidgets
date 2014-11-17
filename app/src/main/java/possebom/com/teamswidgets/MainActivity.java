@@ -4,6 +4,7 @@ package possebom.com.teamswidgets;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.view.animation.AccelerateInterpolator;
 
 import possebom.com.teamswidgets.adapters.TeamsAdapter;
 import possebom.com.teamswidgets.controller.TWController;
@@ -84,13 +85,11 @@ public class MainActivity extends BaseActivity implements TeamsAdapter.OnTeamSel
 
     @Override
     public void hideToolBar() {
-        Timber.d("hideToolBar");
-        toolbar.animate().translationY(toolbar.getHeight() * -1);
+        toolbar.animate().translationY(-toolbar.getHeight());
     }
 
     @Override
     public void showToolBar() {
-        Timber.d("showToolBar");
         toolbar.animate().translationY(0f);
     }
 

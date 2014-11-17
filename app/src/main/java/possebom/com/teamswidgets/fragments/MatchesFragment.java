@@ -39,7 +39,7 @@ public class MatchesFragment extends BaseFragment {
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         mAdapter = new MatchesAdapter();
-
+        mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(mAdapter);
 
         if (getArguments() != null) {
