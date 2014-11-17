@@ -4,7 +4,13 @@
              android:layout_height="match_parent"
              tools:context="possebom.com.teamswidgets.fragments.AboutFragment">
 
+    <View xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:minHeight="?attr/actionBarSize" />
+
     <TextView
+        android:layout_marginTop="?attr/actionBarSize"
         android:id="@+id/textview_about"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

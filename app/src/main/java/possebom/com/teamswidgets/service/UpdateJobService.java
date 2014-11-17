@@ -18,14 +18,23 @@ public class UpdateJobService extends JobService {
     @Override
     public boolean onStartJob(JobParameters jobParameters) {
         Timber.d("onStartJob");
-        TWController.INSTANCE.getDao().update();
-        jobFinished(jobParameters,false);
-        SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        final SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         String last = sharedPreferences.getString("last","");
-        last = last + "\n" +android.text.format.DateFormat.format("yyyy-MM-dd kk:mm:ss", new java.util.Date());;
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("last", last);
-        editor.apply();
+
+        String[] dates = last.split("\n");
+
+        last = "";
+
+        int count = dates.length > 24 ? 24 : dates.length;
+        for(int i = 1; i< count;i++){
+            last = last + dates[i] + "\n";
+        }
+        
+        last = last + android.text.format.DateFormat.format("dd-MM-yyyy kk:mm:ss", new java.util.Date()) + "\n";
+
+        sharedPreferences.edit().putString("last", last).apply();
+        TWController.INSTANCE.getDao().update();
+        jobFinished(jobParameters,true);
         return true;
     }
 

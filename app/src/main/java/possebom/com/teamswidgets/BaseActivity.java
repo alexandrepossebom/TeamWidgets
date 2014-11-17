@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -53,6 +54,9 @@ public abstract class BaseActivity extends ActionBarActivity {
         Timber.d("Activity Created");
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        ViewCompat.setElevation(toolbar, getResources().getDimension(R.dimen.elevation));
+
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
 
         if (toolbar != null) {

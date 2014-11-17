@@ -15,7 +15,6 @@ import possebom.com.teamswidgets.R;
 import possebom.com.teamswidgets.controller.TWController;
 import possebom.com.teamswidgets.dao.DAO;
 import possebom.com.teamswidgets.interfaces.ToolBarUtils;
-import timber.log.Timber;
 
 /**
  * Created by alexandre on 03/11/14.
@@ -28,14 +27,18 @@ public abstract class BaseFragment extends ProgressFragment {
     protected ToolBarUtils toolBarUtils;
     protected View mContentView;
     private boolean toolbarIsHidden = false;
-    private int actionBarHeight = 0;
 
     protected final OnScrollListener mScrollListener = new OnScrollListener() {
+        RecyclerView.ViewHolder viewHolder;
+
         @Override
         public void onScrolled(final RecyclerView recyclerView, final int dx, final int dy) {
             if (dy > 0 && !toolbarIsHidden) {
-                final RecyclerView.ViewHolder viewHolder = recyclerView.findViewHolderForPosition(0);
-                if (viewHolder == null || -viewHolder.itemView.getTop() + getActionBarHeight() > viewHolder.itemView.getHeight() / 2) {
+                if (viewHolder == null) {
+                    viewHolder = recyclerView.findViewHolderForPosition(0);
+                }
+                if (viewHolder == null || viewHolder.itemView.getTop() < 0) {
+                    viewHolder = null;
                     toolbarIsHidden = true;
                     toolBarUtils.hideToolBar();
                 }
@@ -46,11 +49,8 @@ public abstract class BaseFragment extends ProgressFragment {
             super.onScrolled(recyclerView, dx, dy);
         }
 
-        @Override
-        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-            super.onScrollStateChanged(recyclerView, newState);
-        }
     };
+    private int actionBarHeight = 0;
 
     @Override
     public void onAttach(final Activity activity) {
@@ -65,14 +65,14 @@ public abstract class BaseFragment extends ProgressFragment {
     }
 
     protected void setTopPadding(View view) {
-        final int paddingVertical = context.getResources().getDimensionPixelSize(R.dimen.activity_vertical_margin);
+        final int paddingVertical = view.getContext().getResources().getDimensionPixelSize(R.dimen.activity_vertical_margin);
         final int paddingTop = getActionBarHeight() + paddingVertical;
-        final int paddingLeftRight = context.getResources().getDimensionPixelSize(R.dimen.activity_horizontal_margin);
+        final int paddingLeftRight = view.getContext().getResources().getDimensionPixelSize(R.dimen.activity_horizontal_margin);
         view.setPadding(paddingLeftRight, paddingTop, paddingLeftRight, paddingVertical);
     }
 
-    private int getActionBarHeight(){
-        if(actionBarHeight == 0) {
+    private int getActionBarHeight() {
+        if (actionBarHeight == 0) {
             final TypedValue tv = new TypedValue();
             if (context.getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
                 actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data, getResources().getDisplayMetrics());
