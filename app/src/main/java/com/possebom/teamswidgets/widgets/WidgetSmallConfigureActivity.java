@@ -7,9 +7,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.possebom.teamswidgets.R;
+import com.possebom.teamswidgets.controller.TWController;
+import com.possebom.teamswidgets.model.Team;
 
 
 /**
@@ -18,9 +22,9 @@ import com.possebom.teamswidgets.R;
 public class WidgetSmallConfigureActivity extends Activity {
 
     int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
-    EditText mAppWidgetText;
     private static final String PREFS_NAME = "com.possebom.teamswidgets.WidgetSmall";
     private static final String PREF_PREFIX_KEY = "appwidget_";
+    private Spinner spinner;
 
     public WidgetSmallConfigureActivity() {
         super();
@@ -35,7 +39,8 @@ public class WidgetSmallConfigureActivity extends Activity {
         setResult(RESULT_CANCELED);
 
         setContentView(R.layout.widget_small_configure);
-        mAppWidgetText = (EditText) findViewById(R.id.appwidget_text);
+        spinner = (Spinner) findViewById(R.id.spinner);
+
         findViewById(R.id.add_button).setOnClickListener(mOnClickListener);
 
         // Find the widget id from the intent.
@@ -46,13 +51,16 @@ public class WidgetSmallConfigureActivity extends Activity {
                     AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
         }
 
+        ArrayAdapter<Team> dataAdapter = new ArrayAdapter<Team>(this,android.R.layout.simple_spinner_item, TWController.INSTANCE.getDao().getTeamList());
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(dataAdapter);
+
         // If this activity was started with an intent without an app widget ID, finish with an error.
         if (mAppWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
             finish();
             return;
         }
 
-        mAppWidgetText.setText(loadTitlePref(WidgetSmallConfigureActivity.this, mAppWidgetId));
     }
 
     View.OnClickListener mOnClickListener = new View.OnClickListener() {
@@ -60,7 +68,7 @@ public class WidgetSmallConfigureActivity extends Activity {
             final Context context = WidgetSmallConfigureActivity.this;
 
             // When the button is clicked, store the string locally
-            String widgetText = mAppWidgetText.getText().toString();
+            String widgetText =   spinner.getSelectedItem().toString();
             saveTitlePref(context, mAppWidgetId, widgetText);
 
             // It is the responsibility of the configuration activity to update the app widget

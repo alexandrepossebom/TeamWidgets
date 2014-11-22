@@ -32,5 +32,7 @@
     <string name="appwidget_text">EXAMPLE</string>
     <string name="configure">Configure</string>
     <string name="add_widget">Add widget</string>
+    <string name="no_data">No Data</string>
+    <string name="configure_widget">Choose your team</string>
 
 </resources>

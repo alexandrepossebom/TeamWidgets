@@ -4,77 +4,57 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.text.format.DateFormat;
 
-import java.util.Calendar;
-
 import com.possebom.teamswidgets.R;
+
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 /**
  * Created by alexandre on 01/11/14.
  */
 public class Match {
+    private Calendar date;
     private long timestamp;
     private Boolean home;
     private String transmission;
     private String opponent;
     private String league;
     private String place;
-    private final Calendar date = Calendar.getInstance();
 
     public long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(final long timestamp) {
-        this.timestamp = timestamp;
-        date.setTimeInMillis(timestamp);
-    }
-
     public String getDateFormatted() {
+        if(date == null) {
+            date = GregorianCalendar.getInstance();
+            date.setTimeInMillis(timestamp);
+        }
         String strDate = DateFormat.format("dd/MM (E) kk:mm", date).toString();
         if (opponent.isEmpty()) {
             strDate = "";
         }
-        return strDate.replaceFirst(" 00:00","");
+        return strDate.replaceFirst(" 00:00", "");
     }
 
     public Boolean getHome() {
         return home;
     }
 
-    public void setHome(final Boolean home) {
-        this.home = home;
-    }
-
     public String getTransmission() {
         return transmission;
-    }
-
-    public void setTransmission(final String transmission) {
-        this.transmission = transmission;
     }
 
     public String getOpponent() {
         return opponent;
     }
 
-    public void setOpponent(final String opponent) {
-        this.opponent = opponent;
-    }
-
     public String getLeague() {
         return league;
     }
 
-    public void setLeague(final String league) {
-        this.league = league;
-    }
-
     public String getPlace() {
         return place;
-    }
-
-    public void setPlace(final String place) {
-        this.place = place;
     }
 
     public String getTimeRemaining(final Context context) {
@@ -83,7 +63,7 @@ public class Match {
 
         long diffInSeconds = (timestamp - System.currentTimeMillis()) / 1000;
 
-        if (diffInSeconds < 0){
+        if (diffInSeconds < 0) {
             return context.getString(R.string.played);
         }
 

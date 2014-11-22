@@ -31,8 +31,8 @@ public class BaseApplication extends Application {
 
         final JobInfo job = new JobInfo.Builder(0, new ComponentName(context, UpdateJobService.class))
                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
-                .setMinimumLatency(DateUtils.HOUR_IN_MILLIS / 2)
-                .setOverrideDeadline(DateUtils.HOUR_IN_MILLIS*2)
+                .setMinimumLatency(DateUtils.DAY_IN_MILLIS / 2)
+                .setOverrideDeadline(DateUtils.DAY_IN_MILLIS)
                 .setPersisted(true)
                 .build();
 

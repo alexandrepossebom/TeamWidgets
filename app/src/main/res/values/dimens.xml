@@ -18,4 +18,9 @@
     <dimen name="elevation">4dp</dimen>
     <dimen name="widget_margin">8dp</dimen>
 
+    <dimen name="widget_padding">3dp</dimen>
+    <dimen name="widget_data_size">7sp</dimen>
+    <dimen name="widget_adve_size">14sp</dimen>
+    <dimen name="widgetImageSize">25dp</dimen>
+
 </resources>
