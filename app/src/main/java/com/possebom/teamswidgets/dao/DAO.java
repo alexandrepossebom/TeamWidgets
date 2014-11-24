@@ -92,9 +92,9 @@ public enum DAO {
     }
 
     public void update() {
-//        if (!isNeedUpdate()) {
-//            return;
-//        }
+        if (!isNeedUpdate()) {
+            return;
+        }
 
         final AsyncHttpClient client = new AsyncHttpClient();
         client.get("http://possebom.com/widgets/teams.json", new JsonHttpResponseHandler() {
