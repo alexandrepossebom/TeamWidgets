@@ -76,7 +76,7 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
         Picasso.with(context)
                 .load(url01)
                 .error(R.drawable.generic_team)
-                .resizeDimen(R.dimen.detail_team_image_size,R.dimen.detail_team_image_size)
+                .resizeDimen(R.dimen.detail_team_image_size, R.dimen.detail_team_image_size)
                 .centerInside()
                 .into(viewHolder.imageView01);
 
@@ -84,8 +84,8 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
         Picasso.with(context)
                 .load(url02)
                 .error(R.drawable.generic_team)
+                .resizeDimen(R.dimen.detail_team_image_size, R.dimen.detail_team_image_size)
                 .centerInside()
-                .resizeDimen(R.dimen.detail_team_image_size,R.dimen.detail_team_image_size)
                 .into(viewHolder.imageView02);
     }
 
