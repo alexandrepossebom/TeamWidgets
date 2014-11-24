@@ -17,6 +17,8 @@ import com.possebom.teamswidgets.model.Match;
 import com.possebom.teamswidgets.model.Team;
 import com.squareup.picasso.Picasso;
 
+import timber.log.Timber;
+
 /**
  * Created by alexandre on 01/11/14.
  */
@@ -73,20 +75,23 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
             url02 = team.getImgUrl();
         }
 
-        Picasso.with(context)
-                .load(url01)
-                .error(R.drawable.generic_team)
-                .resizeDimen(R.dimen.detail_team_image_size, R.dimen.detail_team_image_size)
-                .centerInside()
-                .into(viewHolder.imageView01);
+        if(url01 != null) {
+            Picasso.with(context)
+                    .load(url01)
+                    .error(R.drawable.generic_team)
+                    .resizeDimen(R.dimen.detail_team_image_size, R.dimen.detail_team_image_size)
+                    .centerInside()
+                    .into(viewHolder.imageView01);
+        }
 
-
-        Picasso.with(context)
-                .load(url02)
-                .error(R.drawable.generic_team)
-                .resizeDimen(R.dimen.detail_team_image_size, R.dimen.detail_team_image_size)
-                .centerInside()
-                .into(viewHolder.imageView02);
+        if(url02 != null) {
+            Picasso.with(context)
+                    .load(url02)
+                    .error(R.drawable.generic_team)
+                    .resizeDimen(R.dimen.detail_team_image_size, R.dimen.detail_team_image_size)
+                    .centerInside()
+                    .into(viewHolder.imageView02);
+        }
     }
 
     private void setIcon(TextView textview, Iconify.IconValue iconId) {
