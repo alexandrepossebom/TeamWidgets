@@ -98,7 +98,7 @@ public class NotificationService extends IntentService {
                 .setContentText(match.getDateFormatted())
                 .setVibrate(vibrate)
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-                .setSmallIcon(R.drawable.generic_team)
+                .setSmallIcon(R.drawable.ic_stat_icon_ball)
                 .setAutoCancel(true)
                 .setContentIntent(pIntent)
                 .build();
