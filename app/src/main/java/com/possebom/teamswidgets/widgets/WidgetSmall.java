@@ -42,7 +42,7 @@ public class WidgetSmall extends AppWidgetProvider {
 
         // Construct the RemoteViews object
         final RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_small);
-        views.setTextViewText(R.id.textViewOpponent, match.getOpponent());
+        views.setTextViewText(R.id.textViewOpponent, match.getVisitingTeam());
         views.setTextViewText(R.id.textViewLeague, match.getLeague());
         views.setTextViewText(R.id.textViewPlace, match.getPlace());
         views.setTextViewText(R.id.textViewDate, match.getDateFormatted());

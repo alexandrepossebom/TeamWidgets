@@ -47,8 +47,9 @@ public class TeamsAdapter extends RecyclerView.Adapter<TeamsAdapter.ViewHolder> 
 
         Picasso.with(viewHolder.image.getContext())
                 .load(team.getImgUrl())
-                .placeholder(R.drawable.ic_launcher)
-                .error(R.drawable.drawer_shadow)
+                .error(R.drawable.generic_team)
+                .centerInside()
+                .resizeDimen(R.dimen.detail_team_image_size,R.dimen.detail_team_image_size)
                 .into(viewHolder.image);
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {

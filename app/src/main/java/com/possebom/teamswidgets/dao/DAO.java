@@ -5,20 +5,23 @@ import android.content.SharedPreferences;
 import android.text.format.DateUtils;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
-import com.koushikdutta.async.future.FutureCallback;
-import com.koushikdutta.ion.Ion;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.possebom.teamswidgets.BaseApplication;
+import com.possebom.teamswidgets.controller.TWController;
+import com.possebom.teamswidgets.event.UpdateEvent;
+import com.possebom.teamswidgets.model.Team;
+
+import org.apache.http.Header;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.possebom.teamswidgets.BaseApplication;
-import com.possebom.teamswidgets.controller.TWController;
-import com.possebom.teamswidgets.event.UpdateEvent;
-import com.possebom.teamswidgets.model.Team;
 import timber.log.Timber;
 
 /**
@@ -89,31 +92,35 @@ public enum DAO {
     }
 
     public void update() {
-        if (!isNeedUpdate()) {
-            return;
-        }
-        
-        final Context context = BaseApplication.getContext();
+//        if (!isNeedUpdate()) {
+//            return;
+//        }
 
-        Ion.with(context)
-                .load("http://possebom.com/widgets/teams.json")
-                .asJsonObject()
-                .setCallback(new FutureCallback<JsonObject>() {
-                    @Override
-                    public void onCompleted(Exception e, JsonObject result) {
-                        if (e != null) {
-                            Timber.e("Error :" + e.getMessage());
-                            TWController.INSTANCE.getBus().post(new UpdateEvent("error"));
-                        } else {
-                            final String json = result.getAsJsonArray("Teams").toString();
-                            SharedPreferences.Editor editor = getSharedPreferences().edit();
-                            editor.putString(PREFS_KEY_JSON, json);
-                            editor.putLong(PREFS_KEY_LASTUPDATE, System.currentTimeMillis());
-                            editor.apply();
-                            updateResults(json, true);
-                        }
-                    }
-                });
+        final AsyncHttpClient client = new AsyncHttpClient();
+        client.get("http://possebom.com/widgets/teams.json", new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                Timber.d("debug :" + response.toString());
+                try {
+                    final String json = response.getJSONArray("teams").toString();
+                    SharedPreferences.Editor editor = getSharedPreferences().edit();
+                    editor.putString(PREFS_KEY_JSON, json);
+                    editor.putLong(PREFS_KEY_LASTUPDATE, System.currentTimeMillis());
+                    editor.apply();
+                    updateResults(json, true);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    TWController.INSTANCE.getBus().post(new UpdateEvent("error"));
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Timber.e("Error :" + statusCode);
+                TWController.INSTANCE.getBus().post(new UpdateEvent("error"));
+            }
+        });
+
     }
 
     private void updateResults(final String json, boolean sendBus) {

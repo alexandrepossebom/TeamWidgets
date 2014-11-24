@@ -88,7 +88,7 @@ public class NotificationService extends IntentService {
         final long[] vibrate = {0, 500, 200, 500, 200, 500};
         final NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
 
-        final String title = getString(R.string.notification_alert, match.getOpponent());
+        final String title = getString(R.string.notification_alert, match.getVisitingTeam());
 
         final Intent mIntent = new Intent(getApplicationContext(), MainActivity.class);
         final PendingIntent pIntent = PendingIntent.getActivity(getApplicationContext(), 0, mIntent, 0);

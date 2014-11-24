@@ -2,6 +2,7 @@ package com.possebom.teamswidgets.model;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.text.TextUtils;
 import android.text.format.DateFormat;
 
 import com.possebom.teamswidgets.R;
@@ -17,9 +18,10 @@ public class Match {
     private long timestamp;
     private Boolean home;
     private String transmission;
-    private String opponent;
     private String league;
     private String place;
+    private String homeTeam;
+    private String visitingTeam;
 
     public long getTimestamp() {
         return timestamp;
@@ -31,10 +33,18 @@ public class Match {
             date.setTimeInMillis(timestamp);
         }
         String strDate = DateFormat.format("dd/MM (E) kk:mm", date).toString();
-        if (opponent.isEmpty()) {
+        if (TextUtils.isEmpty(visitingTeam)) {
             strDate = "";
         }
         return strDate.replaceFirst(" 00:00", "");
+    }
+
+    public String getVisitingTeam() {
+        return visitingTeam;
+    }
+
+    public String getHomeTeam() {
+        return homeTeam;
     }
 
     public Boolean getHome() {
@@ -43,10 +53,6 @@ public class Match {
 
     public String getTransmission() {
         return transmission;
-    }
-
-    public String getOpponent() {
-        return opponent;
     }
 
     public String getLeague() {

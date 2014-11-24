@@ -59,7 +59,7 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
         String url01;
         String url02;
 
-        Team opponent = TWController.INSTANCE.getDao().getTeamByName(match.getOpponent());
+        Team opponent = TWController.INSTANCE.getDao().getTeamByName(match.getVisitingTeam());
         String urlOpponent = null;
         if (opponent != null) {
             urlOpponent = opponent.getImgUrl();
@@ -75,13 +75,17 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
 
         Picasso.with(context)
                 .load(url01)
-                .placeholder(R.drawable.generic_team)
+                .error(R.drawable.generic_team)
+                .resizeDimen(R.dimen.detail_team_image_size,R.dimen.detail_team_image_size)
+                .centerInside()
                 .into(viewHolder.imageView01);
 
 
         Picasso.with(context)
                 .load(url02)
-                .placeholder(R.drawable.generic_team)
+                .error(R.drawable.generic_team)
+                .centerInside()
+                .resizeDimen(R.dimen.detail_team_image_size,R.dimen.detail_team_image_size)
                 .into(viewHolder.imageView02);
     }
 
