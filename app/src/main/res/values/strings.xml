@@ -34,5 +34,6 @@
     <string name="add_widget">Add widget</string>
     <string name="no_data">No Data</string>
     <string name="configure_widget">Choose your team</string>
+    <string name="notification_alert">Game with  %1$s</string>
 
 </resources>

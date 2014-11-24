@@ -1,7 +1,7 @@
 package com.possebom.teamswidgets;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewCompat;
@@ -14,15 +14,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.joanzapata.android.iconify.IconDrawable;
-import com.joanzapata.android.iconify.Iconify;
+import com.mikpenz.iconics.IconicsDrawable;
+import com.mikpenz.iconics.typeface.FontAwesome;
+import com.possebom.teamswidgets.controller.TWController;
+import com.possebom.teamswidgets.dao.DAO;
+import com.possebom.teamswidgets.model.Team;
 import com.squareup.picasso.Picasso;
 import com.tundem.aboutlibraries.Libs;
 import com.tundem.aboutlibraries.ui.LibsActivity;
 
-import com.possebom.teamswidgets.controller.TWController;
-import com.possebom.teamswidgets.dao.DAO;
-import com.possebom.teamswidgets.model.Team;
 import timber.log.Timber;
 
 /**
@@ -34,12 +34,6 @@ public abstract class BaseActivity extends ActionBarActivity {
     protected FragmentManager fragmentManager;
     private DrawerLayout mDrawerLayout;
     private LinearLayout mDrawerList;
-
-
-    protected enum Frag
-    {
-        ABOUT, TEAMS, MATCHES
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +91,7 @@ public abstract class BaseActivity extends ActionBarActivity {
         mDrawerList.findViewById(R.id.drawer_teams).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showFragment(Frag.TEAMS,null);
+                showFragment(Frag.TEAMS, null);
                 mDrawerLayout.closeDrawers();
             }
         });
@@ -105,19 +99,19 @@ public abstract class BaseActivity extends ActionBarActivity {
         mDrawerList.findViewById(R.id.drawer_about).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showFragment(Frag.ABOUT,null);
+                showFragment(Frag.ABOUT, null);
                 mDrawerLayout.closeDrawers();
             }
         });
 
-        setIconDrawer(R.id.drawer_opensource_icon, Iconify.IconValue.fa_github);
-        setIconDrawer(R.id.drawer_twitter_icon, Iconify.IconValue.fa_twitter);
-        setIconDrawer(R.id.drawer_plus_icon, Iconify.IconValue.fa_google_plus_square);
-        setIconDrawer(R.id.drawer_about_icon, Iconify.IconValue.fa_info_circle);
+        setIconDrawer(R.id.drawer_opensource_icon, FontAwesome.Icon.faw_github);
+        setIconDrawer(R.id.drawer_twitter_icon, FontAwesome.Icon.faw_twitter);
+        setIconDrawer(R.id.drawer_plus_icon, FontAwesome.Icon.faw_google_plus);
+        setIconDrawer(R.id.drawer_about_icon, FontAwesome.Icon.faw_info);
     }
 
-    protected void setupDrawerCover(final Team team){
-        if(team == null){
+    protected void setupDrawerCover(final Team team) {
+        if (team == null) {
             return;
         }
         final ImageView teamDrawer = (ImageView) findViewById(R.id.imageview_team_drawer);
@@ -139,14 +133,18 @@ public abstract class BaseActivity extends ActionBarActivity {
         textViewCoverTeamDescription.setText(team.getName());
     }
 
-    private void setIconDrawer(int resId, Iconify.IconValue iconId) {
+    private void setIconDrawer(int resId, FontAwesome.Icon iconId) {
         final ImageView imageView = (ImageView) mDrawerList.findViewById(resId);
-        final Drawable drawable = new IconDrawable(this, iconId).colorRes(R.color.secondary).actionBarSize();
+        final IconicsDrawable drawable = new IconicsDrawable(this, iconId).colorRes(R.color.secondary).sizeRes(R.dimen.widgetImageSize);
         imageView.setImageDrawable(drawable);
     }
 
     protected abstract void showFragment(Frag frag, Bundle bundle);
 
     protected abstract int getLayoutResource();
+
+    protected enum Frag {
+        ABOUT, TEAMS, MATCHES
+    }
 
 }

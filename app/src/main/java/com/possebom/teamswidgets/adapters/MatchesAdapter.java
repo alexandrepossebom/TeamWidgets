@@ -11,20 +11,19 @@ import android.widget.TextView;
 
 import com.joanzapata.android.iconify.IconDrawable;
 import com.joanzapata.android.iconify.Iconify;
-import com.squareup.picasso.Picasso;
-
 import com.possebom.teamswidgets.R;
 import com.possebom.teamswidgets.controller.TWController;
 import com.possebom.teamswidgets.model.Match;
 import com.possebom.teamswidgets.model.Team;
+import com.squareup.picasso.Picasso;
 
 /**
  * Created by alexandre on 01/11/14.
  */
 public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHolder> {
 
-    private Team team;
     private final int rowLayout;
+    private Team team;
 
     public MatchesAdapter() {
         rowLayout = R.layout.card_matches;

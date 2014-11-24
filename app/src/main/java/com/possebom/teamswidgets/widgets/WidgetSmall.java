@@ -1,20 +1,21 @@
 package com.possebom.teamswidgets.widgets;
 
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
+import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.widget.RemoteViews;
 
 import com.mikpenz.iconics.IconicsDrawable;
 import com.mikpenz.iconics.typeface.FontAwesome;
+import com.possebom.teamswidgets.MainActivity;
 import com.possebom.teamswidgets.R;
 import com.possebom.teamswidgets.controller.TWController;
 import com.possebom.teamswidgets.model.Match;
 import com.possebom.teamswidgets.model.Team;
+import com.possebom.teamswidgets.service.NotificationService;
 import com.squareup.picasso.Picasso;
 
 
@@ -37,6 +38,8 @@ public class WidgetSmall extends AppWidgetProvider {
             return;
         }
 
+        NotificationService.scheduleNotification(context, team, match);
+
         // Construct the RemoteViews object
         final RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_small);
         views.setTextViewText(R.id.textViewOpponent, match.getOpponent());
@@ -44,7 +47,16 @@ public class WidgetSmall extends AppWidgetProvider {
         views.setTextViewText(R.id.textViewPlace, match.getPlace());
         views.setTextViewText(R.id.textViewDate, match.getDateFormatted());
 
-        Picasso.with(context).load(team.getImgUrl()).into(views, R.id.imageViewTeam, new int[]{appWidgetId});
+        final Intent intent = new Intent(context, MainActivity.class);
+        final PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+
+        views.setOnClickPendingIntent(R.id.layout_widget_small, pendingIntent);
+
+        Picasso.with(context)
+                .load(team.getImgUrl())
+                .resizeDimen(R.dimen.widgetImageSize, R.dimen.widgetImageSize)
+                .centerInside()
+                .into(views, R.id.imageViewTeam, new int[]{appWidgetId});
 
         FontAwesome.Icon icon = FontAwesome.Icon.faw_plane;
 
@@ -53,13 +65,7 @@ public class WidgetSmall extends AppWidgetProvider {
         }
 
         final IconicsDrawable drawable = new IconicsDrawable(context, icon).color(Color.WHITE).sizeRes(R.dimen.widgetImageSize);
-        drawable.setStyle(Paint.Style.FILL);
-        final Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-        final Canvas canvas = new Canvas(bitmap);
-        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-        drawable.draw(canvas);
-
-        views.setImageViewBitmap(R.id.imageViewHomeOut, bitmap);
+        views.setImageViewBitmap(R.id.imageViewHomeOut, drawable.toBitmap());
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);

@@ -22,5 +22,6 @@
     <dimen name="widget_data_size">7sp</dimen>
     <dimen name="widget_adve_size">14sp</dimen>
     <dimen name="widgetImageSize">25dp</dimen>
+    <dimen name="notification_icon_width_height">64dp</dimen>
 
 </resources>
