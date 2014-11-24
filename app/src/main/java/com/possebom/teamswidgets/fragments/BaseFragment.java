@@ -3,6 +3,7 @@ package com.possebom.teamswidgets.fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.OnScrollListener;
 import android.util.TypedValue;
@@ -27,6 +28,7 @@ public abstract class BaseFragment extends ProgressFragment {
     protected ToolBarUtils toolBarUtils;
     protected View mContentView;
     private boolean toolbarIsHidden = false;
+    protected SwipeRefreshLayout swipeRefreshLayout;
 
     protected final OnScrollListener mScrollListener = new OnScrollListener() {
         RecyclerView.ViewHolder viewHolder;
@@ -69,6 +71,12 @@ public abstract class BaseFragment extends ProgressFragment {
         final int paddingTop = getActionBarHeight() + paddingVertical;
         final int paddingLeftRight = view.getContext().getResources().getDimensionPixelSize(R.dimen.activity_horizontal_margin);
         view.setPadding(paddingLeftRight, paddingTop, paddingLeftRight, paddingVertical);
+    }
+
+    protected void setSwipeScrollOffset(){
+        final int paddingVertical = swipeRefreshLayout.getContext().getResources().getDimensionPixelSize(R.dimen.activity_vertical_margin);
+        final int paddingTop = getActionBarHeight() + paddingVertical;
+        swipeRefreshLayout.setProgressViewOffset(false,0,paddingTop);
     }
 
     private int getActionBarHeight() {

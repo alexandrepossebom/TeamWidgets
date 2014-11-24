@@ -1,6 +1,7 @@
 package com.possebom.teamswidgets.fragments;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,13 +12,15 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 
-import com.squareup.otto.Subscribe;
-
 import com.possebom.teamswidgets.MainActivity;
 import com.possebom.teamswidgets.R;
 import com.possebom.teamswidgets.adapters.TeamsAdapter;
 import com.possebom.teamswidgets.controller.TWController;
+import com.possebom.teamswidgets.dao.DAO;
+import com.possebom.teamswidgets.event.ErrorOnUpdateEvent;
 import com.possebom.teamswidgets.event.UpdateEvent;
+import com.squareup.otto.Subscribe;
+
 import timber.log.Timber;
 
 /**
@@ -35,6 +38,14 @@ public class TeamsFragment extends BaseFragment {
         mRecyclerView = (RecyclerView) mContentView.findViewById(R.id.listTeams);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
 
+        swipeRefreshLayout = (SwipeRefreshLayout) mContentView.findViewById(R.id.swipe_layout);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                DAO.INSTANCE.update(true);
+            }
+        });
+        setSwipeScrollOffset();
 
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
@@ -64,28 +75,25 @@ public class TeamsFragment extends BaseFragment {
         Timber.d("onPause");
     }
 
+
+    @Subscribe
+    public void onUpdateError(ErrorOnUpdateEvent event) {
+        Timber.d("onUpdateError");
+        setContentEmpty(true);
+        swipeRefreshLayout.setRefreshing(false);
+    }
+
     @Subscribe
     public void onUpdate(UpdateEvent event) {
         Timber.d("onUpdate");
-        if (event != null && event.getMessage() != null) {
-            setContentEmpty(true);
-            return;
-        }
-
         setContentShown(true);
-
+        swipeRefreshLayout.setRefreshing(false);
         mAdapter.setTeamList(TWController.INSTANCE.getDao().getTeamList());
         Animation fadeIn = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
         fadeIn.setDuration(250);
         LayoutAnimationController layoutAnimationController = new LayoutAnimationController(fadeIn);
         mRecyclerView.setLayoutAnimation(layoutAnimationController);
         mRecyclerView.startLayoutAnimation();
-
-//            Picasso.with(this)
-//                    .load(TWController.INSTANCE.getDao().getTeamList().get(0).getImgUrl())
-//                    .placeholder(R.drawable.ic_launcher)
-//                    .error(R.drawable.drawer_shadow)
-//                    .into(getFabImageView());
     }
 
 }

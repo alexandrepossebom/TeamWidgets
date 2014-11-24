@@ -10,10 +10,12 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.possebom.teamswidgets.BaseApplication;
 import com.possebom.teamswidgets.controller.TWController;
+import com.possebom.teamswidgets.event.ErrorOnUpdateEvent;
 import com.possebom.teamswidgets.event.UpdateEvent;
 import com.possebom.teamswidgets.model.Team;
 
 import org.apache.http.Header;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -92,8 +94,14 @@ public enum DAO {
     }
 
     public void update() {
-        if (!isNeedUpdate()) {
-            return;
+        update(false);
+    }
+
+    public void update(boolean force) {
+        if(!force){
+            if(!isNeedUpdate()) {
+                return;
+            }
         }
 
         final AsyncHttpClient client = new AsyncHttpClient();
@@ -110,14 +118,14 @@ public enum DAO {
                     updateResults(json, true);
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    TWController.INSTANCE.getBus().post(new UpdateEvent("error"));
+                    TWController.INSTANCE.getBus().post(new ErrorOnUpdateEvent(e.getCause()));
                 }
             }
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 Timber.e("Error :" + statusCode);
-                TWController.INSTANCE.getBus().post(new UpdateEvent("error"));
+                TWController.INSTANCE.getBus().post(new ErrorOnUpdateEvent(throwable));
             }
         });
 
@@ -129,7 +137,7 @@ public enum DAO {
         teamList = new Gson().fromJson(json, collectionType);
         Timber.i("Team list size: " + teamList.size());
         if (sendBus) {
-            TWController.INSTANCE.getBus().post(new UpdateEvent(null));
+            TWController.INSTANCE.getBus().post(new UpdateEvent());
         }
     }
 
