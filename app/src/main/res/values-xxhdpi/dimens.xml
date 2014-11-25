@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="widget_data_size">8sp</dimen>
+    <dimen name="widget_adve_size">16sp</dimen>
+    <dimen name="widget_padding">3dp</dimen>
+</resources>
