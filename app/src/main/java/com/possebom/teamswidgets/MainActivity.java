@@ -73,6 +73,7 @@ public class MainActivity extends BaseActivity implements TeamsAdapter.OnTeamSel
 
     @Override
     public void onTeamSelected(final String teamName) {
+        showToolBar();
         final Team team = dao.getTeamByName(teamName);
         setupDrawerCover(team);
         TWController.INSTANCE.setDefaultTeam(teamName);

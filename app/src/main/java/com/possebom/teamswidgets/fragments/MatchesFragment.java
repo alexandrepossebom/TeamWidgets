@@ -57,6 +57,8 @@ public class MatchesFragment extends BaseFragment {
             teamName = getArguments().getString("teamName", "");
         }
 
+
+
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 

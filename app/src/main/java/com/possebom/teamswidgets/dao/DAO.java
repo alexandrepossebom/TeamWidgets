@@ -75,6 +75,15 @@ public enum DAO {
         return teamResult;
     }
 
+    public String getTeamLogoUrlByName(final String teamName){
+        String url = null;
+        final Team opponent = TWController.INSTANCE.getDao().getTeamByName(teamName);
+        if (opponent != null) {
+            url = opponent.getImgUrl();
+        }
+        return url;
+    }
+
     public boolean isNeedUpdate() {
         long lastUpdate = getSharedPreferences().getLong(PREFS_KEY_LASTUPDATE, 0);
         long now = System.currentTimeMillis();

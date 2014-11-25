@@ -3,6 +3,7 @@ package com.possebom.teamswidgets.adapters;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +17,6 @@ import com.possebom.teamswidgets.controller.TWController;
 import com.possebom.teamswidgets.model.Match;
 import com.possebom.teamswidgets.model.Team;
 import com.squareup.picasso.Picasso;
-
-import timber.log.Timber;
 
 /**
  * Created by alexandre on 01/11/14.
@@ -58,40 +57,32 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
         viewHolder.textViewPlace.setText(match.getPlace());
         setIcon(viewHolder.textViewPlace, Iconify.IconValue.fa_location_arrow);
 
-        String url01;
-        String url02;
-
-        Team opponent = TWController.INSTANCE.getDao().getTeamByName(match.getVisitingTeam());
-        String urlOpponent = null;
-        if (opponent != null) {
-            urlOpponent = opponent.getImgUrl();
-        }
+        String urlOpponent = TWController.INSTANCE.getDao().getTeamLogoUrlByName(match.getVisitingTeam());
 
         if (match.getHome()) {
-            url01 = team.getImgUrl();
-            url02 = urlOpponent;
+            setTeamLogo(viewHolder.imageView01, team.getImgUrl());
+            setTeamLogo(viewHolder.imageView02, urlOpponent);
         } else {
-            url01 = urlOpponent;
-            url02 = team.getImgUrl();
+            setTeamLogo(viewHolder.imageView01, urlOpponent);
+            setTeamLogo(viewHolder.imageView02, team.getImgUrl());
         }
 
-        if(url01 != null) {
-            Picasso.with(context)
-                    .load(url01)
-                    .error(R.drawable.generic_team)
-                    .resizeDimen(R.dimen.detail_team_image_size, R.dimen.detail_team_image_size)
-                    .centerInside()
-                    .into(viewHolder.imageView01);
+    }
+
+    private void setTeamLogo(final ImageView imageView, final String url) {
+        if (TextUtils.isEmpty(url)) {
+            imageView.setImageResource(R.drawable.generic_team);
+            return;
         }
 
-        if(url02 != null) {
-            Picasso.with(context)
-                    .load(url02)
-                    .error(R.drawable.generic_team)
-                    .resizeDimen(R.dimen.detail_team_image_size, R.dimen.detail_team_image_size)
-                    .centerInside()
-                    .into(viewHolder.imageView02);
-        }
+        final Context context = imageView.getContext();
+        Picasso.with(context)
+                .load(url)
+                .error(R.drawable.generic_team)
+                .placeholder(R.drawable.generic_team)
+                .resizeDimen(R.dimen.detail_team_image_size, R.dimen.detail_team_image_size)
+                .centerInside()
+                .into(imageView);
     }
 
     private void setIcon(TextView textview, Iconify.IconValue iconId) {
