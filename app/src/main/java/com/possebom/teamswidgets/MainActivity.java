@@ -37,6 +37,7 @@ public class MainActivity extends BaseActivity implements TeamsAdapter.OnTeamSel
 
     @Override
     protected void showFragment(final Frag frag, final Bundle bundle) {
+        setTitle(getString(R.string.app_name));
         Fragment fragment;
         switch (frag) {
             case ABOUT:
