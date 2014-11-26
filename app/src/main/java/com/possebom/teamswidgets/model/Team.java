@@ -57,6 +57,32 @@ public class Team {
         return nextMatch;
     }
 
+    public int getFirstPlayedPosition(){
+        int position = -1;
+        final long now = System.currentTimeMillis();
+        for(int i = 0;i< matches.size();i++){
+            final Match match = matches.get(i);
+            if(match.getTimestamp() < now){
+                position = i;
+                break;
+            }
+        }
+        return position;
+    }
+
+    public int getFirstNotPlayedPosition(){
+        int position = -1;
+        final long now = System.currentTimeMillis();
+        for(int i = 0;i< matches.size();i++){
+            final Match match = matches.get(i);
+            if(match.getTimestamp() > now){
+                position = i;
+                break;
+            }
+        }
+        return position;
+    }
+
     @Override
     public String toString() {
         return name;

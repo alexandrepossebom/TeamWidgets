@@ -14,11 +14,15 @@ import android.view.animation.LayoutAnimationController;
 
 import com.possebom.teamswidgets.R;
 import com.possebom.teamswidgets.adapters.MatchesAdapter;
+import com.possebom.teamswidgets.adapters.SimpleSectionedRecyclerViewAdapter;
 import com.possebom.teamswidgets.dao.DAO;
 import com.possebom.teamswidgets.event.ErrorOnUpdateEvent;
 import com.possebom.teamswidgets.event.UpdateEvent;
 import com.possebom.teamswidgets.model.Team;
 import com.squareup.otto.Subscribe;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import timber.log.Timber;
 
@@ -29,6 +33,7 @@ public class MatchesFragment extends BaseFragment {
 
     private RecyclerView mRecyclerView;
     private MatchesAdapter mAdapter;
+    private SimpleSectionedRecyclerViewAdapter mSectionedAdapter;
     private String teamName;
 
 
@@ -51,13 +56,14 @@ public class MatchesFragment extends BaseFragment {
 
         mAdapter = new MatchesAdapter();
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setAdapter(mAdapter);
+
+        mSectionedAdapter = new SimpleSectionedRecyclerViewAdapter(getActivity(),R.layout.section,R.id.section_text,mAdapter);
+
+        mRecyclerView.setAdapter(mSectionedAdapter);
 
         if (getArguments() != null) {
             teamName = getArguments().getString("teamName", "");
         }
-
-
 
         return super.onCreateView(inflater, container, savedInstanceState);
     }
@@ -95,8 +101,23 @@ public class MatchesFragment extends BaseFragment {
         setContentShown(true);
         swipeRefreshLayout.setRefreshing(false);
 
+
+        final List<SimpleSectionedRecyclerViewAdapter.Section> sections = new ArrayList<SimpleSectionedRecyclerViewAdapter.Section>();
+
+        int indexNotPlayed = team.getFirstNotPlayedPosition();
+        int indexPlayed = team.getFirstPlayedPosition();
+        if(indexPlayed != -1) {
+            sections.add(new SimpleSectionedRecyclerViewAdapter.Section(indexPlayed, "Section 1"));
+        }
+        if(indexNotPlayed != -1) {
+            sections.add(new SimpleSectionedRecyclerViewAdapter.Section(indexNotPlayed, "Section 2"));
+        }
+
+        final SimpleSectionedRecyclerViewAdapter.Section[] sectionsArray = new SimpleSectionedRecyclerViewAdapter.Section[sections.size()];
+        mSectionedAdapter.setSections(sections.toArray(sectionsArray));
+
         mAdapter.setTeam(team);
-        Animation fadeIn = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
+        final Animation fadeIn = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
         fadeIn.setDuration(250);
         LayoutAnimationController layoutAnimationController = new LayoutAnimationController(fadeIn);
         mRecyclerView.setLayoutAnimation(layoutAnimationController);
@@ -104,6 +125,8 @@ public class MatchesFragment extends BaseFragment {
         toolBarUtils.setTitle(team.getName());
         dao.setDefaultTeamName(team.getName());
         mRecyclerView.startLayoutAnimation();
+
+        mRecyclerView.getLayoutManager().scrollToPosition(indexNotPlayed+sections.size());
     }
 
 

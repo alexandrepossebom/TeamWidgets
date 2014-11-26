@@ -32,7 +32,7 @@ public class UpdateJobService extends JobService {
 
         sharedPreferences.edit().putString("last", last).apply();
         TWController.INSTANCE.getDao().update();
-//        jobFinished(jobParameters,true);
+        jobFinished(jobParameters,false);
         return true;
     }
 
