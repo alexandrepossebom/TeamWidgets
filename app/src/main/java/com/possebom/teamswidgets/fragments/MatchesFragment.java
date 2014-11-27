@@ -34,7 +34,7 @@ public class MatchesFragment extends BaseFragment {
     private RecyclerView mRecyclerView;
     private MatchesAdapter mAdapter;
     private SimpleSectionedRecyclerViewAdapter mSectionedAdapter;
-    private String teamName;
+    private int teamId;
 
 
     @Override
@@ -62,7 +62,7 @@ public class MatchesFragment extends BaseFragment {
         mRecyclerView.setAdapter(mSectionedAdapter);
 
         if (getArguments() != null) {
-            teamName = getArguments().getString("teamName", "");
+            teamId = getArguments().getInt("teamId", 0);
         }
 
         return super.onCreateView(inflater, container, savedInstanceState);
@@ -93,7 +93,7 @@ public class MatchesFragment extends BaseFragment {
     @Subscribe
     public void onUpdate(UpdateEvent event) {
         Timber.d("onUpdate");
-        final Team team = dao.getTeamByName(teamName);
+        final Team team = dao.getTeamById(teamId);
         if (team == null) {
             setContentEmpty(true);
             return;
@@ -123,7 +123,7 @@ public class MatchesFragment extends BaseFragment {
         mRecyclerView.setLayoutAnimation(layoutAnimationController);
         mRecyclerView.setOnScrollListener(mScrollListener);
         toolBarUtils.setTitle(team.getName());
-        dao.setDefaultTeamName(team.getName());
+        dao.setDefaultTeamName(team.getId());
         mRecyclerView.startLayoutAnimation();
 
         mRecyclerView.getLayoutManager().scrollToPosition(indexNotPlayed+sections.size());

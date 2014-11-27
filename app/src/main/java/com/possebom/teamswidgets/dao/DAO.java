@@ -55,12 +55,12 @@ public enum DAO {
         return sharedPreferences;
     }
 
-    public String getDefaultTeamName() {
-        return getSharedPreferences().getString("defaultTeamName", null);
+    public int getDefaultTeamName() {
+        return getSharedPreferences().getInt("defaultTeamId", 0);
     }
 
-    public void setDefaultTeamName(final String teamName) {
-        getSharedPreferences().edit().putString("defaultTeamName", teamName).apply();
+    public void setDefaultTeamName(final int teamId) {
+        getSharedPreferences().edit().putInt("defaultTeamId", teamId).apply();
     }
 
     public Team getTeamByName(final String name) {
@@ -91,9 +91,9 @@ public enum DAO {
 
     public String getTeamLogoUrlByName(final String teamName){
         String url = null;
-        final Team opponent = TWController.INSTANCE.getDao().getTeamByName(teamName);
-        if (opponent != null) {
-            url = opponent.getImgUrl();
+        final Team team = TWController.INSTANCE.getDao().getTeamByName(teamName);
+        if (team != null) {
+            url = team.getImgUrl();
         }
         return url;
     }

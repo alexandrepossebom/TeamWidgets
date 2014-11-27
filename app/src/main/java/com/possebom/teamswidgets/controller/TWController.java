@@ -11,7 +11,7 @@ public enum TWController {
     INSTANCE;
     private final Bus bus = new Bus();
     private final DAO dao = DAO.INSTANCE;
-    private String defaultTeamName;
+    private int defaultTeamId =0;
 
     private TWController() {
 
@@ -26,17 +26,17 @@ public enum TWController {
     }
 
 
-    public String getDefaultTeamName() {
-        if (defaultTeamName == null) {
-            defaultTeamName = dao.getDefaultTeamName();
+    public int getDefaultTeamName() {
+        if (defaultTeamId == 0) {
+            defaultTeamId = dao.getDefaultTeamName();
         }
-        return defaultTeamName;
+        return defaultTeamId;
     }
 
-    public void setDefaultTeam(final String defaultTeamName) {
-        if (this.defaultTeamName == null || (defaultTeamName != null && !defaultTeamName.equals(this.defaultTeamName))) {
-            dao.setDefaultTeamName(defaultTeamName);
-            this.defaultTeamName = defaultTeamName;
+    public void setDefaultTeam(final int teamId) {
+        if (this.defaultTeamId == 0 || teamId != defaultTeamId) {
+            dao.setDefaultTeamName(defaultTeamId);
+            this.defaultTeamId = defaultTeamId;
         }
     }
 }

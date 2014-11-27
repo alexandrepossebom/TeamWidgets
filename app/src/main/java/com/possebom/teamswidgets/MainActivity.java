@@ -27,7 +27,7 @@ public class MainActivity extends BaseActivity implements TeamsAdapter.OnTeamSel
             return;
         }
 
-        if (TWController.INSTANCE.getDefaultTeamName() == null) {
+        if (TWController.INSTANCE.getDefaultTeamName() == 0) {
             showFragment(Frag.TEAMS, null);
         } else {
             onTeamSelected(TWController.INSTANCE.getDefaultTeamName());
@@ -73,14 +73,14 @@ public class MainActivity extends BaseActivity implements TeamsAdapter.OnTeamSel
     }
 
     @Override
-    public void onTeamSelected(final String teamName) {
+    public void onTeamSelected(final int teamId) {
         showToolBar();
-        final Team team = dao.getTeamByName(teamName);
+        final Team team = dao.getTeamById(teamId);
         setupDrawerCover(team);
-        TWController.INSTANCE.setDefaultTeam(teamName);
-        Timber.d("selectTeam : %s", teamName);
+        TWController.INSTANCE.setDefaultTeam(teamId);
+        Timber.d("selectTeam : %s", team.getName());
         Bundle bundle = new Bundle();
-        bundle.putString("teamName", teamName);
+        bundle.putInt("teamId", teamId);
         showFragment(Frag.MATCHES, bundle);
     }
 
