@@ -26,9 +26,9 @@ import com.squareup.picasso.Picasso;
 public class WidgetSmall extends AppWidgetProvider {
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
-        final String teamName = WidgetSmallConfigureActivity.loadTitlePref(context, appWidgetId);
+        final int teamId = WidgetSmallConfigureActivity.loadTitlePref(context, appWidgetId);
 
-        final Team team = TWController.INSTANCE.getDao().getTeamByName(teamName);
+        final Team team = TWController.INSTANCE.getDao().getTeamById(teamId);
         if (team == null) {
             return;
         }
@@ -48,7 +48,7 @@ public class WidgetSmall extends AppWidgetProvider {
         views.setTextViewText(R.id.textViewDate, match.getDateFormatted());
 
         final Intent intent = new Intent(context, MainActivity.class);
-        final PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+        final PendingIntent pendingIntent = PendingIntent.getActivity(context, team.getId(), intent, 0);
 
         views.setOnClickPendingIntent(R.id.layout_widget_small, pendingIntent);
 

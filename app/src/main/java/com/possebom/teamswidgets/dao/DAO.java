@@ -22,6 +22,7 @@ import org.json.JSONObject;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import timber.log.Timber;
@@ -67,6 +68,19 @@ public enum DAO {
 
         for (Team team : teamList) {
             if (team.getName().equals(name)) {
+                teamResult = team;
+                break;
+            }
+        }
+
+        return teamResult;
+    }
+
+    public Team getTeamById(final int id) {
+        Team teamResult = null;
+
+        for (Team team : teamList) {
+            if (team.getId() == id) {
                 teamResult = team;
                 break;
             }
@@ -144,6 +158,11 @@ public enum DAO {
         final Type collectionType = new TypeToken<Collection<Team>>() {
         }.getType();
         teamList = new Gson().fromJson(json, collectionType);
+
+        for(Team team: teamList){
+            Collections.sort(team.getMatches());
+        }
+
         Timber.i("Team list size: " + teamList.size());
         if (sendBus) {
             TWController.INSTANCE.getBus().post(new UpdateEvent());

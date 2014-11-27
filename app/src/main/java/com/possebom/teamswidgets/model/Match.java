@@ -13,7 +13,7 @@ import java.util.GregorianCalendar;
 /**
  * Created by alexandre on 01/11/14.
  */
-public class Match {
+public class Match implements Comparable<Match> {
     private Calendar date;
     private long timestamp;
     private Boolean home;
@@ -96,5 +96,16 @@ public class Match {
             }
         }
         return text;
+    }
+
+    @Override
+    public int compareTo(Match another) {
+        if (this.timestamp < another.getTimestamp()) {
+            return -1;
+        }
+        if (this.timestamp > another.getTimestamp()) {
+            return 1;
+        }
+        return 0;
     }
 }

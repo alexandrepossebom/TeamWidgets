@@ -68,8 +68,8 @@ public class WidgetSmallConfigureActivity extends Activity {
             final Context context = WidgetSmallConfigureActivity.this;
 
             // When the button is clicked, store the string locally
-            String widgetText =   spinner.getSelectedItem().toString();
-            saveTitlePref(context, mAppWidgetId, widgetText);
+            int id  = ((Team) spinner.getSelectedItem()).getId();
+            saveTitlePref(context, mAppWidgetId, id);
 
             // It is the responsibility of the configuration activity to update the app widget
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
@@ -83,29 +83,22 @@ public class WidgetSmallConfigureActivity extends Activity {
         }
     };
 
-    // Write the prefix to the SharedPreferences object for this widget
-    static void saveTitlePref(Context context, int appWidgetId, String text) {
-        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
-        prefs.putString(PREF_PREFIX_KEY + appWidgetId, text);
-        prefs.commit();
+    static void saveTitlePref(Context context, int appWidgetId, int id) {
+        final SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
+        prefs.putInt(PREF_PREFIX_KEY + appWidgetId, id);
+        prefs.apply();
     }
 
-    // Read the prefix from the SharedPreferences object for this widget.
-    // If there is no preference saved, get the default from a resource
-    static String loadTitlePref(Context context, int appWidgetId) {
-        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
-        String titleValue = prefs.getString(PREF_PREFIX_KEY + appWidgetId, null);
-        if (titleValue != null) {
-            return titleValue;
-        } else {
-            return context.getString(R.string.appwidget_text);
-        }
+    static int loadTitlePref(Context context, int appWidgetId) {
+        final SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
+        int id = prefs.getInt(PREF_PREFIX_KEY + appWidgetId, 0);
+        return id;
     }
 
     static void deleteTitlePref(Context context, int appWidgetId) {
-        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
+        final SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
         prefs.remove(PREF_PREFIX_KEY + appWidgetId);
-        prefs.commit();
+        prefs.apply();
     }
 }
 

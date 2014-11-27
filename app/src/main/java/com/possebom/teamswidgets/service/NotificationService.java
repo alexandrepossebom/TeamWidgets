@@ -9,9 +9,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.RingtoneManager;
-import android.os.Handler;
-import android.os.Looper;
-import android.provider.SyncStateContract;
 import android.support.v4.app.NotificationCompat;
 
 import com.possebom.teamswidgets.MainActivity;
@@ -19,8 +16,6 @@ import com.possebom.teamswidgets.R;
 import com.possebom.teamswidgets.controller.TWController;
 import com.possebom.teamswidgets.model.Match;
 import com.possebom.teamswidgets.model.Team;
-import com.squareup.picasso.Picasso;
-
 
 import timber.log.Timber;
 
@@ -42,9 +37,9 @@ public class NotificationService extends IntentService {
         final Intent intent = new Intent();
         intent.setClass(context, NotificationService.class);
         intent.setAction(ACTION_NOTIFY);
-        intent.putExtra(EXTRA_TEAM, team.getName());
+        intent.putExtra(EXTRA_TEAM, team.getId());
 
-        final PendingIntent pendingIntent = PendingIntent.getService(context, 0, intent, 0);
+        final PendingIntent pendingIntent = PendingIntent.getService(context, team.getId(), intent, 0);
         final AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.cancel(pendingIntent);
 
@@ -60,22 +55,18 @@ public class NotificationService extends IntentService {
         if (intent != null) {
             final String action = intent.getAction();
             if (ACTION_NOTIFY.equals(action)) {
-                final String teamName = intent.getStringExtra(EXTRA_TEAM);
-                handleActionNotify(teamName);
+                final int teamId = intent.getIntExtra(EXTRA_TEAM, 0);
+                handleActionNotify(teamId);
             }
         }
     }
 
-    /**
-     * Handle action Foo in the provided background thread with the provided
-     * parameters.
-     */
-    private void handleActionNotify(String teamName) {
+    private void handleActionNotify(final int id) {
         Timber.d("Notification time !!!");
 
         final Context context = getApplicationContext();
 
-        final Team team = TWController.INSTANCE.getDao().getTeamByName(teamName);
+        final Team team = TWController.INSTANCE.getDao().getTeamById(id);
         if (team == null) {
             return;
         }
@@ -88,10 +79,10 @@ public class NotificationService extends IntentService {
         final long[] vibrate = {0, 500, 200, 500, 200, 500};
         final NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
 
-        final String title = getString(R.string.notification_alert, match.getVisitingTeam());
+        final String title = getString(R.string.notification_alert, match.getHomeTeam(), match.getVisitingTeam());
 
-        final Intent mIntent = new Intent(getApplicationContext(), MainActivity.class);
-        final PendingIntent pIntent = PendingIntent.getActivity(getApplicationContext(), 0, mIntent, 0);
+        final Intent mIntent = new Intent(context, MainActivity.class);
+        final PendingIntent pIntent = PendingIntent.getActivity(context, 0, mIntent, 0);
 
         final Notification notification = new NotificationCompat.Builder(this)
                 .setContentTitle(title)
@@ -102,6 +93,7 @@ public class NotificationService extends IntentService {
                 .setAutoCancel(true)
                 .setContentIntent(pIntent)
                 .build();
+
         notificationManager.notify(notification_index, notification);
         notification_index++;
     }
