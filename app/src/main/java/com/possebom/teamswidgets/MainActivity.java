@@ -12,6 +12,7 @@ import com.possebom.teamswidgets.fragments.MatchesFragment;
 import com.possebom.teamswidgets.fragments.TeamsFragment;
 import com.possebom.teamswidgets.interfaces.ToolBarUtils;
 import com.possebom.teamswidgets.model.Team;
+
 import timber.log.Timber;
 
 
@@ -27,10 +28,20 @@ public class MainActivity extends BaseActivity implements TeamsAdapter.OnTeamSel
             return;
         }
 
-        if (TWController.INSTANCE.getDefaultTeamName() == 0) {
+
+        Bundle bundle = getIntent().getExtras();
+        int teamId = 0;
+        if (bundle != null) {
+            teamId = bundle.getInt("teamId", 0);
+            Timber.d("aqui !!! id = "+ teamId);
+        }
+
+        if (teamId != 0) {
+            onTeamSelected(teamId);
+        } else if (TWController.INSTANCE.getDefaultTeamId() == 0) {
             showFragment(Frag.TEAMS, null);
         } else {
-            onTeamSelected(TWController.INSTANCE.getDefaultTeamName());
+            onTeamSelected(TWController.INSTANCE.getDefaultTeamId());
         }
 
     }

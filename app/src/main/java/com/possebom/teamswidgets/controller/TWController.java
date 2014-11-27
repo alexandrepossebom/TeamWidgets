@@ -26,7 +26,7 @@ public enum TWController {
     }
 
 
-    public int getDefaultTeamName() {
+    public int getDefaultTeamId() {
         if (defaultTeamId == 0) {
             defaultTeamId = dao.getDefaultTeamName();
         }

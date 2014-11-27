@@ -48,7 +48,8 @@ public class WidgetSmall extends AppWidgetProvider {
         views.setTextViewText(R.id.textViewDate, match.getDateFormatted());
 
         final Intent intent = new Intent(context, MainActivity.class);
-        final PendingIntent pendingIntent = PendingIntent.getActivity(context, team.getId(), intent, 0);
+        intent.putExtra("teamId",team.getId());
+        final PendingIntent pendingIntent = PendingIntent.getActivity(context, team.getId(), intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
         views.setOnClickPendingIntent(R.id.layout_widget_small, pendingIntent);
 
