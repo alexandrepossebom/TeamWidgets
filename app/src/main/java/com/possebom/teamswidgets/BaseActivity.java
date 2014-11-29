@@ -23,6 +23,7 @@ import com.squareup.picasso.Picasso;
 import com.tundem.aboutlibraries.Libs;
 import com.tundem.aboutlibraries.ui.LibsActivity;
 
+import hugo.weaving.DebugLog;
 import timber.log.Timber;
 
 /**
@@ -52,8 +53,12 @@ public abstract class BaseActivity extends ActionBarActivity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
 
         if (toolbar != null) {
-            setSupportActionBar(toolbar);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            try {
+                setSupportActionBar(toolbar);
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            } catch (Throwable t) {
+                // WTF SAMSUNG!
+            }
         }
 
         if (mDrawerLayout != null) {
@@ -64,6 +69,7 @@ public abstract class BaseActivity extends ActionBarActivity {
         dao = TWController.INSTANCE.getDao();
     }
 
+    @DebugLog
     private void setupDrawerActions() {
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
         actionBarDrawerToggle.syncState();
@@ -110,6 +116,7 @@ public abstract class BaseActivity extends ActionBarActivity {
         setIconDrawer(R.id.drawer_about_icon, FontAwesome.Icon.faw_info);
     }
 
+    @DebugLog
     protected void setupDrawerCover(final Team team) {
         if (team == null) {
             return;
@@ -133,6 +140,7 @@ public abstract class BaseActivity extends ActionBarActivity {
         textViewCoverTeamDescription.setText(team.getName());
     }
 
+    @DebugLog
     private void setIconDrawer(int resId, FontAwesome.Icon iconId) {
         final ImageView imageView = (ImageView) mDrawerList.findViewById(resId);
         final IconicsDrawable drawable = new IconicsDrawable(this, iconId).colorRes(R.color.secondary).sizeRes(R.dimen.widgetImageSize);

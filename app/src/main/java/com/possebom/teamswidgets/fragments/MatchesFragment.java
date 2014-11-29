@@ -107,10 +107,10 @@ public class MatchesFragment extends BaseFragment {
         int indexNotPlayed = team.getFirstNotPlayedPosition();
         int indexPlayed = team.getFirstPlayedPosition();
         if(indexPlayed != -1) {
-            sections.add(new SimpleSectionedRecyclerViewAdapter.Section(indexPlayed, "Section 1"));
+            sections.add(new SimpleSectionedRecyclerViewAdapter.Section(indexPlayed, context.getString(R.string.section_prev)));
         }
         if(indexNotPlayed != -1) {
-            sections.add(new SimpleSectionedRecyclerViewAdapter.Section(indexNotPlayed, "Section 2"));
+            sections.add(new SimpleSectionedRecyclerViewAdapter.Section(indexNotPlayed, context.getString(R.string.section_next)));
         }
 
         final SimpleSectionedRecyclerViewAdapter.Section[] sectionsArray = new SimpleSectionedRecyclerViewAdapter.Section[sections.size()];

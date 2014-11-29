@@ -1,84 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_widget_small"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:id="@+id/layout_widget_small">
+    android:layout_height="fill_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         android:layout_marginBottom="@dimen/widget_padding"
         android:layout_marginLeft="@dimen/widget_padding"
         android:layout_marginRight="@dimen/widget_padding"
         android:background="@drawable/widget_background">
 
         <TextView
+            android:id="@+id/textViewOpponent"
+            style="@style/WidgetAdversario"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/WidgetAdversario"
-            android:text="@string/no_data"
-            android:id="@+id/textViewOpponent"
-            android:singleLine="true"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:paddingBottom="10dp"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
+            android:singleLine="true"
+            android:text="@string/no_data" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/WidgetData"
             android:id="@+id/textViewDate"
-            android:paddingTop="3dp"
+            style="@style/WidgetData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:paddingTop="3dp" />
 
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/WidgetData"
             android:id="@+id/textViewPlace"
-            android:paddingBottom="3dp"
-            android:layout_marginLeft="17dp"
-            android:layout_marginRight="17dp"
-            android:singleLine="true"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true" />
-
-        <TextView
+            style="@style/WidgetData"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/WidgetData"
-            android:id="@+id/textViewLeague"
-            android:singleLine="true"
-            android:layout_above="@+id/textViewPlace"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
             android:layout_marginLeft="17dp"
             android:layout_marginRight="17dp"
-            android:layout_centerHorizontal="true" />
+            android:paddingBottom="3dp"
+            android:singleLine="true" />
+
+        <TextView
+            android:id="@+id/textViewLeague"
+            style="@style/WidgetData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/textViewPlace"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="17dp"
+            android:layout_marginRight="17dp"
+            android:singleLine="true" />
     </RelativeLayout>
 
     <ImageView
+        android:id="@+id/imageViewTeam"
         android:layout_width="@dimen/widgetImageSize"
         android:layout_height="@dimen/widgetImageSize"
-        android:src="@drawable/generic_team"
-        android:contentDescription="@string/app_name"
-        android:id="@+id/imageViewTeam"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:contentDescription="@string/app_name" />
 
     <ImageView
+        android:id="@+id/imageViewHomeOut"
         android:layout_width="@dimen/widgetImageSize"
         android:layout_height="@dimen/widgetImageSize"
-        android:id="@+id/imageViewHomeOut"
-        android:contentDescription="@string/app_name"
-        android:src="@drawable/generic_team"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:contentDescription="@string/app_name" />
 </RelativeLayout>

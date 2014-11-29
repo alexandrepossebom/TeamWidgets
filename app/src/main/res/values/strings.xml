@@ -35,5 +35,7 @@
     <string name="no_data">No Data</string>
     <string name="configure_widget">Choose your team</string>
     <string name="notification_alert">Match %1$s x %2$s</string>
+    <string name="section_prev">Previous Matches</string>
+    <string name="section_next">Next Matches</string>
 
 </resources>

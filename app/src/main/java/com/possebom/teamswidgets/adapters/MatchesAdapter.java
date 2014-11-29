@@ -1,7 +1,6 @@
 package com.possebom.teamswidgets.adapters;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -10,8 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.joanzapata.android.iconify.IconDrawable;
-import com.joanzapata.android.iconify.Iconify;
+import com.mikpenz.iconics.IconicsDrawable;
+import com.mikpenz.iconics.typeface.FontAwesome;
 import com.possebom.teamswidgets.R;
 import com.possebom.teamswidgets.controller.TWController;
 import com.possebom.teamswidgets.model.Match;
@@ -41,21 +40,21 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
         final Context context = viewHolder.textViewDate.getContext();
         final Match match = team.getMatches().get(i);
         viewHolder.textViewDate.setText(match.getDateFormatted());
-        setIcon(viewHolder.textViewDate, Iconify.IconValue.fa_calendar);
+        setIcon(viewHolder.textViewDate, FontAwesome.Icon.faw_calendar);
 
         viewHolder.textViewTimeRemain.setText(match.getTimeRemaining(context));
-        setIcon(viewHolder.textViewTimeRemain, Iconify.IconValue.fa_clock_o);
+        setIcon(viewHolder.textViewTimeRemain, FontAwesome.Icon.faw_clock_o);
 
         viewHolder.textViewLeague.setText(match.getLeague());
-        setIcon(viewHolder.textViewLeague, Iconify.IconValue.fa_trophy);
+        setIcon(viewHolder.textViewLeague, FontAwesome.Icon.faw_trophy);
         if (match.getTransmission().isEmpty()) {
             viewHolder.textViewTransmission.setVisibility(View.GONE);
         } else {
             viewHolder.textViewTransmission.setText(match.getTransmission());
-            setIcon(viewHolder.textViewTransmission, Iconify.IconValue.fa_eye);
+            setIcon(viewHolder.textViewTransmission, FontAwesome.Icon.faw_eye);
         }
         viewHolder.textViewPlace.setText(match.getPlace());
-        setIcon(viewHolder.textViewPlace, Iconify.IconValue.fa_location_arrow);
+        setIcon(viewHolder.textViewPlace, FontAwesome.Icon.faw_location_arrow);
 
         String urlOpponent = TWController.INSTANCE.getDao().getTeamLogoUrlByName(match.getVisitingTeam());
 
@@ -85,8 +84,8 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
                 .into(imageView);
     }
 
-    private void setIcon(TextView textview, Iconify.IconValue iconId) {
-        final Drawable drawable = new IconDrawable(textview.getContext(), iconId).colorRes(R.color.secondary).sizeDp(20);
+    private void setIcon(final TextView textview, final FontAwesome.Icon icon) {
+        final IconicsDrawable drawable = new IconicsDrawable(textview.getContext(), icon).colorRes(R.color.secondary).sizeRes(R.dimen.match_drawable_left);
         textview.setCompoundDrawables(drawable, null, null, null);
     }
 

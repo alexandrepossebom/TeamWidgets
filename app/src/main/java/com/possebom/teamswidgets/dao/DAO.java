@@ -23,8 +23,11 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import hugo.weaving.DebugLog;
 import timber.log.Timber;
 
 /**
@@ -39,6 +42,7 @@ public enum DAO {
 
     private List<Team> teamList = new ArrayList<Team>();
     private SharedPreferences sharedPreferences;
+    private final Map<String,String> mapUrls = new HashMap<String,String>();
 
     private DAO() {
         String json = getSharedPreferences().getString(PREFS_KEY_JSON, null);
@@ -76,6 +80,7 @@ public enum DAO {
         return teamResult;
     }
 
+    @DebugLog
     public Team getTeamById(final int id) {
         Team teamResult = null;
 
@@ -89,15 +94,12 @@ public enum DAO {
         return teamResult;
     }
 
+    @DebugLog
     public String getTeamLogoUrlByName(final String teamName){
-        String url = null;
-        final Team team = TWController.INSTANCE.getDao().getTeamByName(teamName);
-        if (team != null) {
-            url = team.getImgUrl();
-        }
-        return url;
+        return mapUrls.get(teamName);
     }
 
+    @DebugLog
     public boolean isNeedUpdate() {
         long lastUpdate = getSharedPreferences().getLong(PREFS_KEY_LASTUPDATE, 0);
         long now = System.currentTimeMillis();
@@ -160,7 +162,7 @@ public enum DAO {
         teamList = new Gson().fromJson(json, collectionType);
 
         for(Team team: teamList){
-            Collections.sort(team.getMatches());
+            mapUrls.put(team.getName(),team.getImgUrl());
         }
 
         Timber.i("Team list size: " + teamList.size());

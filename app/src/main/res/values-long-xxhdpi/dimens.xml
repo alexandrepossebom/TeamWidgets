@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Dimensions for Samsung S5-->
+    <dimen name="widget_data_size">9sp</dimen>
+    <dimen name="widget_adve_size">18sp</dimen>
+    <dimen name="widget_padding">4dp</dimen>
+</resources>

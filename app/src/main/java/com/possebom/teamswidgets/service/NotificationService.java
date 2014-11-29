@@ -14,9 +14,11 @@ import android.support.v4.app.NotificationCompat;
 import com.possebom.teamswidgets.MainActivity;
 import com.possebom.teamswidgets.R;
 import com.possebom.teamswidgets.controller.TWController;
+import com.possebom.teamswidgets.dao.DAO;
 import com.possebom.teamswidgets.model.Match;
 import com.possebom.teamswidgets.model.Team;
 
+import hugo.weaving.DebugLog;
 import timber.log.Timber;
 
 public class NotificationService extends IntentService {
@@ -28,18 +30,14 @@ public class NotificationService extends IntentService {
         super("NotificationService");
     }
 
+    @DebugLog
     public static void scheduleNotification(final Context context, final Team team, final Match match) {
         Timber.d("scheduleNotification");
 
         final SharedPreferences prefs = context.getSharedPreferences("PREF", 0);
         long offset = prefs.getLong("OFFSET", 60 * 60 * 1000);
 
-        final Intent intent = new Intent();
-        intent.setClass(context, NotificationService.class);
-        intent.setAction(ACTION_NOTIFY);
-        intent.putExtra(EXTRA_TEAM, team.getId());
-
-        final PendingIntent pendingIntent = PendingIntent.getService(context, team.getId(), intent, 0);
+        final PendingIntent pendingIntent = getPendingIntent(context, team);
         final AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.cancel(pendingIntent);
 
@@ -48,6 +46,26 @@ public class NotificationService extends IntentService {
             Timber.d("scheduleNotification : scheduled!");
             alarmManager.set(AlarmManager.RTC_WAKEUP, alarmTime, pendingIntent);
         }
+    }
+
+    private static PendingIntent getPendingIntent(final Context context, final Team team) {
+        final Intent intent = new Intent();
+        intent.setClass(context, NotificationService.class);
+        intent.setAction(ACTION_NOTIFY);
+        intent.putExtra(EXTRA_TEAM, team.getId());
+
+        return PendingIntent.getService(context, team.getId(), intent, 0);
+    }
+
+    public static void cancelAlarmsByTeam(final Context context, final Team team) {
+        if (team != null) {
+            final AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+            alarmManager.cancel(getPendingIntent(context, team));
+        }
+    }
+
+    public static void cancelAlarmsByTeamId(final Context context, final int teamId) {
+        cancelAlarmsByTeam(context, DAO.INSTANCE.getTeamById(teamId));
     }
 
     @Override

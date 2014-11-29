@@ -24,4 +24,6 @@
     <dimen name="widgetImageSize">25dp</dimen>
     <dimen name="notification_icon_width_height">64dp</dimen>
 
+    <dimen name="match_drawable_left">20dp</dimen>
+
 </resources>
