@@ -34,14 +34,16 @@
                 android:src="@drawable/generic_team"
                 tools:ignore="UnusedAttribute"/>
 
-            <TextView
-                android:id="@+id/textView"
+            <IconicsTextView
+                android:id="@+id/textViewResult"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:paddingRight="30dp"
+                android:paddingLeft="30dp"
+                android:text="@string/result"
+                android:textColor="@android:color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingEnd="30dp"
-                android:paddingStart="30dp"
-                android:text="@string/versus"
-                android:textAppearance="?android:attr/textAppearanceLarge"/>
+                android:textSize="24sp"/>
 
             <ImageView
                 android:id="@+id/imageView02"
@@ -61,6 +63,13 @@
             android:orientation="vertical"
             android:paddingEnd="30dp"
             android:paddingStart="30dp">
+
+            <TextView
+                android:id="@+id/textViewVisitingTeam"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="5dp"
+                android:padding="5dp"/>
 
             <TextView
                 android:id="@+id/textViewDate"

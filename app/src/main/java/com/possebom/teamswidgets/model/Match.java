@@ -22,6 +22,15 @@ public class Match implements Comparable<Match> {
     private String place;
     private String homeTeam;
     private String visitingTeam;
+    private String result;
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
+    }
 
     public long getTimestamp() {
         return timestamp;

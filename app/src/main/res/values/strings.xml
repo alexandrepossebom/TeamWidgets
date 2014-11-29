@@ -28,7 +28,7 @@
     <string name="about_text">This application is a small tribute to José Altair Possebom.\n\nDeveloped by Alexandre Possebom</string>
     <string name="icon">Icon</string>
     <string name="team_image_desc">Team Icon</string>
-    <string name="versus">X</string>
+    <string name="result"> {faw-times} </string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="configure">Configure</string>
     <string name="add_widget">Add widget</string>

@@ -1,6 +1,7 @@
 package com.possebom.teamswidgets.adapters;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -31,7 +32,7 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
 
     @Override
     public ViewHolder onCreateViewHolder(final ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(rowLayout, viewGroup, false);
+        final View v = LayoutInflater.from(viewGroup.getContext()).inflate(rowLayout, viewGroup, false);
         return new ViewHolder(v);
     }
 
@@ -65,6 +66,22 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
             setTeamLogo(viewHolder.imageView01, urlOpponent);
             setTeamLogo(viewHolder.imageView02, team.getImgUrl());
         }
+
+        if (TextUtils.isEmpty(match.getResult())) {
+            viewHolder.textViewResult.setText(R.string.result);
+        } else {
+            final String result = match.getResult().replace("x", context.getString(R.string.result));
+            viewHolder.textViewResult.setText(result);
+        }
+
+        viewHolder.textViewVisitingTeam.setText(match.getVisitingTeam());
+
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               
+            }
+        });
 
     }
 
@@ -106,6 +123,8 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
         public final TextView textViewLeague;
         public final TextView textViewTransmission;
         public final TextView textViewPlace;
+        public final TextView textViewResult;
+        public final TextView textViewVisitingTeam;
         public final ImageView imageView01;
         public final ImageView imageView02;
 
@@ -118,6 +137,8 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
             textViewLeague = (TextView) itemView.findViewById(R.id.textViewLeague);
             textViewTransmission = (TextView) itemView.findViewById(R.id.textViewTransmission);
             textViewPlace = (TextView) itemView.findViewById(R.id.textViewPlace);
+            textViewResult = (TextView) itemView.findViewById(R.id.textViewResult);
+            textViewVisitingTeam = (TextView) itemView.findViewById(R.id.textViewVisitingTeam);
         }
 
     }

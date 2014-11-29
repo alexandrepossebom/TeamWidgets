@@ -57,7 +57,7 @@ public class MatchesFragment extends BaseFragment {
         mAdapter = new MatchesAdapter();
         mRecyclerView.setHasFixedSize(true);
 
-        mSectionedAdapter = new SimpleSectionedRecyclerViewAdapter(getActivity(),R.layout.section,R.id.section_text,mAdapter);
+        mSectionedAdapter = new SimpleSectionedRecyclerViewAdapter(getActivity(), R.layout.section, R.id.section_text, mAdapter);
 
         mRecyclerView.setAdapter(mSectionedAdapter);
 
@@ -106,10 +106,10 @@ public class MatchesFragment extends BaseFragment {
 
         int indexNotPlayed = team.getFirstNotPlayedPosition();
         int indexPlayed = team.getFirstPlayedPosition();
-        if(indexPlayed != -1) {
+        if (indexPlayed != -1) {
             sections.add(new SimpleSectionedRecyclerViewAdapter.Section(indexPlayed, context.getString(R.string.section_prev)));
         }
-        if(indexNotPlayed != -1) {
+        if (indexNotPlayed != -1) {
             sections.add(new SimpleSectionedRecyclerViewAdapter.Section(indexNotPlayed, context.getString(R.string.section_next)));
         }
 
@@ -126,7 +126,7 @@ public class MatchesFragment extends BaseFragment {
         dao.setDefaultTeamName(team.getId());
         mRecyclerView.startLayoutAnimation();
 
-        mRecyclerView.getLayoutManager().scrollToPosition(indexNotPlayed+sections.size());
+        mRecyclerView.getLayoutManager().scrollToPosition(indexNotPlayed + sections.size());
     }
 
 
