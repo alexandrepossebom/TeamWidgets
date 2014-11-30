@@ -94,7 +94,6 @@ public enum DAO {
         return teamResult;
     }
 
-    @DebugLog
     public String getTeamLogoUrlByName(final String teamName){
         return mapUrls.get(teamName);
     }

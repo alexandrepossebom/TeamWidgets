@@ -38,4 +38,20 @@
     <string name="section_prev">Previous Matches</string>
     <string name="section_next">Next Matches</string>
 
+
+
+    <string name="relativetime_ago">ago</string>
+    <string name="relativetime_day">a day</string>
+    <string name="relativetime_days">%1$d days</string>
+    <string name="relativetime_hour">about an hour</string>
+    <string name="relativetime_hours">%1$d hours</string>
+    <string name="relativetime_minute">about a minute</string>
+    <string name="relativetime_minutes">%1$d minutes</string>
+    <string name="relativetime_month">about a month</string>
+    <string name="relativetime_months">%1$d months</string>
+    <string name="relativetime_seconds">less than a minute</string>
+    <string name="relativetime_prefix_togo">in</string>
+    <string name="relativetime_year">about a year</string>
+    <string name="relativetime_years">%1$d years</string>
+
 </resources>

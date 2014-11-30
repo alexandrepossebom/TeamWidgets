@@ -55,7 +55,7 @@ public class MatchesFragment extends BaseFragment {
         setSwipeScrollOffset();
 
         mAdapter = new MatchesAdapter();
-        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setHasFixedSize(false);
 
         mSectionedAdapter = new SimpleSectionedRecyclerViewAdapter(getActivity(), R.layout.section, R.id.section_text, mAdapter);
 

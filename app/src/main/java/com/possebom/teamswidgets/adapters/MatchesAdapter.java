@@ -1,13 +1,15 @@
 package com.possebom.teamswidgets.adapters;
 
 import android.content.Context;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.Transformation;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mikpenz.iconics.IconicsDrawable;
@@ -16,7 +18,13 @@ import com.possebom.teamswidgets.R;
 import com.possebom.teamswidgets.controller.TWController;
 import com.possebom.teamswidgets.model.Match;
 import com.possebom.teamswidgets.model.Team;
+import com.possebom.teamswidgets.util.RelativeTime;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import timber.log.Timber;
 
 /**
  * Created by alexandre on 01/11/14.
@@ -25,25 +33,82 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
 
     private final int rowLayout;
     private Team team;
+    private List<Integer> listExpanded = new ArrayList<Integer>();
+    private boolean initialized = false;
 
     public MatchesAdapter() {
         rowLayout = R.layout.card_matches;
     }
 
-    @Override
-    public ViewHolder onCreateViewHolder(final ViewGroup viewGroup, int i) {
-        final View v = LayoutInflater.from(viewGroup.getContext()).inflate(rowLayout, viewGroup, false);
-        return new ViewHolder(v);
+    public static void expand(final View view) {
+        view.measure(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        final int targetHeight = view.getMeasuredHeight();
+
+        view.getLayoutParams().height = 0;
+        view.setVisibility(View.VISIBLE);
+        final Animation animation = new Animation() {
+            @Override
+            protected void applyTransformation(final float interpolatedTime, final Transformation transformation) {
+                view.getLayoutParams().height = interpolatedTime == 1
+                        ? LinearLayout.LayoutParams.WRAP_CONTENT
+                        : (int) (targetHeight * interpolatedTime);
+                view.requestLayout();
+            }
+
+            @Override
+            public boolean willChangeBounds() {
+                return true;
+            }
+        };
+
+        animation.setDuration(250);
+        view.startAnimation(animation);
+    }
+
+    public static void collapse(final View view) {
+        final int initialHeight = view.getMeasuredHeight();
+        final Animation animation = new Animation() {
+            @Override
+            protected void applyTransformation(final float interpolatedTime, final Transformation transformation) {
+                if (interpolatedTime == 1) {
+                    view.setVisibility(View.GONE);
+                } else {
+                    view.getLayoutParams().height = initialHeight - (int) (initialHeight * interpolatedTime);
+                    view.requestLayout();
+                }
+            }
+
+            @Override
+            public boolean willChangeBounds() {
+                return true;
+            }
+        };
+
+        animation.setDuration(250);
+        view.startAnimation(animation);
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder viewHolder, int i) {
+    public ViewHolder onCreateViewHolder(final ViewGroup viewGroup, int i) {
+        final View view = LayoutInflater.from(viewGroup.getContext()).inflate(rowLayout, viewGroup, false);
+        return new ViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(final ViewHolder viewHolder, final int i) {
         final Context context = viewHolder.textViewDate.getContext();
+
         final Match match = team.getMatches().get(i);
+
+        if(match.equals(team.getNextMatch()) && !initialized){
+            listExpanded.add(i);
+            initialized = true;
+        }
+
         viewHolder.textViewDate.setText(match.getDateFormatted());
         setIcon(viewHolder.textViewDate, FontAwesome.Icon.faw_calendar);
 
-        viewHolder.textViewTimeRemain.setText(match.getTimeRemaining(context));
+        viewHolder.textViewTimeRemain.setText(RelativeTime.getTime(context, match.getTimestamp()));
         setIcon(viewHolder.textViewTimeRemain, FontAwesome.Icon.faw_clock_o);
 
         viewHolder.textViewLeague.setText(match.getLeague());
@@ -52,10 +117,11 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
             viewHolder.textViewTransmission.setVisibility(View.GONE);
         } else {
             viewHolder.textViewTransmission.setText(match.getTransmission());
-            setIcon(viewHolder.textViewTransmission, FontAwesome.Icon.faw_eye);
+            setIcon(viewHolder.textViewTransmission, FontAwesome.Icon.faw_youtube_play);
         }
         viewHolder.textViewPlace.setText(match.getPlace());
-        setIcon(viewHolder.textViewPlace, FontAwesome.Icon.faw_location_arrow);
+        setIcon(viewHolder.textViewPlace, FontAwesome.Icon.faw_map_marker);
+        setIcon(viewHolder.textViewVisitingTeam, FontAwesome.Icon.faw_futbol_o);
 
         String urlOpponent = TWController.INSTANCE.getDao().getTeamLogoUrlByName(match.getVisitingTeam());
 
@@ -74,12 +140,40 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
             viewHolder.textViewResult.setText(result);
         }
 
+        if (listExpanded.contains(i)) {
+            viewHolder.textViewVisitingTeam.setVisibility(View.VISIBLE);
+            viewHolder.textViewTimeRemain.setVisibility(View.VISIBLE);
+            viewHolder.textViewTransmission.setVisibility(View.VISIBLE);
+            viewHolder.textViewPlace.setVisibility(View.VISIBLE);
+        } else {
+            viewHolder.textViewVisitingTeam.setVisibility(View.GONE);
+            viewHolder.textViewTimeRemain.setVisibility(View.GONE);
+            viewHolder.textViewTransmission.setVisibility(View.GONE);
+            viewHolder.textViewPlace.setVisibility(View.GONE);
+        }
+
+        if(urlOpponent == null){
+            viewHolder.textViewVisitingTeam.setVisibility(View.VISIBLE);
+        }
+
         viewHolder.textViewVisitingTeam.setText(match.getVisitingTeam());
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               
+                if (listExpanded.contains(i)) {
+                    collapse(viewHolder.textViewVisitingTeam);
+                    collapse(viewHolder.textViewTimeRemain);
+                    collapse(viewHolder.textViewTransmission);
+                    collapse(viewHolder.textViewPlace);
+                    listExpanded.remove((Integer) i);
+                } else {
+                    expand(viewHolder.textViewVisitingTeam);
+                    expand(viewHolder.textViewTimeRemain);
+                    expand(viewHolder.textViewTransmission);
+                    expand(viewHolder.textViewPlace);
+                    listExpanded.add(i);
+                }
             }
         });
 
@@ -142,4 +236,7 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
         }
 
     }
+
+
+
 }

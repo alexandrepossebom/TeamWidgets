@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
+import android.text.format.DateUtils;
 
 import com.possebom.teamswidgets.R;
 
@@ -72,39 +73,8 @@ public class Match implements Comparable<Match> {
         return place;
     }
 
-    public String getTimeRemaining(final Context context) {
-        final Resources res = context.getResources();
-        final String and = context.getString(R.string.and);
-
-        long diffInSeconds = (timestamp - System.currentTimeMillis()) / 1000;
-
-        if (diffInSeconds < 0) {
-            return context.getString(R.string.played);
-        }
-
-        final int minutes = (int) ((diffInSeconds = (diffInSeconds / 60)) >= 60 ? diffInSeconds % 60 : diffInSeconds);
-        final int hours = (int) ((diffInSeconds = (diffInSeconds / 60)) >= 24 ? diffInSeconds % 24 : diffInSeconds);
-        final int days = (int) (diffInSeconds / 24);
-
-        final String text;
-        if (days == 0) {
-            if (hours == 0) {
-                text = res.getQuantityString(R.plurals.minutes, minutes, minutes);
-            } else if (minutes == 0) {
-                text = res.getQuantityString(R.plurals.hours, hours, hours);
-            } else {
-                text = res.getQuantityString(R.plurals.hours, hours, hours) + and + res.getQuantityString(R.plurals.minutes, minutes, minutes);
-            }
-        } else {
-            if (hours == 0 && minutes == 0) {
-                text = res.getQuantityString(R.plurals.days, days, days);
-            } else if (hours == 0) {
-                text = res.getQuantityString(R.plurals.days, days, days) + and + res.getQuantityString(R.plurals.minutes, minutes, minutes);
-            } else {
-                text = res.getQuantityString(R.plurals.days, days, days) + and + res.getQuantityString(R.plurals.hours, hours, hours);
-            }
-        }
-        return text;
+    public boolean isAlreadyPlayed() {
+        return timestamp <= System.currentTimeMillis();
     }
 
     @Override
