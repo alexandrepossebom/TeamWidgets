@@ -1,9 +1,9 @@
 package com.possebom.teamswidgets;
 
 
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 
 import com.possebom.teamswidgets.adapters.TeamsAdapter;
 import com.possebom.teamswidgets.controller.TWController;
@@ -14,7 +14,6 @@ import com.possebom.teamswidgets.interfaces.ToolBarUtils;
 import com.possebom.teamswidgets.model.Team;
 
 import timber.log.Timber;
-
 
 public class MainActivity extends BaseActivity implements TeamsAdapter.OnTeamSelectedListener, ToolBarUtils {
 
@@ -28,12 +27,10 @@ public class MainActivity extends BaseActivity implements TeamsAdapter.OnTeamSel
             return;
         }
 
-
-        Bundle bundle = getIntent().getExtras();
+        final Bundle bundle = getIntent().getExtras();
         int teamId = 0;
         if (bundle != null) {
             teamId = bundle.getInt("teamId", 0);
-            Timber.d("aqui !!! id = "+ teamId);
         }
 
         if (teamId != 0) {
@@ -44,6 +41,12 @@ public class MainActivity extends BaseActivity implements TeamsAdapter.OnTeamSel
             onTeamSelected(TWController.INSTANCE.getDefaultTeamId());
         }
 
+    }
+
+    @Override
+    protected void onResume() {
+        Timber.d("onResume");
+        super.onResume();
     }
 
     @Override
@@ -66,13 +69,10 @@ public class MainActivity extends BaseActivity implements TeamsAdapter.OnTeamSel
         }
         fragment.setArguments(bundle);
         Timber.d("num back stack : %d", fragmentManager.getBackStackEntryCount());
-        if (fragmentManager.getFragments() != null) {
-            Timber.d("num frags : %d", fragmentManager.getFragments().size());
-        }
 
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        final FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, fragment);
-        if (fragmentManager.getFragments() != null) {
+        if (fragmentManager.getBackStackEntryCount() > 0) {
             fragmentTransaction.addToBackStack(null);
         }
         fragmentTransaction.commit();

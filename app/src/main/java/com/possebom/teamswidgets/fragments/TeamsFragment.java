@@ -65,6 +65,7 @@ public class TeamsFragment extends BaseFragment {
         super.onResume();
         bus.register(this);
         dao.update();
+        toolBarUtils.showToolBar();
         Timber.d("onResume");
     }
 

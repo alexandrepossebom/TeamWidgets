@@ -29,8 +29,8 @@ def getDate() {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:support-v4:21.0.2'
-    compile "com.android.support:appcompat-v7:21.0.2"
+    compile 'com.android.support:support-v4:21.0.3'
+    compile "com.android.support:appcompat-v7:21.0.3"
     compile 'com.android.support:recyclerview-v7:21.0.0'
     compile 'com.android.support:cardview-v7:21.0.0'
     compile 'com.squareup.picasso:picasso:2.4.0'
@@ -39,7 +39,7 @@ dependencies {
     compile 'com.loopj.android:android-async-http:1.4.6'
     compile 'com.squareup:otto:1.3.5'
     compile 'com.jakewharton.timber:timber:2.5.0'
-    compile 'com.github.johnkil.android-progressfragment:progressfragment:1.4.0'
+    compile 'com.github.johnkil.android-progressfragment:progressfragment-native:1.4.0'
     compile 'me.tatarka.support:jobscheduler:0.1.1'
     compile 'com.mikepenz.iconics:library:0.6.0@aar'
 }
