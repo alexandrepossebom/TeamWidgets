@@ -21,19 +21,22 @@ import com.possebom.teamswidgets.service.NotificationService;
 import hugo.weaving.DebugLog;
 import timber.log.Timber;
 
-
-public class WidgetSmall extends AppWidgetProvider {
+/**
+ * Implementation of App Widget functionality.
+ * App Widget Configuration implemented in {@link WidgetLargeConfigureActivity WidgetLargeConfigureActivity}
+ */
+public class WidgetLarge extends AppWidgetProvider {
 
     private static final String EMPTY = "";
-    public static int pendingIntentId = 0;
 
     @DebugLog
     static void updateAppWidget(final Context context, final AppWidgetManager appWidgetManager, final int appWidgetId) {
         Timber.d("updateAppWidget widget id : " + appWidgetId);
-        final int teamId = WidgetSmallConfigureActivity.loadTitlePref(context, appWidgetId);
+        final int teamId = WidgetLargeConfigureActivity.loadTitlePref(context, appWidgetId);
 
         final Team team = TWController.INSTANCE.getDao().getTeamById(teamId);
         if (team == null) {
+            Timber.d("Team is null id is : " + teamId);
             return;
         }
 
@@ -42,7 +45,7 @@ public class WidgetSmall extends AppWidgetProvider {
         final Match match = team.getNextMatch();
 
         // Construct the RemoteViews object
-        final RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_small);
+        final RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_large);
 
         if (match == null) {
             views.setTextViewText(R.id.textViewOpponent, context.getString(R.string.no_data));
@@ -63,19 +66,19 @@ public class WidgetSmall extends AppWidgetProvider {
                 icon = FontAwesome.Icon.faw_home;
             }
 
-            final IconicsDrawable drawable = new IconicsDrawable(context, icon).color(Color.WHITE).sizeRes(R.dimen.widgetImageSizeSmall);
+            final IconicsDrawable drawable = new IconicsDrawable(context, icon).color(Color.WHITE).sizeRes(R.dimen.widgetImageSizeLarge);
             views.setImageViewBitmap(R.id.imageViewHomeOut, drawable.toBitmap());
         }
 
         final Intent intent = new Intent(context, MainActivity.class);
         intent.putExtra("teamId", team.getId());
-        final PendingIntent pendingIntent = PendingIntent.getActivity(context, ++pendingIntentId, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        final PendingIntent pendingIntent = PendingIntent.getActivity(context, ++WidgetSmall.pendingIntentId, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
-        views.setOnClickPendingIntent(R.id.layout_widget_small, pendingIntent);
+        views.setOnClickPendingIntent(R.id.layout_widget_large, pendingIntent);
 
         BaseApplication.getPicasso()
                 .load(team.getImgUrl())
-                .resizeDimen(R.dimen.widgetImageSizeSmall, R.dimen.widgetImageSizeSmall)
+                .resizeDimen(R.dimen.widgetImageSizeLarge, R.dimen.widgetImageSizeLarge)
                 .centerInside()
                 .into(views, R.id.imageViewTeam, new int[]{appWidgetId});
 
@@ -93,9 +96,9 @@ public class WidgetSmall extends AppWidgetProvider {
     @Override
     public void onDeleted(Context context, int[] appWidgetIds) {
         for (int appWidgetId : appWidgetIds) {
-            final int teamId = WidgetSmallConfigureActivity.loadTitlePref(context, appWidgetId);
+            final int teamId = WidgetLargeConfigureActivity.loadTitlePref(context, appWidgetId);
             NotificationService.cancelAlarmsByTeamId(context, teamId);
-            WidgetSmallConfigureActivity.deleteTitlePref(context, appWidgetId);
+            WidgetLargeConfigureActivity.deleteTitlePref(context, appWidgetId);
         }
     }
 }

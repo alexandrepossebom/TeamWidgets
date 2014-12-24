@@ -15,32 +15,31 @@ import com.possebom.teamswidgets.R;
 import com.possebom.teamswidgets.adapters.TeamsAdapter;
 import com.possebom.teamswidgets.controller.TWController;
 
-
 /**
- * The configuration screen for the {@link WidgetSmall WidgetSmall} AppWidget.
+ * The configuration screen for the {@link WidgetLarge WidgetLarge} AppWidget.
  */
-public class WidgetSmallConfigureActivity extends ActionBarActivity implements TeamsAdapter.OnTeamSelectedListener {
+public class WidgetLargeConfigureActivity extends ActionBarActivity implements TeamsAdapter.OnTeamSelectedListener {
 
-    private static final String PREFS_NAME = "com.possebom.teamswidgets.WidgetSmall";
+    private static final String PREFS_NAME = "com.possebom.teamswidgets.widgets.WidgetLarge";
     private static final String PREF_PREFIX_KEY = "appwidget_";
     int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
 
-    public WidgetSmallConfigureActivity() {
+    public WidgetLargeConfigureActivity() {
         super();
     }
 
-    static void saveTitlePref(final Context context, final int appWidgetId, final int id) {
+    public static void saveTitlePref(final Context context, final int appWidgetId, final int id) {
         final SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
         prefs.putInt(PREF_PREFIX_KEY + appWidgetId, id);
         prefs.apply();
     }
 
-    static int loadTitlePref(final Context context, final int appWidgetId) {
+    public static int loadTitlePref(final Context context, final int appWidgetId) {
         final SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
         return prefs.getInt(PREF_PREFIX_KEY + appWidgetId, 0);
     }
 
-    static void deleteTitlePref(final Context context, final int appWidgetId) {
+    public static void deleteTitlePref(final Context context, final int appWidgetId) {
         final SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
         prefs.remove(PREF_PREFIX_KEY + appWidgetId);
         prefs.apply();
@@ -98,7 +97,7 @@ public class WidgetSmallConfigureActivity extends ActionBarActivity implements T
 
         // It is the responsibility of the configuration activity to update the app widget
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
-        WidgetSmall.updateAppWidget(this, appWidgetManager, mAppWidgetId);
+        WidgetLarge.updateAppWidget(this, appWidgetManager, mAppWidgetId);
 
         // Make sure we pass back the original appWidgetId
         final Intent resultValue = new Intent();
@@ -107,3 +106,8 @@ public class WidgetSmallConfigureActivity extends ActionBarActivity implements T
         finish();
     }
 }
+
+
+
+
+

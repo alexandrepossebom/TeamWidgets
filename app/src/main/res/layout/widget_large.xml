@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+         Copyright (C) 2009 The Android Open Source Project
+
+         Licensed under the Apache License, Version 2.0 (the "License");
+         you may not use this file except in compliance with the License.
+         You may obtain a copy of the License at
+
+              http://www.apache.org/licenses/LICENSE-2.0
+
+         Unless required by applicable law or agreed to in writing, software
+         distributed under the License is distributed on an "AS IS" BASIS,
+         WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+         See the License for the specific language governing permissions and
+         limitations under the License.
+    -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_widget_large"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/widget_background"
+    android:clickable="true"
+    android:orientation="horizontal"
+    tools:ignore="Overdraw">
+
+    <ImageView
+        android:id="@+id/imageViewTeam"
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/app_name"
+        android:scaleType="center"
+        android:src="@drawable/generic_team" />
+
+    <ImageView
+        android:layout_width="1dip"
+        android:layout_height="match_parent"
+        android:background="@drawable/appwidget_divider"
+        android:contentDescription="@string/app_name" />
+
+    <LinearLayout
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:background="@android:color/transparent"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip">
+
+        <TextView
+            android:id="@+id/textViewDate"
+            style="@style/WidgetAdversario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="none"
+            android:fadingEdge="horizontal"
+            android:fadingEdgeLength="10dip"
+            android:singleLine="true"
+            android:textSize="9sp"
+            tools:ignore="SmallSp" />
+
+        <TextView
+            android:id="@+id/textViewOpponent"
+            style="@style/WidgetData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="none"
+            android:fadingEdge="horizontal"
+            android:fadingEdgeLength="10dip"
+            android:singleLine="true"
+            android:text="@string/no_data"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textViewLeague"
+            style="@style/WidgetData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="none"
+            android:fadingEdge="horizontal"
+            android:fadingEdgeLength="10dip"
+            android:singleLine="true"
+            android:textSize="9sp"
+            tools:ignore="SmallSp" />
+
+        <TextView
+            android:id="@+id/textViewPlace"
+            style="@style/WidgetData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="none"
+            android:fadingEdge="horizontal"
+            android:fadingEdgeLength="10dip"
+            android:singleLine="true"
+            android:textSize="9sp"
+            tools:ignore="SmallSp" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="1dip"
+        android:layout_height="match_parent"
+        android:background="@drawable/appwidget_divider"
+        android:contentDescription="@string/app_name" />
+
+    <ImageView
+        android:id="@+id/imageViewHomeOut"
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/app_name"
+        android:scaleType="center" />
+
+</LinearLayout>

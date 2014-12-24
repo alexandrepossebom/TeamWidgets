@@ -143,7 +143,7 @@ public abstract class BaseActivity extends ActionBarActivity {
     @DebugLog
     private void setIconDrawer(int resId, FontAwesome.Icon iconId) {
         final ImageView imageView = (ImageView) mDrawerList.findViewById(resId);
-        final IconicsDrawable drawable = new IconicsDrawable(this, iconId).colorRes(R.color.secondary).sizeRes(R.dimen.widgetImageSize);
+        final IconicsDrawable drawable = new IconicsDrawable(this, iconId).colorRes(R.color.secondary).sizeRes(R.dimen.widgetImageSizeSmall);
         imageView.setImageDrawable(drawable);
     }
 
