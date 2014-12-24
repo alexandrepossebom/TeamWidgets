@@ -7,9 +7,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.possebom.teamswidgets.BaseApplication;
 import com.possebom.teamswidgets.R;
 import com.possebom.teamswidgets.model.Team;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,11 +45,11 @@ public class TeamsAdapter extends RecyclerView.Adapter<TeamsAdapter.ViewHolder> 
 
         viewHolder.name.setText(team.getName());
 
-        Picasso.with(viewHolder.image.getContext())
+        BaseApplication.getPicasso()
                 .load(team.getImgUrl())
                 .error(R.drawable.generic_team)
                 .centerInside()
-                .resizeDimen(R.dimen.detail_team_image_size,R.dimen.detail_team_image_size)
+                .resizeDimen(R.dimen.detail_team_image_size, R.dimen.detail_team_image_size)
                 .into(viewHolder.image);
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {

@@ -6,18 +6,17 @@ import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.text.TextUtils;
 import android.widget.RemoteViews;
 
 import com.mikpenz.iconics.IconicsDrawable;
 import com.mikpenz.iconics.typeface.FontAwesome;
+import com.possebom.teamswidgets.BaseApplication;
 import com.possebom.teamswidgets.MainActivity;
 import com.possebom.teamswidgets.R;
 import com.possebom.teamswidgets.controller.TWController;
 import com.possebom.teamswidgets.model.Match;
 import com.possebom.teamswidgets.model.Team;
 import com.possebom.teamswidgets.service.NotificationService;
-import com.squareup.picasso.Picasso;
 
 import hugo.weaving.DebugLog;
 import timber.log.Timber;
@@ -50,7 +49,7 @@ public class WidgetSmall extends AppWidgetProvider {
             views.setTextViewText(R.id.textViewPlace, EMPTY);
             views.setTextViewText(R.id.textViewDate, EMPTY);
             views.setImageViewBitmap(R.id.imageViewHomeOut, null);
-        }else {
+        } else {
             NotificationService.scheduleNotification(context, team, match);
 
             views.setTextViewText(R.id.textViewOpponent, match.getVisitingTeam());
@@ -73,7 +72,7 @@ public class WidgetSmall extends AppWidgetProvider {
 
         views.setOnClickPendingIntent(R.id.layout_widget_small, pendingIntent);
 
-        Picasso.with(context)
+        BaseApplication.getPicasso()
                 .load(team.getImgUrl())
                 .resizeDimen(R.dimen.widgetImageSize, R.dimen.widgetImageSize)
                 .centerInside()

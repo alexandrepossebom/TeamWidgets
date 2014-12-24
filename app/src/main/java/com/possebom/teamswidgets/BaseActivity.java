@@ -2,7 +2,6 @@ package com.possebom.teamswidgets;
 
 import android.app.FragmentManager;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -19,7 +18,6 @@ import com.mikpenz.iconics.typeface.FontAwesome;
 import com.possebom.teamswidgets.controller.TWController;
 import com.possebom.teamswidgets.dao.DAO;
 import com.possebom.teamswidgets.model.Team;
-import com.squareup.picasso.Picasso;
 import com.tundem.aboutlibraries.Libs;
 import com.tundem.aboutlibraries.ui.LibsActivity;
 
@@ -120,7 +118,7 @@ public abstract class BaseActivity extends ActionBarActivity {
     @DebugLog
     protected void setupDrawerCover(final Team team) {
         final ImageView drawerCover = (ImageView) findViewById(R.id.imageview_drawer_cover);
-        Picasso.with(this)
+        BaseApplication.getPicasso()
                 .load("http://possebom.com/widgets/soccer.jpg")
                 .placeholder(android.R.color.holo_green_dark)
                 .into(drawerCover);
@@ -133,7 +131,7 @@ public abstract class BaseActivity extends ActionBarActivity {
         final TextView textViewCoverTeamName = (TextView) findViewById(R.id.textview_cover_team_name);
         final TextView textViewCoverTeamDescription = (TextView) findViewById(R.id.textview_cover_team_description);
 
-        Picasso.with(this)
+        BaseApplication.getPicasso()
                 .load(team.getImgUrl())
                 .placeholder(R.drawable.generic_team)
                 .into(teamDrawer);
