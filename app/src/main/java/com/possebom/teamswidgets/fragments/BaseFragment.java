@@ -93,7 +93,7 @@ public abstract class BaseFragment extends ProgressFragment {
     public void onActivityCreated(final Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setContentView(mContentView);
-        setEmptyText("lala");
+        setEmptyText(R.string.no_data);
     }
 
 }

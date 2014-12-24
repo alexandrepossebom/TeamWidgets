@@ -99,5 +99,3 @@ public class WidgetSmall extends AppWidgetProvider {
         }
     }
 }
-
-

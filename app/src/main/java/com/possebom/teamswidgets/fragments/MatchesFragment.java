@@ -86,6 +86,7 @@ public class MatchesFragment extends BaseFragment {
     @Subscribe
     public void onUpdateError(ErrorOnUpdateEvent event) {
         Timber.d("onUpdateError");
+        setContentShown(true);
         setContentEmpty(true);
         swipeRefreshLayout.setRefreshing(false);
     }

@@ -54,5 +54,6 @@
 
     <string name="my_googleplus">https://plus.google.com/+AlexandrePossebom/posts</string>
     <string name="my_twitter">http://twitter.com/possebom</string>
+    <string name="download_error">Ocorreu um erro ao fazer o download</string>
 
 </resources>
