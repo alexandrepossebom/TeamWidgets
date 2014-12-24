@@ -16,4 +16,9 @@
     <!-- secondary colors for drawer -->
     <color name="list_background_secondary_normal">#F2F2F2</color>
 
+    <color name="light_blue_100">#B3E5FC</color>
+    <color name="light_blue_300">#4FC3F7</color>
+    <color name="light_blue_500">#03A9F4</color>
+    <color name="light_blue_900">#01579B</color>
+
 </resources>

@@ -22,9 +22,13 @@ public class TeamsAdapter extends RecyclerView.Adapter<TeamsAdapter.ViewHolder> 
     private final OnTeamSelectedListener mCallback;
     private List<Team> teamList;
 
-    public TeamsAdapter(OnTeamSelectedListener mCallback) {
-        teamList = new ArrayList<Team>();
-        this.rowLayout = R.layout.card_teams;
+    public TeamsAdapter(final OnTeamSelectedListener mCallback) {
+        this(mCallback, R.layout.card_teams);
+    }
+
+    public TeamsAdapter(final OnTeamSelectedListener mCallback, final int layoutId) {
+        teamList = new ArrayList<>();
+        this.rowLayout = layoutId;
         this.mCallback = mCallback;
     }
 
@@ -73,7 +77,7 @@ public class TeamsAdapter extends RecyclerView.Adapter<TeamsAdapter.ViewHolder> 
         public final TextView name;
         public final ImageView image;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(final View itemView) {
             super(itemView);
             name = (TextView) itemView.findViewById(R.id.teamName);
             image = (ImageView) itemView.findViewById(R.id.teamImage);
