@@ -96,6 +96,7 @@
     <orderEntry type="library" exported="" name="hugo-annotations-1.1.0" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-21.0.3" level="project" />
     <orderEntry type="library" exported="" name="timber-2.5.0" level="project" />
+    <orderEntry type="library" exported="" name="butterknife-6.0.0" level="project" />
     <orderEntry type="library" exported="" name="progressfragment-native-1.4.0" level="project" />
     <orderEntry type="library" exported="" name="library-4.0.1" level="project" />
     <orderEntry type="library" exported="" name="picasso-2.4.0" level="project" />

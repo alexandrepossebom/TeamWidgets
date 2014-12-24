@@ -145,6 +145,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:id="@+id/drawer_plus"
         android:layout_height="@dimen/drawer_secondary"
         android:background="@drawable/button_rect_list_secondary"
         android:clickable="true">

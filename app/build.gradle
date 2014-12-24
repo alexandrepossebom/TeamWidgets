@@ -42,4 +42,5 @@ dependencies {
     compile 'com.github.johnkil.android-progressfragment:progressfragment-native:1.4.0'
     compile 'me.tatarka.support:jobscheduler:0.1.1'
     compile 'com.mikepenz.iconics:library:0.6.0@aar'
+    compile 'com.jakewharton:butterknife:6.0.0'
 }

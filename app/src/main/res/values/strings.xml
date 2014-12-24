@@ -38,8 +38,6 @@
     <string name="section_prev">Previous Matches</string>
     <string name="section_next">Next Matches</string>
 
-
-
     <string name="relativetime_ago">ago</string>
     <string name="relativetime_day">a day</string>
     <string name="relativetime_days">%1$d days</string>
@@ -53,5 +51,8 @@
     <string name="relativetime_prefix_togo">in</string>
     <string name="relativetime_year">about a year</string>
     <string name="relativetime_years">%1$d years</string>
+
+    <string name="my_googleplus">https://plus.google.com/+AlexandrePossebom/posts</string>
+    <string name="my_twitter">http://twitter.com/possebom</string>
 
 </resources>

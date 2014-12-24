@@ -1,8 +1,9 @@
 package com.possebom.teamswidgets;
 
-
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.possebom.teamswidgets.adapters.TeamsAdapter;
@@ -13,14 +14,17 @@ import com.possebom.teamswidgets.fragments.TeamsFragment;
 import com.possebom.teamswidgets.interfaces.ToolBarUtils;
 import com.possebom.teamswidgets.model.Team;
 
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import timber.log.Timber;
 
 public class MainActivity extends BaseActivity implements TeamsAdapter.OnTeamSelectedListener, ToolBarUtils {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         Timber.d("onCreate");
         super.onCreate(savedInstanceState);
+        ButterKnife.inject(this);
         TWController.INSTANCE.getBus().register(this);
 
         if (savedInstanceState != null) {
@@ -90,7 +94,7 @@ public class MainActivity extends BaseActivity implements TeamsAdapter.OnTeamSel
         setupDrawerCover(team);
         TWController.INSTANCE.setDefaultTeam(teamId);
         Timber.d("selectTeam : %s", team.getName());
-        Bundle bundle = new Bundle();
+        final Bundle bundle = new Bundle();
         bundle.putInt("teamId", teamId);
         showFragment(Frag.MATCHES, bundle);
     }
@@ -109,4 +113,24 @@ public class MainActivity extends BaseActivity implements TeamsAdapter.OnTeamSel
     public void setTitle(final String title) {
         toolbar.setTitle(title);
     }
+
+    @OnClick(R.id.drawer_plus)
+    public void clickPlus() {
+        final Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.addCategory(Intent.CATEGORY_BROWSABLE);
+        intent.setData(Uri.parse(getString(R.string.my_googleplus)));
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.drawer_twitter)
+    public void clickTwitter() {
+        final Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.addCategory(Intent.CATEGORY_BROWSABLE);
+        intent.setData(Uri.parse(getString(R.string.my_twitter)));
+        startActivity(intent);
+    }
+
+
 }

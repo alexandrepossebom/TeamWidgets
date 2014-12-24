@@ -36,7 +36,6 @@ public class MatchesFragment extends BaseFragment {
     private SimpleSectionedRecyclerViewAdapter mSectionedAdapter;
     private int teamId;
 
-
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
         mContentView = inflater.inflate(R.layout.fragment_matches, container, false);
@@ -74,6 +73,7 @@ public class MatchesFragment extends BaseFragment {
         Timber.d("onResume");
         bus.register(this);
         dao.update();
+        toolBarUtils.showToolBar();
     }
 
     @Override
