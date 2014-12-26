@@ -170,7 +170,9 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
                     collapse(viewHolder.textViewPlace);
                     listExpanded.remove((Integer) i);
                 } else {
-                    expand(viewHolder.textViewVisitingTeam);
+                    if (viewHolder.textViewVisitingTeam.getVisibility() != View.VISIBLE) {
+                        expand(viewHolder.textViewVisitingTeam);
+                    }
                     expand(viewHolder.textViewTimeRemain);
                     if (!viewHolder.textViewTransmission.getText().toString().isEmpty()) {
                         expand(viewHolder.textViewTransmission);
