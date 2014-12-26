@@ -4,13 +4,13 @@
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
     android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
     android:orientation="horizontal">
 
     <TextView
         android:id="@+id/teamName"
         android:layout_width="match_parent"
         android:layout_height="72dp"
-        android:background="@drawable/clickable_background"
         android:clickable="false"
         android:gravity="center_vertical"
         android:paddingLeft="80dp"
