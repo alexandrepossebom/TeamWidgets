@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawerList"
     android:layout_width="@dimen/drawer_width"
     android:layout_height="match_parent"
@@ -20,16 +21,17 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:scaleType="fitXY"
-            android:src="#c6c6c6" />
+            android:src="#c6c6c6"
+            tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/imageview_team_drawer"
             android:layout_width="64dp"
             android:layout_height="64dp"
-            android:src="@drawable/generic_team"
-            android:layout_marginTop="24dp"
             android:layout_above="@+id/gradient"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="24dp"
+            android:src="@drawable/generic_team" />
 
         <LinearLayout
             android:id="@+id/gradient"
@@ -145,10 +147,10 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:id="@+id/drawer_plus"
         android:layout_height="@dimen/drawer_secondary"
         android:background="@drawable/button_rect_list_secondary"
-        android:clickable="true">
+        android:clickable="true"
+        android:onClick="clickPlus">
 
         <ImageView
             android:id="@+id/drawer_plus_icon"
@@ -177,11 +179,11 @@
         android:background="@color/dividers" />
 
     <LinearLayout
-        android:id="@+id/drawer_twitter"
         android:layout_width="match_parent"
         android:layout_height="@dimen/drawer_secondary"
         android:background="@drawable/button_rect_list_secondary"
-        android:clickable="true">
+        android:clickable="true"
+        android:onClick="clickTwitter">
 
         <ImageView
             android:id="@+id/drawer_twitter_icon"

@@ -121,7 +121,7 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
         setIcon(viewHolder.textViewPlace, FontAwesome.Icon.faw_map_marker);
         setIcon(viewHolder.textViewVisitingTeam, FontAwesome.Icon.faw_futbol_o);
 
-        String urlOpponent = TWController.INSTANCE.getDao().getTeamLogoUrlByName(match.getVisitingTeam());
+        final String urlOpponent = TWController.INSTANCE.getDao().getTeamLogoUrlByName(match.getVisitingTeam());
 
         if (match.getHome()) {
             setTeamLogo(viewHolder.imageView01, team.getImgUrl());
@@ -137,23 +137,26 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
             final String result = match.getResult().replace("x", context.getString(R.string.result));
             viewHolder.textViewResult.setText(result);
         }
+        viewHolder.textViewVisitingTeam.setVisibility(View.GONE);
 
         if (listExpanded.contains(i)) {
             viewHolder.textViewVisitingTeam.setVisibility(View.VISIBLE);
             viewHolder.textViewTimeRemain.setVisibility(View.VISIBLE);
-            if (!viewHolder.textViewTransmission.getText().toString().isEmpty()) {
+            viewHolder.textViewPlace.setVisibility(View.VISIBLE);
+            if (!TextUtils.isEmpty(viewHolder.textViewTransmission.getText())) {
                 viewHolder.textViewTransmission.setVisibility(View.VISIBLE);
             }
-            viewHolder.textViewPlace.setVisibility(View.VISIBLE);
         } else {
             viewHolder.textViewVisitingTeam.setVisibility(View.GONE);
             viewHolder.textViewTimeRemain.setVisibility(View.GONE);
-            viewHolder.textViewTransmission.setVisibility(View.GONE);
             viewHolder.textViewPlace.setVisibility(View.GONE);
+            if (!TextUtils.isEmpty(viewHolder.textViewTransmission.getText())) {
+                viewHolder.textViewTransmission.setVisibility(View.GONE);
+            }
         }
 
-        if (urlOpponent == null) {
-            viewHolder.textViewVisitingTeam.setVisibility(View.VISIBLE);
+        if (TextUtils.isEmpty(urlOpponent)) {
+            expand(viewHolder.textViewVisitingTeam);
         }
 
         viewHolder.textViewVisitingTeam.setText(match.getVisitingTeam());

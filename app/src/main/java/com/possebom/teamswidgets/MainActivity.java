@@ -5,6 +5,7 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 
 import com.possebom.teamswidgets.adapters.TeamsAdapter;
 import com.possebom.teamswidgets.controller.TWController;
@@ -14,8 +15,6 @@ import com.possebom.teamswidgets.fragments.TeamsFragment;
 import com.possebom.teamswidgets.interfaces.ToolBarUtils;
 import com.possebom.teamswidgets.model.Team;
 
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import timber.log.Timber;
 
 public class MainActivity extends BaseActivity implements TeamsAdapter.OnTeamSelectedListener, ToolBarUtils {
@@ -24,7 +23,6 @@ public class MainActivity extends BaseActivity implements TeamsAdapter.OnTeamSel
     protected void onCreate(final Bundle savedInstanceState) {
         Timber.d("onCreate");
         super.onCreate(savedInstanceState);
-        ButterKnife.inject(this);
         TWController.INSTANCE.getBus().register(this);
 
         if (savedInstanceState != null) {
@@ -114,8 +112,7 @@ public class MainActivity extends BaseActivity implements TeamsAdapter.OnTeamSel
         toolbar.setTitle(title);
     }
 
-    @OnClick(R.id.drawer_plus)
-    public void clickPlus() {
+    public void clickPlus(final View view) {
         final Intent intent = new Intent();
         intent.setAction(Intent.ACTION_VIEW);
         intent.addCategory(Intent.CATEGORY_BROWSABLE);
@@ -123,8 +120,7 @@ public class MainActivity extends BaseActivity implements TeamsAdapter.OnTeamSel
         startActivity(intent);
     }
 
-    @OnClick(R.id.drawer_twitter)
-    public void clickTwitter() {
+    public void clickTwitter(final View view) {
         final Intent intent = new Intent();
         intent.setAction(Intent.ACTION_VIEW);
         intent.addCategory(Intent.CATEGORY_BROWSABLE);

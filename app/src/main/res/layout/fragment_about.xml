@@ -1,19 +1,19 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context="com.possebom.teamswidgets.fragments.AboutFragment">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.possebom.teamswidgets.fragments.AboutFragment">
 
-    <View xmlns:android="http://schemas.android.com/apk/res/android"
+    <View
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:minHeight="?attr/actionBarSize" />
 
     <TextView
-        android:layout_marginTop="?attr/actionBarSize"
         android:id="@+id/textview_about"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/about_text"/>
+        android:layout_marginTop="?attr/actionBarSize"
+        android:text="@string/about_text" />
 
 </FrameLayout>

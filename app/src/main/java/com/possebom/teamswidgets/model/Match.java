@@ -1,12 +1,8 @@
 package com.possebom.teamswidgets.model;
 
-import android.content.Context;
-import android.content.res.Resources;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
-import android.text.format.DateUtils;
-
-import com.possebom.teamswidgets.R;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -38,7 +34,7 @@ public class Match implements Comparable<Match> {
     }
 
     public String getDateFormatted() {
-        if(date == null) {
+        if (date == null) {
             date = GregorianCalendar.getInstance();
             date.setTimeInMillis(timestamp);
         }
@@ -78,7 +74,7 @@ public class Match implements Comparable<Match> {
     }
 
     @Override
-    public int compareTo(Match another) {
+    public int compareTo(@NonNull Match another) {
         if (this.timestamp < another.getTimestamp()) {
             return -1;
         }
