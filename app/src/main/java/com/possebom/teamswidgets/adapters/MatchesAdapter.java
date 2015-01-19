@@ -156,7 +156,7 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
         }
 
         if (TextUtils.isEmpty(urlOpponent)) {
-            expand(viewHolder.textViewVisitingTeam);
+            viewHolder.textViewVisitingTeam.setVisibility(View.VISIBLE);
         }
 
         viewHolder.textViewVisitingTeam.setText(match.getVisitingTeam());

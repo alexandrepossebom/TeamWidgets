@@ -9,6 +9,7 @@ import java.util.List;
 public class Team {
 
     private String name;
+    private String completeName;
     private String imgUrl;
     private List<Match> matches = new ArrayList<Match>();
     private Match nextMatch;
@@ -95,5 +96,13 @@ public class Team {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getCompleteName() {
+        return completeName;
+    }
+
+    public void setCompleteName(String completeName) {
+        this.completeName = completeName;
     }
 }

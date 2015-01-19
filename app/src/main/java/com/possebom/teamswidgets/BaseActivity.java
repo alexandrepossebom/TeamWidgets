@@ -137,7 +137,7 @@ public abstract class BaseActivity extends ActionBarActivity {
                 .into(teamDrawer);
 
         textViewCoverTeamName.setText(team.getName());
-        textViewCoverTeamDescription.setText(team.getName());
+        textViewCoverTeamDescription.setText(team.getCompleteName());
     }
 
     @DebugLog

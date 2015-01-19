@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">TeamsWidgets</string>
-    <string name="drawer_opensource">Open Source</string>
-    <string name="twitter">Twitter</string>
-    <string name="google_plus">Google Plus</string>
-    <string name="drawer_open">Slider Menu Opened</string>
-    <string name="drawer_close">Slider Menu Closed</string>
+    <string name="app_name">Next matches</string>
+    <string name="drawer_opensource" translatable="false">Open Source</string>
+    <string name="twitter" translatable="false">Twitter</string>
+    <string name="google_plus" translatable="false">Google Plus</string>
+    <string name="drawer_open" translatable="false">Slider Menu Opened</string>
+    <string name="drawer_close" translatable="false">Slider Menu Closed</string>
     <string name="played">Played</string>
 
     <plurals name="days">
@@ -28,8 +28,7 @@
     <string name="about_text">This application is a small tribute to José Altair Possebom.\n\nDeveloped by Alexandre Possebom</string>
     <string name="icon">Icon</string>
     <string name="team_image_desc">Team Icon</string>
-    <string name="result"> {faw-times} </string>
-    <string name="appwidget_text">EXAMPLE</string>
+    <string name="result" translatable="false"> {faw-times} </string>
     <string name="configure">Configure</string>
     <string name="add_widget">Add widget</string>
     <string name="no_data">No Data</string>
@@ -52,8 +51,8 @@
     <string name="relativetime_year">about a year</string>
     <string name="relativetime_years">%1$d years</string>
 
-    <string name="my_googleplus">https://plus.google.com/+AlexandrePossebom/posts</string>
-    <string name="my_twitter">http://twitter.com/possebom</string>
-    <string name="download_error">Ocorreu um erro ao fazer o download</string>
+    <string name="my_googleplus" translatable="false">https://plus.google.com/+AlexandrePossebom/posts</string>
+    <string name="my_twitter" translatable="false">http://twitter.com/possebom</string>
+    <string name="download_error">Error while try download</string>
 
 </resources>
