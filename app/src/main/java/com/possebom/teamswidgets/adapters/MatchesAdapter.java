@@ -20,6 +20,7 @@ import com.possebom.teamswidgets.controller.TWController;
 import com.possebom.teamswidgets.model.Match;
 import com.possebom.teamswidgets.model.Team;
 import com.possebom.teamswidgets.util.RelativeTime;
+import com.possebom.teamswidgets.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -121,15 +122,14 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
         setIcon(viewHolder.textViewPlace, FontAwesome.Icon.faw_map_marker);
         setIcon(viewHolder.textViewVisitingTeam, FontAwesome.Icon.faw_futbol_o);
 
-        final String urlOpponent = TWController.INSTANCE.getDao().getTeamLogoUrlByName(match.getVisitingTeam());
-
-        if (match.getHome()) {
-            setTeamLogo(viewHolder.imageView01, team.getImgUrl());
-            setTeamLogo(viewHolder.imageView02, urlOpponent);
-        } else {
-            setTeamLogo(viewHolder.imageView01, urlOpponent);
-            setTeamLogo(viewHolder.imageView02, team.getImgUrl());
+        String urlOpponent = TWController.INSTANCE.getDao().getTeamLogoUrlByName(match.getVisitingTeam());
+        if (TextUtils.isEmpty(urlOpponent)) {
+            urlOpponent = Utils.generateTeamLogoURL(match.getVisitingTeam());
         }
+
+        setTeamLogo(viewHolder.imageView01, match.getHome() ? team.getImgUrl() : urlOpponent);
+        setTeamLogo(viewHolder.imageView02, !match.getHome() ? team.getImgUrl() : urlOpponent);
+
 
         if (TextUtils.isEmpty(match.getResult())) {
             viewHolder.textViewResult.setText(R.string.result);
@@ -137,26 +137,19 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
             final String result = match.getResult().replace("x", context.getString(R.string.result));
             viewHolder.textViewResult.setText(result);
         }
-        viewHolder.textViewVisitingTeam.setVisibility(View.GONE);
 
         if (listExpanded.contains(i)) {
-            viewHolder.textViewVisitingTeam.setVisibility(View.VISIBLE);
             viewHolder.textViewTimeRemain.setVisibility(View.VISIBLE);
             viewHolder.textViewPlace.setVisibility(View.VISIBLE);
             if (!TextUtils.isEmpty(viewHolder.textViewTransmission.getText())) {
                 viewHolder.textViewTransmission.setVisibility(View.VISIBLE);
             }
         } else {
-            viewHolder.textViewVisitingTeam.setVisibility(View.GONE);
             viewHolder.textViewTimeRemain.setVisibility(View.GONE);
             viewHolder.textViewPlace.setVisibility(View.GONE);
             if (!TextUtils.isEmpty(viewHolder.textViewTransmission.getText())) {
                 viewHolder.textViewTransmission.setVisibility(View.GONE);
             }
-        }
-
-        if (TextUtils.isEmpty(urlOpponent)) {
-            viewHolder.textViewVisitingTeam.setVisibility(View.VISIBLE);
         }
 
         viewHolder.textViewVisitingTeam.setText(match.getVisitingTeam());
@@ -165,7 +158,6 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
             @Override
             public void onClick(View v) {
                 if (listExpanded.contains(i)) {
-                    collapse(viewHolder.textViewVisitingTeam);
                     collapse(viewHolder.textViewTimeRemain);
                     if (!viewHolder.textViewTransmission.getText().toString().isEmpty()) {
                         collapse(viewHolder.textViewTransmission);
@@ -173,9 +165,6 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
                     collapse(viewHolder.textViewPlace);
                     listExpanded.remove((Integer) i);
                 } else {
-                    if (viewHolder.textViewVisitingTeam.getVisibility() != View.VISIBLE) {
-                        expand(viewHolder.textViewVisitingTeam);
-                    }
                     expand(viewHolder.textViewTimeRemain);
                     if (!viewHolder.textViewTransmission.getText().toString().isEmpty()) {
                         expand(viewHolder.textViewTransmission);

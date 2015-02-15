@@ -6,6 +6,7 @@ import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.widget.RemoteViews;
 
 import com.mikpenz.iconics.IconicsDrawable;
@@ -17,6 +18,7 @@ import com.possebom.teamswidgets.controller.TWController;
 import com.possebom.teamswidgets.model.Match;
 import com.possebom.teamswidgets.model.Team;
 import com.possebom.teamswidgets.service.NotificationService;
+import com.possebom.teamswidgets.service.UpdateService;
 
 import hugo.weaving.DebugLog;
 import timber.log.Timber;
@@ -87,14 +89,17 @@ public class WidgetLarge extends AppWidgetProvider {
     }
 
     @Override
-    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+    public void onUpdate(final Context context, final AppWidgetManager appWidgetManager, final int[] appWidgetIds) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP && TWController.INSTANCE.getDao().isNeedUpdate()) {
+            context.startService(new Intent(context.getApplicationContext(), UpdateService.class));
+        }
         for (int appWidgetId : appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId);
         }
     }
 
     @Override
-    public void onDeleted(Context context, int[] appWidgetIds) {
+    public void onDeleted(final Context context, final int[] appWidgetIds) {
         for (int appWidgetId : appWidgetIds) {
             final int teamId = WidgetLargeConfigureActivity.loadTitlePref(context, appWidgetId);
             NotificationService.cancelAlarmsByTeamId(context, teamId);

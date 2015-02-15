@@ -1,15 +1,18 @@
 package com.possebom.teamswidgets.service;
 
+import android.annotation.TargetApi;
+import android.app.job.JobParameters;
+import android.app.job.JobService;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 
 import com.possebom.teamswidgets.BuildConfig;
 import com.possebom.teamswidgets.controller.TWController;
 
-import me.tatarka.support.job.JobParameters;
-import me.tatarka.support.job.JobService;
 import timber.log.Timber;
 
+@TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class UpdateJobService extends JobService {
 
     private static final String PREFS_NAME = "TeamPref";
