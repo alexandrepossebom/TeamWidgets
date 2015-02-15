@@ -36,7 +36,6 @@
     <string name="notification_alert">Match %1$s x %2$s</string>
     <string name="section_prev">Previous Matches</string>
     <string name="section_next">Next Matches</string>
-
     <string name="relativetime_ago">ago</string>
     <string name="relativetime_day">a day</string>
     <string name="relativetime_days">%1$d days</string>
@@ -50,9 +49,20 @@
     <string name="relativetime_prefix_togo">in</string>
     <string name="relativetime_year">about a year</string>
     <string name="relativetime_years">%1$d years</string>
-
     <string name="my_googleplus" translatable="false">https://plus.google.com/+AlexandrePossebom/posts</string>
     <string name="my_twitter" translatable="false">http://twitter.com/possebom</string>
     <string name="download_error">Error while try download</string>
+    <string name="extension_title">Next Matches</string>
+    <string name="extension_description">Show next match</string>
+    <string name="category_team">Team</string>
+    <string name="pref_title_team">Choose your team</string>
+    <string name="category_general">General</string>
+    <string name="summary_checkbox_preference">teste de summary</string>
+    <string name="title_checkbox_preference">Update on Screen on</string>
+    <string name="title_activity_dash_clock_preference">DashClockPreferenceActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="pref_title_update_on_screen">Always update data</string>
+    <string name="pref_description_update_on_screen">Update data when screen on</string>
+    <string name="pref_description_team">Team for show next game data</string>
 
 </resources>

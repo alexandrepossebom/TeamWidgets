@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.possebom.teamswidgets" >
+<manifest
+    package="com.possebom.teamswidgets"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <application
         android:name=".BaseApplication"
@@ -16,64 +17,91 @@
         android:label="@string/app_name"
         android:supportsRtl="false"
         android:theme="@style/AppTheme"
-        tools:ignore="UnusedAttribute" >
+        tools:ignore="UnusedAttribute">
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
         <service
             android:name=".service.UpdateJobService"
             android:exported="true"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
+            android:permission="android.permission.BIND_JOB_SERVICE"/>
 
-        <receiver android:name=".widgets.WidgetSmall" >
+        <receiver android:name=".widgets.WidgetSmall">
             <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
             </intent-filter>
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/widget_small_info" />
+                android:resource="@xml/widget_small_info"/>
         </receiver>
 
-        <activity android:name=".widgets.WidgetSmallConfigureActivity" >
+        <activity android:name=".widgets.WidgetSmallConfigureActivity">
             <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
             </intent-filter>
         </activity>
 
         <service
             android:name=".service.NotificationService"
-            android:exported="false" >
+            android:exported="false">
         </service>
 
-        <receiver android:name=".widgets.WidgetLarge" >
+        <receiver android:name=".widgets.WidgetLarge">
             <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
             </intent-filter>
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/widget_large_info" />
+                android:resource="@xml/widget_large_info"/>
         </receiver>
 
-        <activity android:name=".widgets.WidgetLargeConfigureActivity" >
+        <activity android:name=".widgets.WidgetLargeConfigureActivity">
             <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
             </intent-filter>
         </activity>
 
         <service
             android:name=".service.UpdateService"
             android:enabled="true"
-            android:exported="true" >
+            android:exported="true">
         </service>
+        <service
+            android:name=".dashclock.TeamsWidgetsExtension"
+            android:icon="@drawable/ic_stat_icon_ball"
+            android:label="@string/extension_title"
+            android:permission="com.google.android.apps.dashclock.permission.READ_EXTENSION_DATA">
+            <intent-filter>
+                <action android:name="com.google.android.apps.dashclock.Extension"/>
+            </intent-filter>
+
+            <meta-data
+                android:name="protocolVersion"
+                android:value="2"/>
+            <meta-data
+                android:name="worldReadable"
+                android:value="true"/>
+            <meta-data
+                android:name="description"
+                android:value="@string/extension_description"/>
+            <meta-data
+                android:name="settingsActivity"
+                android:value=".dashclock.DashClockPreferenceActivity"/>
+        </service>
+        <activity
+            android:name=".dashclock.DashClockPreferenceActivity"
+            android:exported="true"
+            android:label="@string/app_name">
+        </activity>
     </application>
 
 </manifest>
