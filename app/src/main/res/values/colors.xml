@@ -9,11 +9,6 @@
     <color name="list_background_normal">#FCFCFC</color>
     <color name="list_background_secondary_normal">#F2F2F2</color>
 
-    <color name="primary">#4CAF50</color>
-    <color name="primary_dark">#388E3C</color>
-    <color name="primary_light">#C8E6C9</color>
     <color name="accent">#8BC34A</color>
-    <color name="icons">#FFFFFF</color>
-    <color name="divider">#B6B6B6</color>
 
 </resources>

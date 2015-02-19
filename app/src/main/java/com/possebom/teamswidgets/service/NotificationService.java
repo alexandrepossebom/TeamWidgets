@@ -35,7 +35,7 @@ public class NotificationService extends IntentService {
         Timber.d("scheduleNotification");
 
         final SharedPreferences prefs = context.getSharedPreferences("PREF", 0);
-        long offset = prefs.getLong("OFFSET", 60 * 60 * 1000);
+        final long offset = prefs.getLong("OFFSET", 60 * 60 * 1000);
 
         final PendingIntent pendingIntent = getPendingIntent(context, team);
         final AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);

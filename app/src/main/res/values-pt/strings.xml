@@ -2,7 +2,6 @@
 <resources>
 
     <string name="app_name">Próximos Jogos</string>
-    <string name="played">Jogado</string>
 
     <plurals name="days">
         <item quantity="one">%d day</item>
@@ -23,8 +22,6 @@
     <string name="about_text">Este aplicativo é uma pequena homenagem a José Altair Possebom.\n\nDesenvolvido por Alexandre Possebom</string>
     <string name="icon">Icone</string>
     <string name="team_image_desc">Ícone do time</string>
-    <string name="configure">Configurar</string>
-    <string name="add_widget">Adicionar widget</string>
     <string name="no_data">Sem dados</string>
     <string name="configure_widget">Escolha seu time</string>
     <string name="notification_alert">Jogo %1$s x %2$s</string>
@@ -46,5 +43,13 @@
     <string name="relativetime_years">%1$d anos</string>
 
     <string name="download_error">Ocorreu um erro ao fazer o download</string>
+    <string name="category_general">Geral</string>
+    <string name="category_team">Time</string>
+    <string name="extension_description">Mostra o próximo jogo</string>
+    <string name="extension_title">Próximos Jogos</string>
+    <string name="pref_description_team">Time para mostrar os dados de próximo jogo</string>
+    <string name="pref_description_update_on_screen">Atualizar os dados quando ligada a tela</string>
+    <string name="pref_title_team">Escolha seu time</string>
+    <string name="pref_title_update_on_screen">Sempre atualizar os dados</string>
 
 </resources>

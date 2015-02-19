@@ -24,8 +24,9 @@ public class SettingsFragment extends PreferenceFragment {
         final CharSequence[] charSequences = teamNamesList.toArray(new CharSequence[teamNamesList.size()]);
 
         listPreference.setEntries(charSequences);
-        if (charSequences.length > 0)
+        if (charSequences.length > 0) {
             listPreference.setDefaultValue(teamNamesList.get(0));
+        }
         listPreference.setEntryValues(charSequences);
     }
 

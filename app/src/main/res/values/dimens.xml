@@ -16,14 +16,12 @@
     <dimen name="detail_team_image_size">50dp</dimen>
     <dimen name="drawer_icon_padding">12dp</dimen>
     <dimen name="elevation">4dp</dimen>
-    <dimen name="widget_margin">8dp</dimen>
 
     <dimen name="widget_padding">3dp</dimen>
     <dimen name="widget_data_size">7sp</dimen>
     <dimen name="widget_adve_size">14sp</dimen>
     <dimen name="widgetImageSizeSmall">25dp</dimen>
     <dimen name="widgetImageSizeLarge">40dp</dimen>
-    <dimen name="notification_icon_width_height">64dp</dimen>
 
     <dimen name="match_drawable_left">20dp</dimen>
     <dimen name="item_margin">8dp</dimen>

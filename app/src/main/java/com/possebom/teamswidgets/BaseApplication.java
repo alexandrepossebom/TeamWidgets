@@ -5,12 +5,10 @@ import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.text.format.DateUtils;
 
 import com.possebom.teamswidgets.service.UpdateJobService;
-import com.possebom.teamswidgets.service.UpdateService;
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.picasso.OkHttpDownloader;

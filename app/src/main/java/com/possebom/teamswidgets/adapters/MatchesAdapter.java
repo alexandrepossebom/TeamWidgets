@@ -32,7 +32,7 @@ public class MatchesAdapter extends RecyclerView.Adapter<MatchesAdapter.ViewHold
 
     private final int rowLayout;
     private Team team;
-    private List<Integer> listExpanded = new ArrayList<Integer>();
+    private final List<Integer> listExpanded = new ArrayList<>();
     private boolean initialized = false;
 
 

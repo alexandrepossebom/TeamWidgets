@@ -17,6 +17,7 @@ public class DashClockPreferenceActivity extends ActionBarActivity {
         setSupportActionBar(toolbar);
 
         getFragmentManager().beginTransaction().replace(R.id.content_frame, new SettingsFragment()).commit();
+
     }
 
 }

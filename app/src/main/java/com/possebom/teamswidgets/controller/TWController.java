@@ -36,7 +36,7 @@ public enum TWController {
     public void setDefaultTeam(final int teamId) {
         if (this.defaultTeamId == 0 || teamId != defaultTeamId) {
             dao.setDefaultTeamName(defaultTeamId);
-            this.defaultTeamId = defaultTeamId;
+            this.defaultTeamId = teamId;
         }
     }
 }

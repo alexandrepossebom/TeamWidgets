@@ -15,18 +15,15 @@ public class SimpleSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Rec
 
     private static final int SECTION_TYPE = 0;
     private final Context mContext;
+    private final int mSectionResourceId;
+    private final int mTextResourceId;
+    private final RecyclerView.Adapter mBaseAdapter;
+    private final SparseArray<Section> mSections = new SparseArray<>();
     private boolean mValid = true;
-    private int mSectionResourceId;
-    private int mTextResourceId;
-    private LayoutInflater mLayoutInflater;
-    private RecyclerView.Adapter mBaseAdapter;
-    private SparseArray<Section> mSections = new SparseArray<Section>();
 
 
-    public SimpleSectionedRecyclerViewAdapter(Context context, int sectionResourceId, int textResourceId,
-                                              RecyclerView.Adapter baseAdapter) {
+    public SimpleSectionedRecyclerViewAdapter(final Context context, final int sectionResourceId, final int textResourceId, final RecyclerView.Adapter baseAdapter) {
 
-        mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mSectionResourceId = sectionResourceId;
         mTextResourceId = textResourceId;
         mBaseAdapter = baseAdapter;
@@ -140,9 +137,7 @@ public class SimpleSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Rec
 
     @Override
     public long getItemId(int position) {
-        return isSectionHeaderPosition(position)
-                ? Integer.MAX_VALUE - mSections.indexOfKey(position)
-                : mBaseAdapter.getItemId(sectionedPositionToPosition(position));
+        return isSectionHeaderPosition(position) ? Integer.MAX_VALUE - mSections.indexOfKey(position) : mBaseAdapter.getItemId(sectionedPositionToPosition(position));
     }
 
     @Override
@@ -152,7 +147,7 @@ public class SimpleSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Rec
 
     public static class SectionViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView title;
+        public final TextView title;
 
         public SectionViewHolder(View view, int mTextResourceid) {
             super(view);
@@ -161,9 +156,9 @@ public class SimpleSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Rec
     }
 
     public static class Section {
-        int firstPosition;
+        final int firstPosition;
+        final CharSequence title;
         int sectionedPosition;
-        CharSequence title;
 
         public Section(int firstPosition, CharSequence title) {
             this.firstPosition = firstPosition;

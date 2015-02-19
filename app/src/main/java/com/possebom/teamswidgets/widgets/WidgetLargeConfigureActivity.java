@@ -32,9 +32,9 @@ public class WidgetLargeConfigureActivity extends ActionBarActivity implements T
 
     private static final String PREFS_NAME = "com.possebom.teamswidgets.widgets.WidgetLarge";
     private static final String PREF_PREFIX_KEY = "appwidget_";
-    protected final DAO dao = TWController.INSTANCE.getDao();
-    protected final Bus bus = TWController.INSTANCE.getBus();
-    int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
+    private final DAO dao = TWController.INSTANCE.getDao();
+    private final Bus bus = TWController.INSTANCE.getBus();
+    private int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
     private RecyclerView recyclerView;
     private View mLoadingView;
     private int mShortAnimationDuration;
@@ -46,7 +46,7 @@ public class WidgetLargeConfigureActivity extends ActionBarActivity implements T
         super();
     }
 
-    public static void saveTitlePref(final Context context, final int appWidgetId, final int id) {
+    private static void saveTitlePref(final Context context, final int appWidgetId, final int id) {
         final SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
         prefs.putInt(PREF_PREFIX_KEY + appWidgetId, id);
         prefs.apply();

@@ -41,8 +41,8 @@ public enum DAO {
     private static final String PREFS_NAME = "TeamPref";
     private static final String PREFS_KEY_JSON = "json";
     private static final String PREFS_KEY_LASTUPDATE = "lastUpdate";
-    private final Map<String, String> mapUrls = new HashMap<String, String>();
-    private List<Team> teamList = new ArrayList<Team>();
+    private final Map<String, String> mapUrls = new HashMap<>();
+    private List<Team> teamList = new ArrayList<>();
     private SharedPreferences sharedPreferences;
 
     private DAO() {
