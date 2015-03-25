@@ -8,9 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LayoutAnimationController;
 
 import com.possebom.teamswidgets.R;
 import com.possebom.teamswidgets.adapters.MatchesAdapter;
@@ -116,16 +113,10 @@ public class MatchesFragment extends BaseFragment {
 
         final SimpleSectionedRecyclerViewAdapter.Section[] sectionsArray = new SimpleSectionedRecyclerViewAdapter.Section[sections.size()];
         mSectionedAdapter.setSections(sections.toArray(sectionsArray));
-
         mAdapter.setTeam(team);
-        final Animation fadeIn = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
-        fadeIn.setDuration(250);
-        LayoutAnimationController layoutAnimationController = new LayoutAnimationController(fadeIn);
-        mRecyclerView.setLayoutAnimation(layoutAnimationController);
         mRecyclerView.setOnScrollListener(mScrollListener);
         toolBarUtils.setTitle(team.getName());
         dao.setDefaultTeamName(team.getId());
-        mRecyclerView.startLayoutAnimation();
 
         mRecyclerView.getLayoutManager().scrollToPosition(indexNotPlayed + sections.size());
     }

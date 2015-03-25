@@ -8,9 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LayoutAnimationController;
 
 import com.possebom.teamswidgets.MainActivity;
 import com.possebom.teamswidgets.R;
@@ -28,14 +25,13 @@ import timber.log.Timber;
  */
 public class TeamsFragment extends BaseFragment {
 
-    private RecyclerView mRecyclerView;
     private TeamsAdapter mAdapter;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
         mContentView = inflater.inflate(R.layout.fragment_teams, container, false);
 
-        mRecyclerView = (RecyclerView) mContentView.findViewById(R.id.listTeams);
+        final RecyclerView mRecyclerView = (RecyclerView) mContentView.findViewById(R.id.listTeams);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
 
         swipeRefreshLayout = (SwipeRefreshLayout) mContentView.findViewById(R.id.swipe_layout);
@@ -53,6 +49,7 @@ public class TeamsFragment extends BaseFragment {
 
         mRecyclerView.setOnScrollListener(mScrollListener);
         mRecyclerView.setHasFixedSize(true);
+
 
         setTopPadding(mRecyclerView);
 
@@ -91,11 +88,6 @@ public class TeamsFragment extends BaseFragment {
         setContentShown(true);
         swipeRefreshLayout.setRefreshing(false);
         mAdapter.setTeamList(TWController.INSTANCE.getDao().getTeamList());
-        Animation fadeIn = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
-        fadeIn.setDuration(250);
-        LayoutAnimationController layoutAnimationController = new LayoutAnimationController(fadeIn);
-        mRecyclerView.setLayoutAnimation(layoutAnimationController);
-        mRecyclerView.startLayoutAnimation();
     }
 
 }
