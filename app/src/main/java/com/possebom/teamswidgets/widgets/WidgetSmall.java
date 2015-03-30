@@ -87,6 +87,7 @@ public class WidgetSmall extends AppWidgetProvider {
 
     @Override
     public void onUpdate(final Context context, final AppWidgetManager appWidgetManager, final int[] appWidgetIds) {
+        Timber.d("WidgetSmall onUpdate");
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP && TWController.INSTANCE.getDao().isNeedUpdate()) {
             context.startService(new Intent(context.getApplicationContext(), UpdateService.class));
         }
