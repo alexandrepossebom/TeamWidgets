@@ -99,7 +99,6 @@ public class MatchesFragment extends BaseFragment {
         setContentShown(true);
         swipeRefreshLayout.setRefreshing(false);
 
-
         final List<SimpleSectionedRecyclerViewAdapter.Section> sections = new ArrayList<>();
 
         int indexNotPlayed = team.getFirstNotPlayedPosition();

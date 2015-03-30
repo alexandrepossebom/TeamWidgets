@@ -14,6 +14,8 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.picasso.OkHttpDownloader;
 import com.squareup.picasso.Picasso;
 
+import net.danlew.android.joda.JodaTimeAndroid;
+
 import java.io.IOException;
 
 import timber.log.Timber;
@@ -36,6 +38,9 @@ public class BaseApplication extends Application {
 
     public void onCreate() {
         super.onCreate();
+
+        JodaTimeAndroid.init(this);
+
         if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
         }

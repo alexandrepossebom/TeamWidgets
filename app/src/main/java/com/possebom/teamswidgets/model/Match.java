@@ -2,16 +2,19 @@ package com.possebom.teamswidgets.model;
 
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
-import android.text.format.DateFormat;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
+import java.util.Locale;
 
 /**
  * Created by alexandre on 01/11/14.
  */
 public class Match implements Comparable<Match> {
-    private Calendar date;
+    private DateTime date;
     private long timestamp;
     private Boolean home;
     private String transmission;
@@ -30,15 +33,21 @@ public class Match implements Comparable<Match> {
     }
 
     public long getTimestamp() {
-        return timestamp;
+        if (date == null) fixDate();
+        return date.getMillis();
+    }
+
+    private void fixDate() {
+        synchronized (this) {
+            final DateTime dt = new DateTime(timestamp, DateTimeZone.forID("Brazil/East"));
+            date = dt.withZone(DateTimeZone.getDefault());
+        }
     }
 
     public String getDateFormatted() {
-        if (date == null) {
-            date = GregorianCalendar.getInstance();
-            date.setTimeInMillis(timestamp);
-        }
-        String strDate = DateFormat.format("dd/MM (E) kk:mm", date).toString();
+        if (date == null) fixDate();
+        DateTimeFormatter fmt = DateTimeFormat.forPattern("dd/MM (E) kk:mm").withLocale(Locale.getDefault());
+        String strDate = date.toString(fmt);
         if (TextUtils.isEmpty(visitingTeam)) {
             strDate = "";
         }
@@ -70,15 +79,15 @@ public class Match implements Comparable<Match> {
     }
 
     public boolean isAlreadyPlayed() {
-        return timestamp <= System.currentTimeMillis();
+        return date.isAfterNow();
     }
 
     @Override
     public int compareTo(@NonNull Match another) {
-        if (this.timestamp < another.getTimestamp()) {
+        if (this.getTimestamp() < another.getTimestamp()) {
             return -1;
         }
-        if (this.timestamp > another.getTimestamp()) {
+        if (this.getTimestamp() > another.getTimestamp()) {
             return 1;
         }
         return 0;
