@@ -32,20 +32,27 @@ public class TeamsWidgetsExtension extends DashClockExtension {
         final boolean alwaysUpdate = sharedPreferences.getBoolean("DashClockExtensionUpdate",false);
         setUpdateWhenScreenOn(alwaysUpdate);
 
-        Timber.e("Dashclock team : " + teamName);
-
         final Team team = TWController.INSTANCE.getDao().getTeamByName(teamName);
 
-        if (team == null) return;
+        if (team == null){
+            Timber.e("Dashclock: team is null");
+            publishUpdate(new ExtensionData());
+            return;
+        }
+
+        Timber.e("Dashclock team : " + teamName);
 
         final Match match = team.getNextMatch();
 
-        if (match == null) return;
+        if (match == null){
+            Timber.e("Dashclock: Match is null");
+            publishUpdate(new ExtensionData());
+            return;
+        }
 
 
         final String text = daysBetween(match.getTimestamp());
         final String and = " " + getString(R.string.and) + " ";
-
 
         final String expanded = String.format("%s - %s%n%s%n%s", match.getVisitingTeam(), match.getLeague(), match.getPlace(), text.replace(NEWLINE, and));
 
