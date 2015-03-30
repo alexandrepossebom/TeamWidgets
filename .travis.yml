@@ -18,6 +18,12 @@ android:
     - extra-android-m2repository
     - addon-google_apis-google-19
 
-    # Specify at least one system image,
-    # if you need to run emulator(s) during your tests
-    - sys-img-x86-android-17
+before_install:
+
+    # for gradle output style
+    - export TERM=dumb
+    # environment info
+    - ./gradlew -v
+    -  uname -a
+
+script: ./gradlew clean build
