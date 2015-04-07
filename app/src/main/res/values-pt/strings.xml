@@ -33,13 +33,13 @@
     <string name="relativetime_days">%1$d dias</string>
     <string name="relativetime_hour">em uma hora</string>
     <string name="relativetime_hours">%1$d horas</string>
-    <string name="relativetime_minute">em um minuto</string>
+    <string name="relativetime_minute">um minuto</string>
     <string name="relativetime_minutes">%1$d minutos</string>
-    <string name="relativetime_month">em um mês</string>
+    <string name="relativetime_month">um mês</string>
     <string name="relativetime_months">%1$d meses</string>
     <string name="relativetime_seconds">menos que um minuto</string>
     <string name="relativetime_prefix_togo">em</string>
-    <string name="relativetime_year">em um ano</string>
+    <string name="relativetime_year">um ano</string>
     <string name="relativetime_years">%1$d anos</string>
 
     <string name="download_error">Ocorreu um erro ao fazer o download</string>
